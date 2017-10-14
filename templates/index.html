@@ -1,5 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  Home
+  <h3>Wallet Version: {{ info_output.version }}</h3>
+  <h3>Balance: {{ info_output.balance }}</h3>
+  <h3>Current Block: {{ info_output.blocks }}</h3>
+  <h3>Balance: {{ info_output.balance }}</h3>
+  <h3>Staking: {{ stake_output.staking }}</h3>
+  <h3>Weight: {{ stake_output.weight }}</h3>
+  <h3>Estimated time to stake: {{ stake_output.expectedtime }}</h3>
 {% endblock %}
