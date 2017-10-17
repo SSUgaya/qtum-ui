@@ -4,4 +4,4 @@
 *.log
 *.sql
 *.sqlite
-/.addfiles
+addfiles.sh
