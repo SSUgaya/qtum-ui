@@ -1,7 +1,17 @@
 <div class="sidenav">
+  <h1>Qtum Pi Wallet</h1>
   <button type="button" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-th"></span> My Wallett</button>
   <button type="button" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-upload"></span> Send</button>
   <button type="button" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-download"></span> Receive</button>
   <button type="button" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-briefcase"></span> Smart Contract</button>
   <button type="button" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-list-alt"></span> Transactions</button>
+  <div class="panel panel-default">
+    <div class="panel-heading">Wallet Info</div>
+    <div class="panel-body">
+      Current Block: {{ info_output.blocks }} <br />
+      Staking: {{ stake_output.staking }} <br />
+      Network Weight: {{ stake_output.weight }} <br />
+      Approx Time to Stake: {{ stake_time }} Days
+    </div>
+  </div>
 </div>

@@ -3,17 +3,13 @@
 {% block body %}
   <div class="main">
     <div class="wallet col-md-12 col-sm-12">
-      <h3>Available Balance: {{ info_output.balance }} QTUM</h3>
-      <h3>Pending Balance: {{ info_output.balance }} QTUM</h3>
-      <h3>Current Block: {{ info_output.blocks }}</h3>
-      <h3>Balance: {{ info_output.balance }}</h3>
-      <h3>Staking: {{ stake_output.staking }}</h3>
-      <h3>Weight: {{ stake_output.weight }}</h3>
-      <h3>Estimated time to stake: {{ stake_output.expectedtime }}</h3>
-    </div>
-
+      <h3>Balances</h3> <br />
+        <strong>Available Balance:</strong> {{ info_output.balance }} QTUM <br />
+        <strong>Pending Balance:</strong> 0.00000000 QTUM
+      </div>
+      <div class="q-total col-md-12 col-sm-12"><hr /> <span class="pull-left">Total</span> {{ info_output.balance }} QTUM</div>
     <div class="transactions col-md-12">
-        <h2>Transactions</h2>
+        <h3>Recent Transactions</h3>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -25,58 +21,40 @@
           </thead>
           <tbody>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
+              <td>Oct 10th 2017 18:01</td>
+              <td>Received</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>2.74522338</td>
             </tr>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
+              <td>Oct 08th 2017 17:43</td>
               <td>Sent</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>121.45332</td>
             </tr>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
+              <td>Oct 07th 2017 20:36</td>
+              <td>Received</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>120.00</td>
             </tr>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
+              <td>Oct 05th 2017 11:56</td>
               <td>Sent</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>1.00</td>
             </tr>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
+              <td>Oct 05th 2017 18:26</td>
+              <td>Received</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>0.91234</td>
             </tr>
             <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
+              <td>Oct 04th 2017 23:04</td>
+              <td>Received</td>
               <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
-            </tr>
-            <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
-            </tr>
-            <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
-            </tr>
-            <tr>
-              <td>Sep 10th 2017 18:01</td>
-              <td>Sent</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>34.54</td>
+              <td>1.00</td>
             </tr>
           </tbody>
         </table>
