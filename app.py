@@ -24,6 +24,10 @@ def get_time():
 def index():
     return render_template('index.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
+@app.route('/send')
+def send():
+    return render_template('send.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
