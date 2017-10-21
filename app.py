@@ -28,6 +28,18 @@ def index():
 def send():
     return render_template('send.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
+@app.route('/receive')
+def receive():
+    return render_template('receive.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+
+@app.route('/transaction')
+def transaction():
+    return render_template('transactions.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+
+@app.route('/contract')
+def contract():
+    return render_template('contract.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
