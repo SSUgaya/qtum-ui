@@ -1,1 +1,40 @@
+body {
+  background-color: #201e21;
+  color: #959396;
+  }
 
+.sidenav {
+  margin-top: 40px;
+  height: 80%;
+  width: 320px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #312e32;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+.main {
+  margin-top: 40px;
+  margin-left: 290px; /* Same as the width of the sidenav */
+}
+.transactions {
+  margin-top: 20px;
+  background-color: #312e32;
+}
+
+.wallet {
+  background-color: #312e32;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #3b383c;
+   border-bottom:0px !important;
+}
+
+.table th, .table td {
+    border: 1px !important;
+    height: 40px;
+}
