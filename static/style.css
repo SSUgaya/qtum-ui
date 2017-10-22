@@ -1,10 +1,12 @@
 body {
-  background-color: #201e21;
+  background-color: #393e44;
+  /*background-color: #35495e;*/
   color: #959396;
   }
 
 .sidenav {
-  margin-top: 40px;
+  margin-top: 50px;
+  margin-left: 50px;
   height: 80%;
   width: 320px;
   position: fixed;
@@ -14,6 +16,8 @@ body {
   background-color: #312e32;
   overflow-x: hidden;
   padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
 }
 
 .sidenav h1 {
@@ -23,15 +27,22 @@ body {
 }
 
 .panel {
-  margin-top: 40px;
+  margin-top: 20px;
+}
+
+.panel-heading {
+  text-align: center;
+  font-size: 22px;
 }
 .main {
-  margin-top: 40px;
-  margin-left: 290px; /* Same as the width of the sidenav */
+  margin-top: 50px;
+  margin-left: 320px; /* Same as the width of the sidenav */
 }
 .transactions {
-  margin-top: 20px;
+  margin-top: 18px;
   background-color: #312e32;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
 }
 
 .transactions h3 {
@@ -40,14 +51,15 @@ body {
 
 .wallet {
   background-color: #312e32;
-  padding-bottom: 32px;
+  padding-bottom: 16px;
   font-size: 18px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
 }
 
 .wallet h3 {
   color: white;
 }
-
 
 .q-total {
   text-align: right;
@@ -58,7 +70,6 @@ body {
 
 .q-total span {
   font-size: 20px;
-  padding-top: 10px;
   color: #959396;
 }
 
