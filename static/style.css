@@ -7,7 +7,7 @@ body {
 .sidenav {
   margin-top: 50px;
   margin-left: 50px;
-  height: 80%;
+  /*height: 80%;*/
   width: 320px;
   position: fixed;
   z-index: 1;
@@ -28,6 +28,9 @@ body {
 
 .panel {
   margin-top: 20px;
+  padding-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .panel-heading {
@@ -46,33 +49,63 @@ body {
 }
 
 .transactions h3 {
-  color: white;
+  color: #059be9;
 }
 
 .wallet {
+  background-color: #312e32;
+  padding-bottom: 24px;
+  font-size: 18px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.wallet h3 {
+  color: #059be9;
+}
+
+.send_page {
   background-color: #312e32;
   padding-bottom: 16px;
   font-size: 18px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
+  height: 100%;
 }
 
-.wallet h3 {
+.send_page h3 {
   color: white;
+}
+
+#send-form, #send-wallet, #send-amount, #send-passwd {
+  padding: 8px;
 }
 
 .q-total {
   text-align: right;
   font-size: 30px;
   color: #059be9;
-  background-color: #312e32
 }
 
 .q-total span {
-  font-size: 20px;
+  font-size: 24px;
   color: #959396;
 }
 
+/*.send-total {
+  padding-top: 20px;
+  text-align: right;
+  font-size: 20px;
+  color: #059be9;
+}*/
+
+.send-total span {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 24px;
+  color: #059be9;
+}
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #3b383c;
    border-bottom:0px !important;

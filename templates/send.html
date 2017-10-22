@@ -2,14 +2,72 @@
 
 {% block body %}
 <div class="main">
-  <div class="wallet col-md-12 col-sm-12">
-    <h3>Send info goes here</h3>
+  <div class="send_page col-md-12 col-sm-12">
+    <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ info_output.balance }} QTUM</span></div>
     <form action="{{ url_for('send_qtum') }}" method="post">
-    Receivers Address: <input type="text" name="qtumAddress"><br>
-    Amount: <input type="number" name="qtumAmount"><br>
-    Wallet Passphrase: <input type="password" name="qtumPass"><br>
-    <input type="submit" value="Submit">
-</form>
-    </div>
+      <div id="send-wallet" class="input-group col-md-8">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input id="wallet" type="text" class="form-control" name="qtumAddress" placeholder="Receivers QTUM Address:">
+      </div>
+      <div id="send-amount" class="input-group col-md-8">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+        <input id="amount" type="number" class="form-control" name="qtumAmount" placeholder="Amount of QTUM to send">
+      </div>
+      <div id="send-passwd" class="input-group col-md-8">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input id="password" type="text" class="form-control" name="qtumPass" placeholder="Wallet Passphrase">
+      </div>
+      <div id="send-form" class="col-md-8">
+      <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="transactions col-md-12">
+      <h3>Recent Transactions</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Wallet</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Oct 10th 2017 18:01</td>
+            <td>Received</td>
+            <td>Qwefkwcjnwcwuefowechwuv</td>
+            <td>2.74522338</td>
+          </tr>
+          <tr>
+            <td>Oct 08th 2017 17:43</td>
+            <td>Sent</td>
+            <td>Qwefkwcjnwcwuefowechwuv</td>
+            <td>121.45332</td>
+          </tr>
+          <tr>
+            <td>Oct 07th 2017 20:36</td>
+            <td>Received</td>
+            <td>Qwefkwcjnwcwuefowechwuv</td>
+            <td>120.00</td>
+          </tr>
+          <tr>
+            <td>Oct 05th 2017 11:56</td>
+            <td>Sent</td>
+            <td>Qwefkwcjnwcwuefowechwuv</td>
+            <td>1.00</td>
+          </tr>
+          <tr>
+            <td>Oct 05th 2017 18:26</td>
+            <td>Received</td>
+            <td>Qwefkwcjnwcwuefowechwuv</td>
+            <td>0.91234</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
 </div>
 {% endblock %}
