@@ -4,6 +4,12 @@
 <div class="main">
   <div class="wallet col-md-12 col-sm-12">
     <h3>Send info goes here</h3>
+    <form action="{{ url_for('send_qtum') }}" method="post">
+    Receivers Address: <input type="text" name="qtumAddress"><br>
+    Amount: <input type="number" name="qtumAmount"><br>
+    Wallet Passphrase: <input type="password" name="qtumPass"><br>
+    <input type="submit" value="Submit">
+</form>
     </div>
 </div>
 {% endblock %}
