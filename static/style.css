@@ -78,7 +78,7 @@ body {
   color: white;
 }
 
-#send-form, #send-wallet, #send-amount, #send-passwd {
+#send-form, #send-wallet, #send-amount, #send-passwd, #send-label, #send-discription {
   padding: 8px;
 }
 
