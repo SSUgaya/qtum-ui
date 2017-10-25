@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, BooleanField, PasswordField
+from wtforms.validators import InputRequired, Length
 import json
 import os
 import subprocess
@@ -9,13 +10,13 @@ import subprocess
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
 
-class SendForm(Form):
-    address = StringField('qtumAddress')
-    amount = DecimalField('qtumAmount')
-    label = StringField('qtumLabel')
-    description = StringField('qtumDescription')
-    passwd = PasswordField('qtumPass')
-    feeAmount = BooleanField('qtumFee')
+class SendForm(FlaskForm):
+    address = StringField('address')
+    amount = StringField('amount')
+    label = StringField('label')
+    description = StringField('description')
+    passwd = PasswordField('password')
+    feeAmount = BooleanField('fee')
 
 def get_info():
     p = os.popen("/home/pi/qtum-wallet/bin/qtum-cli getinfo").read()
@@ -40,6 +41,26 @@ def index():
 @app.route('/send', methods=['GET', 'POST'])
 def send():
     form = SendForm()
+    if form.validate_on_submit():
+        address = form.address.data
+        amount = form.amount.data
+        passwd = form.passwd.data
+        label = form.label.data
+        description = form.description.data
+        passwd_time = '20'
+        unlock = ['/home/pi/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
+        unlock.append(passwd)
+        unlock.append(passwd_time)
+        subprocess.run(unlock)
+        command = ['/home/pi/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
+        command.append(address)
+        command.append(amount)
+        command.append(label)
+        command.append(description)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
+        (out,err) = process.communicate()
+        return out
+
     return render_template('send.html', form=form, info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 @app.route('/receive')
@@ -53,27 +74,6 @@ def transaction():
 @app.route('/contract')
 def contract():
     return render_template('contract.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
-
-@app.route('/send_qtum', methods=['POST'])
-def send_qtum():
-    address = request.form['qtumAddress']
-    amount = request.form['qtumAmount']
-    passwd = request.form['qtumPass']
-    label = request.form['qtumLabel']
-    description = request.form['qtumDescription']
-    passwd_time = '20'
-    unlock = ['/home/pi/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
-    unlock.append(passwd)
-    unlock.append(passwd_time)
-    subprocess.run(unlock)
-    command = ['/home/pi/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
-    command.append(address)
-    command.append(amount)
-    command.append(label)
-    command.append(description)
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
-    (out,err) = process.communicate()
-    return out
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
