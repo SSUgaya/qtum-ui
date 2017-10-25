@@ -55,8 +55,8 @@ def send():
         command = ['/home/pi/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
         command.append(address)
         command.append(amount)
-        command.append(label)
         command.append(description)
+        command.append(label)
         process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
         (out,err) = process.communicate()
         return out
