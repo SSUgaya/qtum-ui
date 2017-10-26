@@ -18,18 +18,18 @@ class SendForm(FlaskForm):
     passwd = PasswordField('password')
     feeAmount = BooleanField('fee')
 
-def get_info():
-    p = os.popen("/home/pi/qtum-wallet/bin/qtum-cli getinfo").read()
+def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
+    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getinfo").read()
     parsed_json = json.loads(p)
     return parsed_json
 
 def get_stake():
-    p = os.popen("/home/pi/qtum-wallet/bin/qtum-cli getstakinginfo").read()
+    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getstakinginfo").read()
     parsed_json = json.loads(p)
     return parsed_json
 
 def get_time():
-    p = os.popen("/home/pi/qtum-wallet/bin/qtum-cli getstakinginfo | grep expectedtime | cut -d':' -f2").read()
+    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getstakinginfo | grep expectedtime | cut -d':' -f2").read()
     time = int(p) / 60 / 60 / 24
     expected_stake = round(time)
     return expected_stake
@@ -48,16 +48,16 @@ def send():
         label = form.label.data
         description = form.description.data
         passwd_time = '20'
-        unlock = ['/home/pi/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
+        unlock = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
         unlock.append(passwd)
         unlock.append(passwd_time)
         subprocess.run(unlock)
-        command = ['/home/pi/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
+        command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
         command.append(address)
         command.append(amount)
         command.append(description)
         command.append(label)
-        process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
+        process = subprocess.Popen(command, stdout=subprocess.bossPE,stdin=subprocess.bossPE)
         (out,err) = process.communicate()
         return out
 
