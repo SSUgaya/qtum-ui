@@ -2,11 +2,15 @@
 
 {% block body %}
   <div class="main">
-    <div class="wallet col-md-12 col-sm-12">
+    <div class="wallet col-md-6 col-sm-16">
       <h3>Balances</h3> <br />
-        <strong>Available Balance:</strong> {{ info_output.balance }} QTUM <br />
-        <strong>Pending Balance:</strong> 0.00000000 QTUM
+        <strong>Available:</strong> {{ info_output.balance }} QTUM <br />
+        <strong>Pending:</strong> {{ pending_balance }} QTUM
         <div class="q-total"><hr /> <span class="pull-left">Total</span> {{ info_output.balance }} QTUM</div>
+      </div>
+    <div class="wallet-right col-md-6 col-sm-6">
+      <br />
+        <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="qtum" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
       </div>
     <div class="transactions col-md-12">
         <h3>Recent Transactions</h3>

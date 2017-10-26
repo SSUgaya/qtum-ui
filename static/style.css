@@ -20,7 +20,7 @@ body {
   border-radius: 10px;
 }
 
-.sidenav h1 {
+.sidenav h2 {
   color: #059be9;
   text-align: center;
   margin: 8px;
@@ -30,12 +30,14 @@ body {
   margin-top: 20px;
   padding-bottom: 10px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
+  font-style: oblique;
 }
 
 .panel-heading {
   text-align: center;
   font-size: 22px;
+  font-style: normal;
 }
 .main {
   margin-top: 50px;
@@ -61,6 +63,15 @@ body {
   height: 100%;
 }
 
+.wallet-right {
+  background-color: #312e32;
+  padding-bottom: 25px;
+  /*font-size: 18px;*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+    /*height: 100%;*/
+}
+
 .wallet h3 {
   color: #059be9;
 }
@@ -80,6 +91,10 @@ body {
 
 #send-form, #send-wallet, #send-amount, #send-passwd, #send-label, #send-description {
   padding: 8px;
+  font-size: 14px;
+  color: #059ae9;
+  font-weight: 300;
+
 }
 
 .q-total {

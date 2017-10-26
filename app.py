@@ -34,9 +34,14 @@ def get_time():
     expected_stake = round(time)
     return expected_stake
 
+def get_pending():
+    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getunconfirmedbalance").read()
+    parsed_json = json.loads(p)
+    return parsed_json
+
 @app.route('/')
 def index():
-    return render_template('index.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    return render_template('index.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), pending_balance=get_pending())
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
