@@ -91,7 +91,7 @@ body {
 
 #send-form, #send-wallet, #send-amount, #send-passwd, #send-label, #send-description {
   padding: 8px;
-  font-size: 14px;
+  font-size: 13px;
   color: #059ae9;
   font-weight: 300;
 

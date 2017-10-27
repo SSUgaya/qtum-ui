@@ -62,7 +62,7 @@ def send():
         command.append(amount)
         command.append(description)
         command.append(label)
-        process = subprocess.Popen(command, stdout=subprocess.bossPE,stdin=subprocess.bossPE)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
         (out,err) = process.communicate()
         return out
 
