@@ -20,40 +20,22 @@
               <th>Date</th>
               <th>Type</th>
               <th>Wallet</th>
+              <th>Fee</th>
               <th>Amount</th>
+              <th>Confirmations</th>
             </tr>
           </thead>
           <tbody>
+            {% for tx in last_tx[:5] %}
             <tr>
-              <td>Oct 10th 2017 18:01</td>
-              <td>Received</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>2.74522338</td>
+              <td>{{ date.strftime('%Y-%m-%d', date.localtime(tx.time)) }}</td>
+              <td>{{ tx.category }}</td>
+              <td>{{ tx.address }}</td>
+              <td>{{ tx.fee }}</td>
+              <td>{{ tx.amount }}</td>
+              <td>{{ tx.confirmations }}</td>
             </tr>
-            <tr>
-              <td>Oct 08th 2017 17:43</td>
-              <td>Sent</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>121.45332</td>
-            </tr>
-            <tr>
-              <td>Oct 07th 2017 20:36</td>
-              <td>Received</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>120.00</td>
-            </tr>
-            <tr>
-              <td>Oct 05th 2017 11:56</td>
-              <td>Sent</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>1.00</td>
-            </tr>
-            <tr>
-              <td>Oct 05th 2017 18:26</td>
-              <td>Received</td>
-              <td>Qwefkwcjnwcwuefowechwuv</td>
-              <td>0.91234</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
     </div>
