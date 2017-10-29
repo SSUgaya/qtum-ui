@@ -16,6 +16,7 @@ body {
   background-color: #312e32;
   overflow-x: hidden;
   padding: 10px;
+  padding-bottom: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
@@ -98,22 +99,16 @@ body {
 }
 
 .q-total {
+  padding-bottom: 15px;
   text-align: right;
-  font-size: 30px;
+  font-size: 20px;
   color: #059be9;
 }
 
 .q-total span {
-  font-size: 24px;
+  font-size: 20px;
   color: #959396;
 }
-
-/*.send-total {
-  padding-top: 20px;
-  text-align: right;
-  font-size: 20px;
-  color: #059be9;
-}*/
 
 .send-total span {
   padding-top: 20px;
@@ -128,6 +123,23 @@ body {
 
 .table th, .table td {
     border: 1px !important;
-    height: 40px;
     overflow-y: auto;
+}
+
+.red {
+  padding-top: 8px;
+  color: #e10a04;
+  font-size: 20px;
+}
+
+.green {
+  padding-top: 8px;
+  color: #00B502;
+  font-size: 20px
+}
+
+.blue {
+  padding-top: 8px;
+  color: #3379b7;
+  font-size: 20px
 }

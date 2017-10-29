@@ -52,7 +52,9 @@ def index():
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
+    date = time
     form = SendForm()
+
     if form.validate_on_submit():
         address = form.address.data
         amount = form.amount.data
@@ -73,7 +75,7 @@ def send():
         (out,err) = process.communicate()
         return render_template('send.html', out)
 
-    return render_template('send.html', form=form, info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    return render_template('send.html',last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/receive')
 def receive():
@@ -81,7 +83,8 @@ def receive():
 
 @app.route('/transaction')
 def transaction():
-    return render_template('transactions.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    date = time
+    return render_template('transactions.html', last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/contract')
 def contract():

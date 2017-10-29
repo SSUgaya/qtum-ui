@@ -35,49 +35,39 @@
   </div>
 
   <div class="transactions col-md-12">
-      <h3>Recent Sent Transactions</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Wallet</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Oct 10th 2017 18:01</td>
-            <td>Received</td>
-            <td>Qwefkwcjnwcwuefowechwuv</td>
-            <td>2.74522338</td>
-          </tr>
-          <tr>
-            <td>Oct 08th 2017 17:43</td>
-            <td>Sent</td>
-            <td>Qwefkwcjnwcwuefowechwuv</td>
-            <td>121.45332</td>
-          </tr>
-          <tr>
-            <td>Oct 07th 2017 20:36</td>
-            <td>Received</td>
-            <td>Qwefkwcjnwcwuefowechwuv</td>
-            <td>120.00</td>
-          </tr>
-          <tr>
-            <td>Oct 05th 2017 11:56</td>
-            <td>Sent</td>
-            <td>Qwefkwcjnwcwuefowechwuv</td>
-            <td>1.00</td>
-          </tr>
-          <tr>
-            <td>Oct 05th 2017 18:26</td>
-            <td>Received</td>
-            <td>Qwefkwcjnwcwuefowechwuv</td>
-            <td>0.91234</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Last Sent Transaction</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="text-center col-sm-3">Date</th>
+          <th class="text-center col-sm-1">Type</th>
+          <th class="text-center col-sm-3">Wallet Address</th>
+          <th class="text-center col-sm-2">Amount</th>
+          <th class="text-center col-sm-1">Fee</th>
+          <th class="text-center col-sm-2">Confirmations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tx in last_tx[-3:] %}
+        <tr>
+          {% if tx.category == "send" or  tx.category == "move" %}
+            <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
+            <td align="center">
+              {% if tx.category == "move" %}
+                <span class="glyphicon glyphicon-refresh blue"></span>
+              {% else %}
+                <span class="glyphicon glyphicon-upload red"></span>
+              {% endif %}
+            </td>
+            <td align="center">{{ tx.address }}</td>
+            <td align="center">{{ tx.amount }}</td>
+            <td align="center">{{ tx.fee }}</td>
+            <td align="center">{{ tx.confirmations }}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
 </div>
