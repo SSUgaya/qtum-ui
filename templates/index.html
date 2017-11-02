@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for tx in last_tx[-3:] %}
+            {% for tx in last_tx[::-1] %}
             <tr>
               <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
               <td align="center">

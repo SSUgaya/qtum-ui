@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, url_for, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, BooleanField, PasswordField
 from wtforms.validators import InputRequired, Length
@@ -24,6 +24,11 @@ def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli 
     parsed_json = json.loads(p)
     return parsed_json
 
+def get_block(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
+    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getinfo").read()
+    parsed_json = json.loads(p)
+    return parsed_json
+
 def get_stake():
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getstakinginfo").read()
     parsed_json = json.loads(p)
@@ -36,14 +41,14 @@ def get_time():
     return expected_stake
 
 def get_last_tx():
-    p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli listtransactions").read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*"  100').read()
     parsed_json = json.loads(p)
     return parsed_json
 
 @app.route('/')
 def index():
     date = time
-    return render_template('index.html', last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('index.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
@@ -68,22 +73,23 @@ def send():
         command.append(label)
         process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
         (out,err) = process.communicate()
-        return out
+        flash(out)
+        return redirect(url_for('send'))
 
-    return render_template('send.html',last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('send.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/receive')
 def receive():
-    return render_template('receive.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    return render_template('receive.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 @app.route('/transaction')
 def transaction():
     date = time
-    return render_template('transactions.html', last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('transactions.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/contract')
 def contract():
-    return render_template('contract.html', info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    return render_template('contract.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
