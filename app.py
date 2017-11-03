@@ -41,7 +41,7 @@ def get_time():
     return expected_stake
 
 def get_last_tx():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*"  100').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*"  50').read()
     parsed_json = json.loads(p)
     return parsed_json
 

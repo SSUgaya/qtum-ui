@@ -4,17 +4,27 @@
   <div class="main">
     <div class="wallet col-md-6 col-sm-6">
       <h3>Balance</h3> <br />
-        <strong>Available:</strong> {{ info_output.balance }} <br />
-        <strong data-toggle="tooltip" title="Unconfirmed Coins">Pending:</strong> {{ info_output.unconfirmed_balance }} <br />
-        <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> {{ info_output.immature_balance }} <br />
-        <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong> {{ info_output.stake }}
+        <strong>Available:</strong> <span class="pull-right">{{ info_output.balance }}</span> <br />
+        <strong data-toggle="tooltip" title="Unconfirmed Coins">Pending:</strong> <span class="pull-right">{{ info_output.unconfirmed_balance }}</span> <br />
+        <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ info_output.immature_balance }}</span> <br />
+        <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ info_output.stake }}</span> <br />
         <div class="q-total"><hr /> <span class="pull-left">Total</span> {{ info_output.balance }} QTUM</div>
       </div>
     <div class="wallet-right col-md-6 col-sm-6">
-      <br />
-        <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="qtum" data-base="AUD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
-      </div>
-    <div class="transactions col-md-12">
+      <h3>Information</h3> <br />
+      <strong>Wallet Version:</strong> <span class="pull-right">{{ get_block.version }}</span> <br />
+      <strong>Current Block:</strong> <span class="pull-right">{{ get_block.blocks }}</span> <br />
+      {% if stake_output.staking == false %}
+        <strong>Staking:</strong> <span class="pull-right red-sm">{{ stake_output.staking }}</span> <br />
+      {% else %}
+        <strong>Staking:</strong> <span class="pull-right green-sm">{{ stake_output.staking }}</span> <br />
+      {% endif %}
+      <strong>Wallet Weight:</strong> <span class="pull-right">{{ stake_output.weight / 100000000 }}</span> <br />
+      <strong>Net Weight:</strong> <span class="pull-right">{{ stake_output.netstakeweight / 100000000 }}</span> <br />
+      <strong>Last Stake Reward:</strong> <span class="pull-right">October 12 2017</span> <br />
+      <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
+    </div>
+    <div class="transactions-index col-md-12">
         <h3>Recent Transactions</h3>
         <table class="table table-striped">
           <thead>
@@ -28,9 +38,10 @@
             </tr>
           </thead>
           <tbody>
-            {% for tx in last_tx[::-1] %}
+            {% for tx in last_tx[-4:] %}
+
             <tr>
-              <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
+              <td align="left">{{ date.strftime('%B %d %Y', date.localtime(tx.time)) }}</td>
               <td align="center">
                 {% if tx.category == "receive" %}
                   <span class="glyphicon glyphicon-download green"></span>
@@ -40,7 +51,7 @@
                   <span class="glyphicon glyphicon-refresh blue"></span>
                 {% endif %}
               </td>
-              <td align="center">{{ tx.address }}</td>
+              <td align="center" class="text"><span>{{ tx.address }}</span></td>
               <td align="center">{{ tx.amount }}</td>
               {% if tx.fee == nil %}
                 <td align="center">0.0000</td>

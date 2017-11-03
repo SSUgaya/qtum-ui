@@ -1,19 +1,12 @@
 <div class="sidenav">
   <h2>Qtum-Wallet Pi UI</h2>
-  <a href="/" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-th"></span> Wallet Overview</a>
+  <a href="/" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-th"></span> Overview</a>
   <a href="/send" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-upload"></span> Send</a>
   <a href="/receive" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-download"></span> Receive</a>
-  <a href="/contract" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-briefcase"></span> Smart Contract</a>
   <a href="/transaction" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-list-alt"></span> Transactions</a>
-  <div class="panel panel-primary">
-    <div class="panel-heading">Information</div>
-    <div class="panel-body">
-      Current Block: {{ get_block.blocks }} <br />
-      Staking: {{ stake_output.staking }} <br />
-      Wallet Weight: {{ stake_output.weight / 100000000 }} <br />
-      Net Weight: {{ stake_output.netstakeweight / 100000000 }} <br />
-      Last Stake Reward: October 12 2017<br />
-      Approx TTS: {{ stake_time }} Days
-    </div>
-  </div>
+  <a href="/contract" class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-briefcase"></span> Smart Contract</a>
+  <br />
+  <br />
+  <br />
+  <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="qtum" data-base="AUD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
 </div>

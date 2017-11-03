@@ -1,7 +1,8 @@
 body {
-  background-color: #393e44;
+    background-color: #393e44;
   /*background-color: #35495e;*/
-  color: #959396;
+  /*color: #959396;*/
+  color: #fafdffab;
   }
 
 .sidenav {
@@ -25,39 +26,33 @@ body {
   color: #059be9;
   text-align: center;
   margin: 8px;
+  font-size: 30px;
 }
 
-.panel {
-  margin-top: 20px;
-  padding-bottom: 10px;
-  font-size: 16px;
-  font-weight: 400;
-  font-style: oblique;
-}
-
-.panel-heading {
-  text-align: center;
-  font-size: 22px;
-  font-style: normal;
-}
 .main {
   margin-top: 50px;
   margin-left: 320px; /* Same as the width of the sidenav */
 }
 .transactions {
+  background-color: #312e32;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.transactions-index, .transactions-send {
   margin-top: 18px;
   background-color: #312e32;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 
-.transactions h3 {
+.transactions h3, .transactions-index h3, .transactions-send h3 {
   color: #059be9;
 }
 
 .wallet {
   background-color: #312e32;
-  font-size: 17px;
+  font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
@@ -65,21 +60,21 @@ body {
 
 .wallet-right {
   background-color: #312e32;
-  padding: 24px;
-  /*font-size: 18px;*/
+  font-size: 16px;
+  padding-bottom: 24px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
 }
 
-.wallet h3 {
+.wallet h3, .wallet-right h3 {
   color: #059be9;
 }
 
 .send_page {
   background-color: #312e32;
-  padding-bottom: 16px;
-  font-size: 18px;
+  padding-bottom: 24px;
+  font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
@@ -100,12 +95,12 @@ body {
 .q-total {
   padding-bottom: 15px;
   text-align: right;
-  font-size: 20px;
+  font-size: 24px;
   color: #059be9;
 }
 
 .q-total span {
-  font-size: 20px;
+  font-size: 24px;
   color: #959396;
 }
 
@@ -118,11 +113,24 @@ body {
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #3b383c;
    border-bottom:0px !important;
+
 }
 
-.table th, .table td {
+.table th, .table td, td.text {
+  max-width: 177px;
     border: 1px !important;
     overflow-y: auto;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+
+.table td.text span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
 }
 
 .red {
@@ -131,10 +139,20 @@ body {
   font-size: 20px;
 }
 
+  .red-sm {
+    color: #e10a04;
+    font-size: 16px;
+  }
+
 .green {
   padding-top: 8px;
   color: #00B502;
   font-size: 20px
+}
+
+.green-sm {
+  color: #00B502;
+  font-size: 16px
 }
 
 .blue {
