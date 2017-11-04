@@ -153,3 +153,8 @@ body {
   color: #3379b7;
   font-size: 20px
 }
+
+.dropdown-header {
+  font-size: 18px;
+  color: #059be9;
+}

@@ -3,7 +3,35 @@
 {% block body %}
 <div class="main">
     <div class="wallet col-md-12 col-sm-12">
-      <h3>Receive info goes here</h3>
+      <h3>Get New Wallet Address</h3>
+        <form method="post" action="{{ url_for('send') }}">
+          {{ form.hidden_tag() }}
+          <div id="send-wallet" class="input-group col-md-6">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.address(type="text", class_="form-control", placeholder="Account Name (optional)")}}
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary btn-md">Create</button>
+          </div>
+          </div>
+        </form>
+
+        <div class="dropdown pull-right">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          {% for key, value in account_add.items() %}
+            {% if key == "" %}
+              <li class="divider"></li>
+              <li class="dropdown-header">Default Account</li>
+            {% else %}
+              <li class="divider"></li>
+              <li class="dropdown-header">{{ key }} Account</li>
+            {% endif %}
+            {% for x in value[0:99] %}
+              <li role="presentation"><a role="menuitem" href="#">{{ x }}</a></li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
       </div>
+    </div>
   </div>
 {% endblock %}
