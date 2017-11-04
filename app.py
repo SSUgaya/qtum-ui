@@ -7,7 +7,6 @@ import json
 import os
 import subprocess
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
 
@@ -54,7 +53,6 @@ def index():
 def send():
     date = time
     form = SendForm()
-
     if form.validate_on_submit():
         address = form.address.data
         amount = form.amount.data

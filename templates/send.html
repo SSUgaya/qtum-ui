@@ -16,29 +16,28 @@
     <h1>{{ out }}</h1>
     <form method="post" action="{{ url_for('send') }}">
       {{ form.hidden_tag() }}
-      <div id="send-wallet" class="input-group col-md-8">
+      <div id="send-wallet" class="input-group col-md-9">
         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
         {{ form.address(type="text", class_="form-control", placeholder="Send to QTUM Address")}}
       </div>
-      <div id="send-amount" class="input-group col-md-8">
+      <div id="send-amount" class="input-group col-md-9">
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
         {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send")}}
       </div>
-      <div id="send-label" class="input-group col-md-8">
+      <div id="send-label" class="input-group col-md-9">
         <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
         {{ form.label(type="text", class_="form-control", placeholder="Enter Label for this address and add it to the address book (optional)")}}
       </div>
-      <div id="send-description" class="input-group col-md-8">
+      <div id="send-description" class="input-group col-md-9">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
         {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional)")}}
       </div>
-      <div id="send-passwd" class="input-group col-md-8">
+      <div id="send-passwd" class="input-group col-md-9">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
       </div>
-      <div id="send-form" class="col-md-8">
+      <div id="send-form" class="col-md-9">
       <!-- {{ form.feeAmount(type="checkbox", class_="checkbox-inline", placeholder="Wallet Passphrase")}} <label> Subtract Fee From Amount</label> -->
-      <label> Support Qtum Pi UI: Qav6WL76swQSyJaPYiYJ4EMbrRSRFuwtCL</label>
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
       </div>
     </form>
@@ -61,7 +60,7 @@
         {% for tx in last_tx[-1:] %}
         <tr>
           {% if tx.category == "send" or  tx.category == "move" %}
-            <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
+            <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
             <td align="center">
               {% if tx.category == "move" %}
                 <span class="glyphicon glyphicon-refresh blue"></span>
@@ -79,6 +78,5 @@
       </tbody>
     </table>
   </div>
-
 </div>
 {% endblock %}

@@ -77,19 +77,12 @@ body {
   font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  height: 100%;
 }
 
-.send_page h3 {
-  color: white;
-}
 
 #send-form, #send-wallet, #send-amount, #send-passwd, #send-label, #send-description {
   padding: 8px;
-  font-size: 13px;
-  color: #059ae9;
-  font-weight: 300;
-
+  font-weight: 350;
 }
 
 .q-total {
