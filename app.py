@@ -44,7 +44,7 @@ def get_last_tx():
     parsed_json = json.loads(p)
     return parsed_json
 
-def get_addresses():
+def get_unspent():
     p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent').read()
     parsed_json = json.loads(p)
     return parsed_json
@@ -94,7 +94,7 @@ def send():
 @app.route('/receive')
 def receive():
     form = SendForm()
-    return render_template('receive.html', account_add=get_account_addresses(), get_addresses=get_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('receive.html', account_add=get_account_addresses(), get_unspent=get_unspent(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/transaction')
 def transaction():

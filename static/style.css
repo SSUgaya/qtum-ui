@@ -132,10 +132,10 @@ body {
   font-size: 20px;
 }
 
-  .red-sm {
-    color: #e10a04;
-    font-size: 16px;
-  }
+.red-sm {
+  color: #e10a04;
+  font-size: 16px;
+}
 
 .green {
   padding-top: 8px;
@@ -157,4 +157,21 @@ body {
 .dropdown-header {
   font-size: 18px;
   color: #059be9;
+}
+
+#table-unspent {
+    border: 1px !important;
+    white-space: nowrap;
+    max-width: 100%;
+    font-size: 14px;
+}
+
+.red-unspent {
+  color: #e10a04;
+  font-size: 18px;
+}
+
+.green-unspent {
+  color: #00B502;
+  font-size: 18px
 }

@@ -15,7 +15,7 @@
           </div>
         </form>
 
-        <div class="dropdown pull-right">
+        <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
           {% for key, value in account_add.items() %}
@@ -32,6 +32,34 @@
           {% endfor %}
         </ul>
       </div>
+      <hr />
+    <h3>Unspent Transactions</h3>
+    <table id="table-unspent" class="table table-striped">
+      <thead>
+        <tr>
+          <th class="text-center col-sm-6">Address</th>
+          <th class="text-center col-sm-2">Amount</th>
+          <th class="text-center col-sm-2">Confirmations</th>
+          <th class="text-center col-sm-2">Spendable</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for unspent in get_unspent %}
+        <tr>
+            <td align="center">{{ unspent.address }}</td>
+            <td align="center">{{ unspent.amount }}</td>
+            <td align="center">{{ unspent.confirmations }}</td>
+          <td align="center">
+          {% if unspent.spendable == true %}
+              <span class="glyphicon glyphicon-ok green-unspent"></span>
+          {% else %}
+              <span class="glyphicon glyphicon-remove red-unspent"></span>
+          {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     </div>
   </div>
 {% endblock %}
