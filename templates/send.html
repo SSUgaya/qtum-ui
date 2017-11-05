@@ -5,33 +5,38 @@
   <div class="send_page col-md-12 col-sm-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ info_output.balance }} QTUM</span></div>
     <h1>{{ out }}</h1>
-    <form method="post" action="{{ url_for('send') }}">
+    <form class="send-form col-md-9" method="post" action="{{ url_for('send') }}">
       {{ form.hidden_tag() }}
-      <div id="send-wallet" class="input-group col-md-9">
+      <div id="send-wallet" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        {{ form.address(type="text", class_="form-control", placeholder="Send to QTUM Address")}}
+        {{ form.address(type="text", class_="form-control", placeholder="Send to Address")}}
       </div>
-      <div id="send-amount" class="input-group col-md-9">
+      <div id="send-amount" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
         {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send")}}
       </div>
-      <div id="send-label" class="input-group col-md-9">
+      <div id="send-label" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
         {{ form.label(type="text", class_="form-control", placeholder="Enter Label for this address and add it to the address book (optional)")}}
       </div>
-      <div id="send-description" class="input-group col-md-9">
+      <div id="send-description" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
         {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional)")}}
       </div>
-      <div id="send-passwd" class="input-group col-md-9">
+      <div id="send-passwd" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
       </div>
-      <div id="send-form" class="col-md-9">
+      <div id="send-form">
       <!-- {{ form.feeAmount(type="checkbox", class_="checkbox-inline", placeholder="Wallet Passphrase")}} <label> Subtract Fee From Amount</label> -->
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
       </div>
     </form>
+    <div class="qrcode-donate-img col-md-3">
+        <small id="donate-label"> Donate to support Pi-UI</small>
+        <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+        <small id="donate-address">QjHTZgTVNt6CSGgZHDxDNGcYCedkjR478F</small>
+    </div>
   </div>
 
   <div class="transactions-send col-md-12">

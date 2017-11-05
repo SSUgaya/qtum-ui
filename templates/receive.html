@@ -3,36 +3,48 @@
 {% block body %}
 <div class="main">
     <div class="wallet col-md-12 col-sm-12">
-      <h3>Get New Wallet Address</h3>
-        <form method="post" action="{{ url_for('send') }}">
-          {{ form.hidden_tag() }}
-          <div id="send-wallet" class="input-group col-md-6">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            {{ form.address(type="text", class_="form-control", placeholder="Account Name (optional)")}}
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-primary btn-md">Create</button>
-          </div>
-          </div>
-        </form>
-
-        <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-          {% for key, value in account_add.items() %}
-            {% if key == "" %}
-              <li class="divider"></li>
-              <li class="dropdown-header">Default Account</li>
-            {% else %}
-              <li class="divider"></li>
-              <li class="dropdown-header">{{ key }} Account</li>
-            {% endif %}
-            {% for x in value[0:99] %}
-              <li role="presentation"><a role="menuitem" href="#">{{ x }}</a></li>
-            {% endfor %}
+      <h3>Create New Receive Address</h3>
+      <div class="receive-dropdown col-md-3">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        {% for key, value in account_add.items() %}
+          {% if key == "" %}
+            <li class="divider"></li>
+            <li class="dropdown-header">Default Account</li>
+          {% else %}
+            <li class="divider"></li>
+            <li class="dropdown-header">{{ key }} Account</li>
+          {% endif %}
+          {% for x in value[0:99] %}
+            <li role="presentation"><a role="menuitem" href="#">{{ x }}</a></li>
           {% endfor %}
-        </ul>
+        {% endfor %}
+      </ul>
+    </div>
+      <form class="receive-form col-md-6" method="post" action="{{ url_for('send') }}">
+        {{ form.hidden_tag() }}
+        <div id="send-amount" class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+          {{ form.amount(type="number", step="any", class_="form-control", placeholder="Account Name (optional)")}}
+        </div>
+        <div id="send-label" class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
+          {{ form.label(type="text", class_="form-control", placeholder="Amount to request (optional)")}}
+        </div>
+        <div id="send-description" class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+          {{ form.description(type="text", class_="form-control", placeholder="Message (optional)")}}
+        </div>
+        <div id="send-form">
+          <button type="submit" class="btn btn-primary btn-sm pull-right">Request</button>
+        </div>
+      </form>
+      <div class="qrcode-img col-md-3">
+          <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
       </div>
-      <hr />
+      <small id="new-address" class="col-md-12">Address: {{ get_address }}</small>
+    </div>
+  <div class="transactions-index col-md-12">
     <h3>Unspent Transactions</h3>
     <table id="table-unspent" class="table table-striped">
       <thead>
@@ -61,5 +73,6 @@
       </tbody>
     </table>
     </div>
+
   </div>
 {% endblock %}

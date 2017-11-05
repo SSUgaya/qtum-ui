@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, url_for, redirect
+from flask import Flask, render_template, request, flash, url_for, redirect, send_file
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, BooleanField, PasswordField
 from wtforms.validators import InputRequired, Length
@@ -6,7 +6,8 @@ import time
 import json
 import os
 import subprocess
-import re
+import qrcode
+import io
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
@@ -56,13 +57,16 @@ def last_sent_tx():
     for send in parsed_json:
         if send['category'] == "send" or  send['category'] == "move":
             all_sent.update(send)
-    print(all_sent)
     return all_sent
 
 def get_unspent():
     p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent').read()
     parsed_json = json.loads(p)
     return parsed_json
+
+def get_address():
+    get_address = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli getaccountaddress ""').read()
+    return get_address
 
 def get_account_addresses():
     list_accounts = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listaccounts').read()
@@ -77,7 +81,7 @@ def get_account_addresses():
 @app.route('/')
 def index():
     date = time
-    return render_template('index.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('index.html', get_block=get_block(), last_tx=get_last_tx(), get_info=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
@@ -109,7 +113,7 @@ def send():
 @app.route('/receive')
 def receive():
     form = SendForm()
-    return render_template('receive.html', account_add=get_account_addresses(), get_unspent=get_unspent(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_unspent=get_unspent(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/transaction')
 def transaction():
@@ -119,6 +123,26 @@ def transaction():
 @app.route('/contract')
 def contract():
     return render_template('contract.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+
+def random_qr(url='www.google.com'):
+    qr = qrcode.QRCode(version=5,
+                       error_correction=qrcode.constants.ERROR_CORRECT_L,
+                       box_size=4,
+                       border=1)
+
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image()
+    return img
+
+
+@app.route('/get_qrimg')
+def get_qrimg():
+    img_buf = io.BytesIO()
+    img = random_qr(url='qtum:QS1ooMzj2kMLcoFufeVdt3tq4spQWA17Rb?amount=2.00000000&label=Donation%20&message=FUck%20you%20Bro')
+    img.save(img_buf)
+    img_buf.seek(0)
+    return send_file(img_buf, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

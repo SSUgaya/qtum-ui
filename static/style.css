@@ -182,3 +182,35 @@ body {
   padding: 16px;
   font-size: 14px
 }
+
+#new-address {
+  font-size: 15px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.qrcode-img {
+  padding-bottom: 32px;
+  padding-top: 20px;
+}
+
+.qrcode-donate-img {
+  padding-top: 10px;
+}
+
+#donate-address {
+  font-size: 8px;
+}
+
+#donate-label {
+  font-size: 15px;
+}
+
+.receive-form {
+  padding-top: 12px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+}
+
+.receive-dropdown {
+    padding-top: 20px;
+}
