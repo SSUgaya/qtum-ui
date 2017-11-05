@@ -128,6 +128,14 @@ body {
     max-width: 100%;
 }
 
+a.text span {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: inline-block;
+   max-width: 100%;
+}
+
 .red {
   padding-top: 8px;
   color: #e10a04;
@@ -213,4 +221,16 @@ body {
 
 .receive-dropdown {
     padding-top: 20px;
+}
+
+#send-alert {
+
+}
+
+.alert {
+  margin-bottom: 8px;
+  height: 34px;
+  width: 80%;
+  line-height:30px;
+  padding:0px 15px;
 }

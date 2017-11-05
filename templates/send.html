@@ -4,7 +4,6 @@
 <div class="main">
   <div class="send_page col-md-12 col-sm-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ info_output.balance }} QTUM</span></div>
-    <h1>{{ out }}</h1>
     <form class="send-form col-md-9" method="post" action="{{ url_for('send') }}">
       {{ form.hidden_tag() }}
       <div id="send-wallet" class="input-group">
@@ -30,10 +29,19 @@
       <div id="send-form">
       <!-- {{ form.feeAmount(type="checkbox", class_="checkbox-inline", placeholder="Wallet Passphrase")}} <label> Subtract Fee From Amount</label> -->
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+            <div id="send-alert" class="alert alert-success">
+              <a href="https://explorer.qtum.org/tx/{{ message }}"  target="_blank" class="text"><span>Success! TX ID: {{ message }}</span></a>
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
       </div>
     </form>
     <div class="qrcode-donate-img col-md-3">
-        <small id="donate-label"> Donate to support Pi-UI</small>
+        <small id="donate-label">Donate to support Pi-UI</small>
         <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
         <small id="donate-address">QjHTZgTVNt6CSGgZHDxDNGcYCedkjR478F</small>
     </div>
@@ -54,15 +62,6 @@
       </thead>
       <tbody>
         <tr>
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              {% for message in messages %}
-              <div class="alert alert-info">
-                <strong>Transaction ID:</strong> {{ message }}
-              </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
           <td align="left"><a href="https://explorer.qtum.org/tx/{{last_sent_tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(last_sent_tx.time)) }}</a></td>
           <td align="center">
             {% if last_sent_tx.category == "move" %}

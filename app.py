@@ -105,7 +105,8 @@ def send():
         command.append(label)
         process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
         (out,err) = process.communicate()
-        flash(out)
+        result = str(out,'utf-8')
+        flash(result)
         return redirect(url_for('send'))
 
     return render_template('send.html', get_block=get_block(), last_sent_tx=last_sent_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
