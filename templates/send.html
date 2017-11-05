@@ -2,15 +2,6 @@
 
 {% block body %}
 <div class="main">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-info">
-        <strong>Transaction ID:</strong> {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
   <div class="send_page col-md-12 col-sm-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ info_output.balance }} QTUM</span></div>
     <h1>{{ out }}</h1>
@@ -50,31 +41,36 @@
         <tr>
           <th class="text-center col-sm-3">Date</th>
           <th class="text-center col-sm-1">Type</th>
-          <th class="text-center col-sm-3">Wallet Address</th>
+          <th class="text-center col-sm-3">Transaction ID</th>
           <th class="text-center col-sm-2">Amount</th>
           <th class="text-center col-sm-1">Fee</th>
           <th class="text-center col-sm-2">Confirmations</th>
         </tr>
       </thead>
       <tbody>
-        {% for tx in last_tx[-1:] %}
         <tr>
-          {% if tx.category == "send" or  tx.category == "move" %}
-            <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
-            <td align="center">
-              {% if tx.category == "move" %}
-                <span class="glyphicon glyphicon-refresh blue"></span>
-              {% else %}
-                <span class="glyphicon glyphicon-upload red"></span>
-              {% endif %}
-            </td>
-            <td align="center" class="text"><span>{{ tx.address }}</span></td>
-            <td align="center">{{ tx.amount }}</td>
-            <td align="center">{{ tx.fee }}</td>
-            <td align="center">{{ tx.confirmations }}</td>
-          {% endif %}
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-info">
+                <strong>Transaction ID:</strong> {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <td align="left"><a href="https://explorer.qtum.org/tx/{{last_sent_tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(last_sent_tx.time)) }}</a></td>
+          <td align="center">
+            {% if last_sent_tx.category == "move" %}
+              <span class="glyphicon glyphicon-refresh blue"></span>
+            {% else %}
+              <span class="glyphicon glyphicon-upload red"></span>
+            {% endif %}
+          </td>
+          <td id="table_padding" align="center" class="text"><span>{{ last_sent_tx.txid }}</span></td>
+          <td id="table_padding" align="center">{{ last_sent_tx.amount }}</td>
+          <td id="table_padding" align="center">{{ last_sent_tx.fee }}</td>
+          <td id="table_padding" align="center">{{ last_sent_tx.confirmations }}</td>
         </tr>
-        {% endfor %}
       </tbody>
     </table>
   </div>

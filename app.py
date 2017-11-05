@@ -6,6 +6,7 @@ import time
 import json
 import os
 import subprocess
+import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
@@ -21,7 +22,11 @@ class SendForm(FlaskForm):
 def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getwalletinfo").read()
     parsed_json = json.loads(p)
-    return parsed_json
+    version = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli --version").read()
+    all_info = {'version' : version}
+    all_info = {'version': version.rstrip() for key, value in all_info.items()}
+    all_info.update(parsed_json)
+    return all_info
 
 def get_block(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getinfo").read()
@@ -40,9 +45,19 @@ def get_time():
     return expected_stake
 
 def get_last_tx():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*"  50').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" ').read()
     parsed_json = json.loads(p)
     return parsed_json
+
+def last_sent_tx():
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" ').read()
+    parsed_json = json.loads(p)
+    all_sent = {}
+    for send in parsed_json:
+        if send['category'] == "send" or  send['category'] == "move":
+            all_sent.update(send)
+    print(all_sent)
+    return all_sent
 
 def get_unspent():
     p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent').read()
@@ -89,7 +104,7 @@ def send():
         flash(out)
         return redirect(url_for('send'))
 
-    return render_template('send.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('send.html', get_block=get_block(), last_sent_tx=last_sent_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/receive')
 def receive():

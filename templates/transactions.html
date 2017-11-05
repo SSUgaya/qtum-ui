@@ -9,7 +9,7 @@
             <tr>
               <th class="text-center col-sm-3">Date</th>
               <th class="text-center col-sm-1">Type</th>
-              <th class="text-center col-sm-3">Wallet Address</th>
+              <th class="text-center col-sm-3">Transaction ID</th>
               <th class="text-center col-sm-2">Amount</th>
               <th class="text-center col-sm-1">Fee</th>
               <th class="text-center col-sm-2">Confirmations</th>
@@ -28,14 +28,14 @@
                   <span class="glyphicon glyphicon-refresh blue"></span>
                 {% endif %}
               </td>
-              <td align="center" class="text"><span>{{ tx.address }}</span></td>
-              <td align="center">{{ tx.amount }}</td>
+              <td id="table_padding" align="center" class="text"><span>{{ tx.txid }}</span></td>
+              <td id="table_padding" align="center">{{ tx.amount }}</td>
               {% if tx.fee == nil %}
-                <td align="center">0.0000</td>
+                <td id="table_padding" align="center">0.0000</td>
               {% else %}
-                <td align="center">{{ tx.fee }}</td>
+                <td id="table_padding" align="center">{{ tx.fee }}</td>
               {% endif %}
-              <td align="center">{{ tx.confirmations }}</td>
+              <td id="table_padding" align="center">{{ tx.confirmations }}</td>
             </tr>
             {% endfor %}
           </tbody>

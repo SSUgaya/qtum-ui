@@ -7,8 +7,9 @@ body {
 
 .sidenav {
   margin-top: 50px;
+  margin-bottom: 50px;
   margin-left: 50px;
-  /*height: 80%;*/
+
   width: 320px;
   position: fixed;
   z-index: 1;
@@ -17,7 +18,7 @@ body {
   background-color: #312e32;
   overflow-x: hidden;
   padding: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 55px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
@@ -37,6 +38,7 @@ body {
   background-color: #312e32;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
+  margin-bottom: 40px;
 }
 
 .transactions-index, .transactions-send {
@@ -174,4 +176,9 @@ body {
 .green-unspent {
   color: #00B502;
   font-size: 18px
+}
+
+#table_padding {
+  padding: 16px;
+  font-size: 14px
 }
