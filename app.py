@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, flash, url_for, redirect, sen
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, PasswordField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
-# from subprocess import PIPE, run
 import time
 import json
 import os
@@ -87,13 +86,19 @@ def index():
 def send():
     date = time
     form = SendForm()
+    max_spend = get_block()
     if form.validate_on_submit():
+        spendable = float(max_spend['balance'])
         amount = form.amount.data
+        input_amount = float(amount)
         address = form.address.data
         passwd = form.passwd.data
         label = form.label.data
         description = form.description.data
         passwd_time = '20'
+        if input_amount > spendable:
+            flash("Opps! You Entered an Invalid Amount.")
+            return redirect(url_for('send'))
         unlock = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
         unlock.append(passwd)
         unlock.append(passwd_time)
@@ -110,7 +115,7 @@ def send():
         process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         (out,err) = process.communicate()
         if process.returncode != 0:
-            flash("Opps! You Entered an Invalid Amount.")
+            flash("Opps! You Entered an Invalid Address.")
             return redirect(url_for('send'))
         result = str(out,'utf-8')
         flash("Success! TX ID: %s" % result)
