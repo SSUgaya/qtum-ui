@@ -2,27 +2,29 @@
 
 {% block body %}
   <div class="main">
-    <div class="wallet col-md-6 col-sm-6">
-      <h3>Balance</h3> <br />
-        <strong>Available:</strong> <span class="pull-right">{{ get_info.balance }}</span> <br />
-        <strong data-toggle="tooltip" title="Unconfirmed Coins">Pending:</strong> <span class="pull-right">{{ get_info.unconfirmed_balance }}</span> <br />
+    <div class="index-page col-md-12 col-sm-12">
+      <div class="wallet col-md-6 col-sm-6">
+        <h3>Balance</h3> <br />
+        <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ get_info.balance }}</span> <br />
+        <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ get_info.unconfirmed_balance }}</span> <br />
         <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ get_info.immature_balance }}</span> <br />
         <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ get_info.stake }}</span> <br />
-        <div class="q-total"><hr /> <span class="pull-left">Total</span> {{ get_info.balance + get_info.unconfirmed_balance + get_info.immature_balance + get_info.stake }} QTUM</div>
+        <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ get_info.balance + get_info.unconfirmed_balance + get_info.immature_balance + get_info.stake }} QTUM</div>
       </div>
-    <div class="wallet-right col-md-6 col-sm-6">
-      <h3>Information</h3> <br />
-      <strong>Wallet Version:</strong> <span class="pull-right">{{ get_info.version[29:36] }}</span> <br />
-      <strong>Current Block:</strong> <span class="pull-right">{{ get_block.blocks }}</span> <br />
-      {% if stake_output.staking == false %}
-        <strong>Staking:</strong> <span class="pull-right red-sm">{{ stake_output.staking }}</span> <br />
-      {% else %}
-        <strong>Staking:</strong> <span class="pull-right green-sm">{{ stake_output.staking }}</span> <br />
-      {% endif %}
-      <strong>Wallet Weight:</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
-      <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
-      <strong>Last Stake Reward:</strong> <span class="pull-right">October 12 2017</span> <br />
-      <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
+      <div class="wallet-right col-md-6 col-sm-6">
+        <h3>Information</h3> <br />
+        <strong>Wallet Version:</strong> <span class="pull-right">{{ get_info.version[29:36] }}</span> <br />
+        <strong>Current Block:</strong> <span class="pull-right">{{ get_block.blocks }}</span> <br />
+        {% if stake_output.staking == false %}
+          <strong>Staking:</strong> <span class="pull-right red-sm">{{ stake_output.staking }}</span> <br />
+        {% else %}
+          <strong>Staking:</strong> <span class="pull-right green-sm">{{ stake_output.staking }}</span> <br />
+        {% endif %}
+        <strong>Wallet Weight:</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
+        <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
+        <strong>Last Stake Reward:</strong> <span class="pull-right">October 12 2017</span> <br />
+        <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
+      </div>
     </div>
     <div class="transactions-index col-md-12">
         <h3>Recent Transactions</h3>

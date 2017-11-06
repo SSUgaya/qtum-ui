@@ -52,7 +52,7 @@ body {
   color: #059be9;
 }
 
-.wallet {
+.index-page {
   background-color: #312e32;
   font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -60,10 +60,9 @@ body {
   height: 100%;
 }
 
-.wallet-right {
+.receive-page {
   background-color: #312e32;
   font-size: 16px;
-  padding-bottom: 24px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
@@ -223,9 +222,6 @@ a.text span {
     padding-top: 20px;
 }
 
-#send-alert {
-
-}
 
 .alert {
   margin-bottom: 8px;
