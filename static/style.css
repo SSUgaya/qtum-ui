@@ -74,7 +74,7 @@ body {
 
 .send_page {
   background-color: #312e32;
-  padding-bottom: 24px;
+  padding-bottom: 70px;
   font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
@@ -201,7 +201,11 @@ a.text span {
 }
 
 .qrcode-donate-img {
-  padding-top: 10px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px 0 rgba(146, 178, 218, 0.84), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  background-color: #393e44;
+  /*background-color: #40a9db;*/
 }
 
 #donate-address {
@@ -209,7 +213,7 @@ a.text span {
 }
 
 #donate-label {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .receive-form {

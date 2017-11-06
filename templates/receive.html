@@ -23,16 +23,16 @@
     </div>
       <form class="receive-form col-md-6" method="post" action="{{ url_for('send') }}">
         {{ form.hidden_tag() }}
-        <div id="send-amount" class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-          {{ form.amount(type="number", step="any", class_="form-control", placeholder="Account Name (optional)")}}
-        </div>
-        <div id="send-label" class="input-group">
+        <div id="send-amount" data-toggle="tooltip" title="Use existing account name or create a new account if left blank the default account will be used."  class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
-          {{ form.label(type="text", class_="form-control", placeholder="Amount to request (optional)")}}
+          {{ form.amount(type="text", class_="form-control", placeholder="Account Name (optional)")}}
         </div>
-        <div id="send-description" class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        <div id="send-label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+          {{ form.label(type="number", step="any", class_="form-control", placeholder="Amount to request (optional)")}}
+        </div>
+        <div id="send-description" data-toggle="tooltip" title="Enter message to include in transaction." class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
           {{ form.description(type="text", class_="form-control", placeholder="Message (optional)")}}
         </div>
         <div id="send-form">

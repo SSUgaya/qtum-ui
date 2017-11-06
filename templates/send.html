@@ -7,7 +7,7 @@
     <form class="send-form col-md-9" method="post" action="{{ url_for('send') }}">
       {{ form.hidden_tag() }}
       <div id="send-wallet" class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-share-alt"></i></span>
         {{ form.address(type="text", class_="form-control", placeholder="Send to Address")}}
       </div>
       <div id="send-amount" class="input-group">
@@ -16,10 +16,10 @@
       </div>
       <div id="send-label" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
-        {{ form.label(type="text", class_="form-control", placeholder="Enter Label for this address and add it to the address book (optional)")}}
+        {{ form.label(type="text", class_="form-control", placeholder="Enter Account name add save it to the address book (optional)")}}
       </div>
       <div id="send-description" class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
         {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional)")}}
       </div>
       <div id="send-passwd" class="input-group">
@@ -27,13 +27,20 @@
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
       </div>
       <div id="send-form">
-      <!-- {{ form.feeAmount(type="checkbox", class_="checkbox-inline", placeholder="Wallet Passphrase")}} <label> Subtract Fee From Amount</label> -->
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
+        {% if form.errors %}
+          {% for field, errors in form.errors.items() %}
+            <div id="send-alert" class="alert alert-danger">
+              {{ form[field].label }}: {{ ', '.join(errors) }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
             <div id="send-alert" class="alert alert-success">
-              <a href="https://explorer.qtum.org/tx/{{ message }}"  target="_blank" class="text"><span>Success! TX ID: {{ message }}</span></a>
+              <a href="https://explorer.qtum.org/tx/{{ message }}"  target="_blank" class="text"><span>{{ message }}</span></a>
             </div>
             {% endfor %}
           {% endif %}
@@ -41,7 +48,7 @@
       </div>
     </form>
     <div class="qrcode-donate-img col-md-3">
-        <small id="donate-label">Donate to support Pi-UI</small>
+        <small id="donate-label">Donations: @trevsadev</small>
         <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
         <small id="donate-address">QjHTZgTVNt6CSGgZHDxDNGcYCedkjR478F</small>
     </div>

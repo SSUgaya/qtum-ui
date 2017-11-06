@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, flash, url_for, redirect, send_file
 from flask_wtf import FlaskForm
-from wtforms import StringField, DecimalField, BooleanField, PasswordField
-from wtforms.validators import InputRequired, Length
+from wtforms import StringField, DecimalField, PasswordField
+from wtforms.validators import InputRequired, DataRequired, NumberRange
+# from subprocess import PIPE, run
 import time
 import json
 import os
@@ -13,12 +14,11 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
 
 class SendForm(FlaskForm):
-    address = StringField('address')
-    amount = StringField('amount')
+    address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
+    amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
     label = StringField('label')
     description = StringField('description')
-    passwd = PasswordField('password')
-    feeAmount = BooleanField('fee')
+    passwd = PasswordField('password', validators=[DataRequired(message='Password cannot be blank')])
 
 def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getwalletinfo").read()
@@ -88,8 +88,8 @@ def send():
     date = time
     form = SendForm()
     if form.validate_on_submit():
-        address = form.address.data
         amount = form.amount.data
+        address = form.address.data
         passwd = form.passwd.data
         label = form.label.data
         description = form.description.data
@@ -97,16 +97,23 @@ def send():
         unlock = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
         unlock.append(passwd)
         unlock.append(passwd_time)
-        subprocess.run(unlock)
+        process = subprocess.Popen(unlock, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        output = process.communicate()[1:2]
+        if process.returncode != 0:
+            flash("Opps! Wallet Passphrase is Incorrect.")
+            return redirect(url_for('send'))
         command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
         command.append(address)
         command.append(amount)
         command.append(description)
         command.append(label)
-        process = subprocess.Popen(command, stdout=subprocess.PIPE,stdin=subprocess.PIPE)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         (out,err) = process.communicate()
+        if process.returncode != 0:
+            flash("Opps! You Entered an Invalid Amount.")
+            return redirect(url_for('send'))
         result = str(out,'utf-8')
-        flash(result)
+        flash("Success! TX ID: %s" % result)
         return redirect(url_for('send'))
 
     return render_template('send.html', get_block=get_block(), last_sent_tx=last_sent_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
