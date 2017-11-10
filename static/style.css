@@ -48,7 +48,7 @@ body {
   border-radius: 10px;
 }
 
-.transactions h3, .transactions-index h3, .transactions-send h3 {
+.transactions h3, .transactions-index h3, .transactions-send h3, .receive-page h3 {
   color: #059be9;
 }
 
@@ -61,6 +61,14 @@ body {
 }
 
 .receive-page {
+  background-color: #312e32;
+  font-size: 16px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.setup-page {
   background-color: #312e32;
   font-size: 16px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -81,7 +89,7 @@ body {
 }
 
 
-#send-form, #send-wallet, #send-amount, #send-passwd, #send-label, #send-description {
+#send-form, #send-wallet, #send-amount, #send-passwd, #send-to_label, #send-description {
   padding: 8px;
   font-weight: 350;
 }
@@ -225,6 +233,11 @@ a.text span {
 .receive-dropdown {
     padding-top: 20px;
 }
+.send-dropdown {
+    padding-top: 8px;
+}
+
+
 
 
 .alert {

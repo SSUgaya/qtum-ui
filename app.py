@@ -15,8 +15,8 @@ app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
     amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
-    label = StringField('label')
     description = StringField('description')
+    to_label = StringField('to_label')
     passwd = PasswordField('password', validators=[DataRequired(message='Password cannot be blank')])
 
 def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
@@ -45,12 +45,12 @@ def get_time():
     return expected_stake
 
 def get_last_tx():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" ').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" 1000 ').read()
     parsed_json = json.loads(p)
     return parsed_json
 
 def last_sent_tx():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" ').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" 1000').read()
     parsed_json = json.loads(p)
     all_sent = {}
     for send in parsed_json:
@@ -59,7 +59,7 @@ def last_sent_tx():
     return all_sent
 
 def get_unspent():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent 1 100').read()
     parsed_json = json.loads(p)
     return parsed_json
 
@@ -93,11 +93,11 @@ def send():
         input_amount = float(amount)
         address = form.address.data
         passwd = form.passwd.data
-        label = form.label.data
         description = form.description.data
+        to_label = form.to_label.data
         passwd_time = '20'
         if input_amount > spendable:
-            flash("Opps! You Entered an Invalid Amount.")
+            flash('Opps! You Entered an Invalid Amount.', 'error')
             return redirect(url_for('send'))
         unlock = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
         unlock.append(passwd)
@@ -105,37 +105,37 @@ def send():
         process = subprocess.Popen(unlock, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         output = process.communicate()[1:2]
         if process.returncode != 0:
-            flash("Opps! Wallet Passphrase is Incorrect.")
+            flash('Opps! Wallet Passphrase is Incorrect.', 'error')
             return redirect(url_for('send'))
         command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'sendtoaddress']
         command.append(address)
         command.append(amount)
         command.append(description)
-        command.append(label)
+        command.append(to_label)
         process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         (out,err) = process.communicate()
         if process.returncode != 0:
-            flash("Opps! You Entered an Invalid Address.")
+            flash('Opps! You Entered an Invalid Address.', 'error')
             return redirect(url_for('send'))
         result = str(out,'utf-8')
-        flash("Success! TX ID: %s" % result)
+        flash("Success! TX ID: %s" % result, 'msg')
         return redirect(url_for('send'))
 
-    return render_template('send.html', get_block=get_block(), last_sent_tx=last_sent_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('send.html', last_sent_tx=last_sent_tx(), last_tx=get_last_tx(), get_block=get_block(), get_unspent=get_unspent(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/receive')
 def receive():
     form = SendForm()
-    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_unspent=get_unspent(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/transaction')
 def transaction():
     date = time
     return render_template('transactions.html', get_block=get_block(), last_tx=get_last_tx(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
-@app.route('/contract')
-def contract():
-    return render_template('contract.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+@app.route('/setup')
+def setup():
+    return render_template('settings.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 def random_qr(url='www.google.com'):
     qr = qrcode.QRCode(version=5,

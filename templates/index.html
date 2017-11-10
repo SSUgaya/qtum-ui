@@ -5,11 +5,11 @@
     <div class="index-page col-md-12 col-sm-12">
       <div class="wallet col-md-6 col-sm-6">
         <h3>Balance</h3> <br />
-        <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ get_info.balance }}</span> <br />
-        <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ get_info.unconfirmed_balance }}</span> <br />
-        <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ get_info.immature_balance }}</span> <br />
-        <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ get_info.stake }}</span> <br />
-        <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ get_info.balance + get_info.unconfirmed_balance + get_info.immature_balance + get_info.stake }} QTUM</div>
+        <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ '%0.4f' | format(get_info.balance) }}</span> <br />
+        <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ '%0.4f' | format(get_info.unconfirmed_balance) }}</span> <br />
+        <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ '%0.4f' | format(get_info.immature_balance) }}</span> <br />
+        <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ '%0.4f' | format(get_info.stake) }}</span> <br />
+        <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ '%0.4f' | format(get_info.balance + get_info.unconfirmed_balance + get_info.immature_balance + get_info.stake) }} QTUM</div>
       </div>
       <div class="wallet-right col-md-6 col-sm-6">
         <h3>Information</h3> <br />

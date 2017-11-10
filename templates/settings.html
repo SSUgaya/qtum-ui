@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="main">
+    <div class="setup-page col-md-12 col-sm-12">
+      <h3>Contract info goes here</h3>
+      <div class="qrcode-img col-md-3">
+          <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+      </div>
+      </div>
+  </div>
+{% endblock %}

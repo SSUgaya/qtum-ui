@@ -14,13 +14,13 @@
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
         {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send")}}
       </div>
-      <div id="send-label" class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
-        {{ form.label(type="text", class_="form-control", placeholder="Enter Account name add save it to the address book (optional)")}}
-      </div>
       <div id="send-description" class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
+        {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional))")}}
+      </div>
+      <div id="send-to_label" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional)")}}
+        {{ form.to_label(type="text", class_="form-control", placeholder="Enter Name and save it to the address book (optional)")}}
       </div>
       <div id="send-passwd" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -36,7 +36,7 @@
           {% endfor %}
         {% endif %}
 
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(category_filter=["msg"]) %}
           {% if messages %}
             {% for message in messages %}
             <div id="send-alert" class="alert alert-success">
@@ -45,12 +45,29 @@
             {% endfor %}
           {% endif %}
         {% endwith %}
+
+        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+          {% if messages %}
+            {% for message in messages %}
+            <div id="send-alert" class="alert alert-danger">
+              {{ message }}
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
       </div>
     </form>
-    <div class="qrcode-donate-img col-md-3">
-        <small id="donate-label">Donations: @trevsadev</small>
-        <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
-        <small id="donate-address">QjHTZgTVNt6CSGgZHDxDNGcYCedkjR478F</small>
+    <div class="send-dropdown col-md-3">
+      <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Sent Address Book <span class="caret"></span></button>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+        {% for value in last_tx %}
+          {% if value.to != nill %}
+            <li class="divider"></li>
+            <li class="dropdown-header">{{ value.to }}</li>
+            <li role="presentation"><a role="menuitem" href="#">{{ value.address }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
     </div>
   </div>
 

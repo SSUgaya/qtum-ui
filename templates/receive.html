@@ -27,9 +27,9 @@
           <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
           {{ form.amount(type="text", class_="form-control", placeholder="Account Name (optional)")}}
         </div>
-        <div id="send-label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
+        <div id="send-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-          {{ form.label(type="number", step="any", class_="form-control", placeholder="Amount to request (optional)")}}
+          {{ form.to_label(type="number", step="any", class_="form-control", placeholder="Amount to request (optional)")}}
         </div>
         <div id="send-description" data-toggle="tooltip" title="Enter message to include in transaction." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
