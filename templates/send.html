@@ -60,13 +60,15 @@
     <div class="send-dropdown col-md-3">
       <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Sent Address Book <span class="caret"></span></button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-        {% for value in last_tx %}
-          {% if value.to != nill %}
+        {% if last_tx.to == nill %}
+          <li class="dropdown-header">No Sent Addresses</li>
+        {% else %}
+          {% for value in last_tx %}
             <li class="divider"></li>
             <li class="dropdown-header">{{ value.to }}</li>
             <li role="presentation"><a role="menuitem" href="#">{{ value.address }}</a></li>
-          {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
       </ul>
     </div>
   </div>
@@ -86,6 +88,14 @@
       </thead>
       <tbody>
         <tr>
+          {% if last_sent_tx.time == nill %}
+            <td id="table_padding" align="center">NA</td>
+            <td id="table_padding" align="center">NA</td>
+            <td id="table_padding" align="center" class="text"><span>NA</span></td>
+            <td id="table_padding" align="center">NA</td>
+            <td id="table_padding" align="center">NA</td>
+            <td id="table_padding" align="center">NA</td>
+          {% else %}
           <td align="left"><a href="https://explorer.qtum.org/tx/{{last_sent_tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(last_sent_tx.time)) }}</a></td>
           <td align="center">
             {% if last_sent_tx.category == "move" %}
@@ -98,6 +108,7 @@
           <td id="table_padding" align="center">{{ last_sent_tx.amount }}</td>
           <td id="table_padding" align="center">{{ last_sent_tx.fee }}</td>
           <td id="table_padding" align="center">{{ last_sent_tx.confirmations }}</td>
+          {% endif %}
         </tr>
       </tbody>
     </table>

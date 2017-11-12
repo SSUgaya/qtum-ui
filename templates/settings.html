@@ -5,7 +5,7 @@
     <div class="setup-page col-md-12 col-sm-12">
       <h3>Contract info goes here</h3>
       <div class="qrcode-img col-md-3">
-          <img  src="{{ url_for('get_qrimg', filename = 'img_buf.jpg') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+          <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
       </div>
       </div>
   </div>

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, flash, url_for, redirect, send_file
+from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, PasswordField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
@@ -6,11 +7,11 @@ import time
 import json
 import os
 import subprocess
-import qrcode
-import io
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
+QRcode(app)
 
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
@@ -18,6 +19,11 @@ class SendForm(FlaskForm):
     description = StringField('description')
     to_label = StringField('to_label')
     passwd = PasswordField('password', validators=[DataRequired(message='Password cannot be blank')])
+
+class NewAddressForm(FlaskForm):
+    account_name = StringField('account_name')
+    requested_amount = StringField('requested_amount')
+    message = StringField('message')
 
 def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getwalletinfo").read()
@@ -77,6 +83,15 @@ def get_account_addresses():
         all_addresses[x] = parsed_json
     return all_addresses
 
+def donate_piui():
+    donation_string = 'qtum:QS1ooMzj2kMLcoFufeVdt3tq4spQWA17Rb?amount=&label=Donation&message=PIUI-Donation'
+    return donation_string
+
+def qrcode_format(address, amount, name, msg):
+    response = 'qtum:%s?amount=%s&label=%s&message=%s' % (address, amount, name, msg)
+    print(response)
+    return response
+
 @app.route('/')
 def index():
     date = time
@@ -125,7 +140,26 @@ def send():
 
 @app.route('/receive')
 def receive():
-    form = SendForm()
+    form = NewAddressForm()
+    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+
+@app.route('/new_address', methods=['POST'])
+def new_address():
+    form = NewAddressForm()
+    if form.validate_on_submit():
+        account_name = form.account_name.data
+        requested_amount = form.requested_amount.data
+        message = form.message.data
+        command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'getnewaddress']
+        command.append(account_name)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        (out,err) = process.communicate()
+        if process.returncode != 0:
+            flash('Opps! Something went wrong, try again.', 'error')
+            return redirect(url_for('receive'))
+        result = str(out,'utf-8')
+        flash(result, 'msg')
+        return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
     return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/transaction')
@@ -135,27 +169,7 @@ def transaction():
 
 @app.route('/setup')
 def setup():
-    return render_template('settings.html', get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
-
-def random_qr(url='www.google.com'):
-    qr = qrcode.QRCode(version=5,
-                       error_correction=qrcode.constants.ERROR_CORRECT_L,
-                       box_size=4,
-                       border=1)
-
-    qr.add_data(url)
-    qr.make(fit=True)
-    img = qr.make_image()
-    return img
-
-
-@app.route('/get_qrimg')
-def get_qrimg():
-    img_buf = io.BytesIO()
-    img = random_qr(url='qtum:QS1ooMzj2kMLcoFufeVdt3tq4spQWA17Rb?amount=2.00000000&label=Donation%20&message=FUck%20you%20Bro')
-    img.save(img_buf)
-    img_buf.seek(0)
-    return send_file(img_buf, mimetype='image/png')
+    return render_template('settings.html', donate_piui=donate_piui(), get_address=get_address(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
