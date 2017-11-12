@@ -22,7 +22,7 @@
         {% endif %}
         <strong>Wallet Weight:</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
         <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
-        <strong>Last Stake Reward:</strong> <span class="pull-right">October 12 2017</span> <br />
+        <strong>Peers Connected:</strong> <span class="pull-right">{{ get_block.connections }}</span> <br />
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
       </div>
     </div>

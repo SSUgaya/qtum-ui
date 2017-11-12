@@ -11,6 +11,7 @@ import subprocess
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MySeuperSecretKeyHere'
+app.config['TEMPLATES_AUTO_RELOAD']=True
 QRcode(app)
 
 class SendForm(FlaskForm):
@@ -18,12 +19,19 @@ class SendForm(FlaskForm):
     amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
     description = StringField('description')
     to_label = StringField('to_label')
-    passwd = PasswordField('password', validators=[DataRequired(message='Password cannot be blank')])
+    passwd = PasswordField('password', validators=[DataRequired(message='Passphrase cannot be blank')])
 
 class NewAddressForm(FlaskForm):
+    account_address = StringField('account_address')
     account_name = StringField('account_name')
     requested_amount = StringField('requested_amount')
     message = StringField('message')
+
+class EncryptWallet(FlaskForm):
+    passphrase = PasswordField('passphrase', validators=[DataRequired(message='Passphrase cannot be blank')])
+
+class Staking(FlaskForm):
+    passphrase = PasswordField('passphrase', validators=[DataRequired(message='Passphrase cannot be blank')])
 
 def get_info(): # On Pi working directory is "/home/pi/qtum-wallet/bin/qtum-cli getinfo"
     p = os.popen("/users/Boss/qtum-wallet/bin/qtum-cli getwalletinfo").read()
@@ -89,7 +97,6 @@ def donate_piui():
 
 def qrcode_format(address, amount, name, msg):
     response = 'qtum:%s?amount=%s&label=%s&message=%s' % (address, amount, name, msg)
-    print(response)
     return response
 
 @app.route('/')
@@ -147,20 +154,23 @@ def receive():
 def new_address():
     form = NewAddressForm()
     if form.validate_on_submit():
+        account_address = form.account_address.data
         account_name = form.account_name.data
         requested_amount = form.requested_amount.data
         message = form.message.data
-        command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'getnewaddress']
-        command.append(account_name)
-        process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-        (out,err) = process.communicate()
-        if process.returncode != 0:
-            flash('Opps! Something went wrong, try again.', 'error')
-            return redirect(url_for('receive'))
-        result = str(out,'utf-8')
-        flash(result, 'msg')
-        return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
-    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+        if account_address == '':
+            command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'getnewaddress']
+            command.append(account_name)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            (out,err) = process.communicate()
+            if process.returncode != 0:
+                flash('Opps! Something went wrong, try again.', 'error')
+                return redirect(url_for('receive'))
+            result = str(out,'utf-8')
+            flash(result, 'msg')
+            return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    flash(account_address, 'msg')
+    return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 @app.route('/transaction')
 def transaction():
@@ -169,7 +179,56 @@ def transaction():
 
 @app.route('/setup')
 def setup():
-    return render_template('settings.html', donate_piui=donate_piui(), get_address=get_address(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    form = EncryptWallet()
+    return render_template('settings.html', stake_output=get_stake(), form=form, donate_piui=donate_piui(), get_block=get_block())
+
+@app.route('/encrypt_wallet', methods=['POST'])
+def encrypt_wallet():
+    form = EncryptWallet()
+    if form.validate_on_submit():
+        passphrase = form.passphrase.data
+        command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'encryptwallet']
+        command.append(passphrase)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        (out,err) = process.communicate()
+        if process.returncode != 0:
+            flash('Opps! Something went wrong.', 'error1')
+            return redirect(url_for('setup'))
+        result = str(out,'utf-8')
+        flash(result, 'msg')
+        restart_qtum = ['/users/Boss/qtum-wallet/bin/qtumd', '-daemon']
+        time.sleep(2)
+        print("Starting Qtum-CLI")
+        subprocess.run(restart_qtum)
+        time.sleep(5)
+        return redirect(url_for('index'))
+    return render_template('settings.html', form=form, donate_piui=donate_piui(), get_block=get_block())
+
+@app.route('/staking_service', methods=['POST'])
+def staking_service():
+    form = Staking()
+    if form.validate_on_submit():
+        passphrase = form.passphrase.data
+        passwd_time = '999999999'
+        staking_enable = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletpassphrase']
+        staking_enable.append(passphrase)
+        staking_enable.append(passwd_time)
+        staking_enable.append('true')
+        process = subprocess.Popen(staking_enable, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        (out,err) = process.communicate()
+        if process.returncode != 0:
+            flash('Opps! Wallet Passphrase is Incorrect.', 'error')
+            return redirect(url_for('setup'))
+        flash('Success! Wallet is now Staking.', 'msg')
+        return redirect(url_for('setup'))
+    return render_template('settings.html', stake_output=get_stake(), form=form, donate_piui=donate_piui(), get_block=get_block())
+
+@app.route('/lock_wallet')
+def lock_wallet():
+    lock_wallet = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'walletlock']
+    process = subprocess.run(lock_wallet)
+    flash('Success! Wallet is Locked', 'msg')
+    return redirect(url_for('setup'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

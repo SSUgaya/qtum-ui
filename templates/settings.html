@@ -2,11 +2,91 @@
 
 {% block body %}
 <div class="main">
-    <div class="setup-page col-md-12 col-sm-12">
-      <h3>Contract info goes here</h3>
-      <div class="qrcode-img col-md-3">
-          <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+  <div class="setup-page col-md-12 col-sm-12">
+    <h3>Wallet Settings</h3>
+    <form class="encrypt-form col-md-8" method="post" action="{{ url_for('encrypt_wallet') }}">
+      {{ form.hidden_tag() }}
+    <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
+      <span class="input-group-addon">Encrypt Wallet</span>
+    {% if get_block.unlocked_until == nill %}
+      {{ form.passphrase(type="password", class_="form-control", placeholder="Enter New Passphrase to Encrypt Wallet")}}
+      <div class="input-group-btn">
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
+    {% else %}
+      <input class="form-control" value="This wallet is already encrypted" type="text" disabled>
+      <div class="input-group-btn">
+        <button type="submit" class="btn btn-primary" disabled>Submit</button>
+    {% endif %}
       </div>
+    </div>
+    <small>NOTE: You will be returned to the overview page after the wallet restarts</small>
+    {% with messages = get_flashed_messages(category_filter=["error1"]) %}
+      {% if messages %}
+        {% for message in messages %}
+        <div id="send-alert" class="alert alert-danger">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    </form>
+
+  <form class="stkaing-form col-md-8" method="post" action="{{ url_for('staking_service') }}">
+    {{ form.hidden_tag() }}
+  <div class="input-group">
+    <span class="input-group-addon">Start Staking</span>
+    {{ form.passphrase(type="password", class_="form-control", placeholder="Enter Passphrase to Enable Staking")}}
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
   </div>
+  <br />
+  {% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ ', '.join(errors) }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% with messages = get_flashed_messages(category_filter=["msg"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% with messages = get_flashed_messages(category_filter=["error"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  </form>
+    <div id="disable-staking" class="btn-group btn-group-justified col-md-12">
+    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
+    <a href="#" class="btn btn-primary">Change Password</a>
+    <a href="#" class="btn btn-primary">Backup Wallet</a>
+    <a href="#" class="btn btn-primary">Restore Wallet</a>
+    </div>
+  </div>
+  <div class="transactions-index col-md-12">
+    <h3>Support Pi UI</h3>
+    <div class="support-us col-md-6">
+      <p>
+        Wallet address: QS1ooMzj2kMLcoFufeVdt3tq4spQWA17Rb
+      </p>
+    </div>
+    <div class="qrcode-donate-img col-md-6">
+        <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L', back_color='#312e32', fill_color='#059be9') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+    </div>
+</div>
+</div>
 {% endblock %}
