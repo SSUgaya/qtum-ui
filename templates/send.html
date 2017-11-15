@@ -72,44 +72,32 @@
       </ul>
     </div>
   </div>
-
   <div class="transactions-send col-md-12">
-    <h3>Last Sent Transaction</h3>
-    <table class="table table-striped">
+    <h3>Unspent Transactions</h3>
+    <table id="table-unspent" class="table table-striped">
       <thead>
         <tr>
-          <th class="text-center col-sm-3">Date</th>
-          <th class="text-center col-sm-1">Type</th>
-          <th class="text-center col-sm-3">Transaction ID</th>
+          <th class="text-center col-sm-6">Address</th>
           <th class="text-center col-sm-2">Amount</th>
-          <th class="text-center col-sm-1">Fee</th>
           <th class="text-center col-sm-2">Confirmations</th>
+          <th class="text-center col-sm-2">Spendable</th>
         </tr>
       </thead>
       <tbody>
+        {% for unspent in get_unspent %}
         <tr>
-          {% if last_sent_tx.time == nill %}
-            <td id="table_padding" align="center">NA</td>
-            <td id="table_padding" align="center">NA</td>
-            <td id="table_padding" align="center" class="text"><span>NA</span></td>
-            <td id="table_padding" align="center">NA</td>
-            <td id="table_padding" align="center">NA</td>
-            <td id="table_padding" align="center">NA</td>
-          {% else %}
-          <td align="left"><a href="https://explorer.qtum.org/tx/{{last_sent_tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(last_sent_tx.time)) }}</a></td>
+            <td align="center">{{ unspent.address }}</td>
+            <td align="center">{{ unspent.amount }}</td>
+            <td align="center">{{ unspent.confirmations }}</td>
           <td align="center">
-            {% if last_sent_tx.category == "move" %}
-              <span class="glyphicon glyphicon-refresh blue"></span>
-            {% else %}
-              <span class="glyphicon glyphicon-upload red"></span>
-            {% endif %}
-          </td>
-          <td id="table_padding" align="center" class="text"><span>{{ last_sent_tx.txid }}</span></td>
-          <td id="table_padding" align="center">{{ last_sent_tx.amount }}</td>
-          <td id="table_padding" align="center">{{ last_sent_tx.fee }}</td>
-          <td id="table_padding" align="center">{{ last_sent_tx.confirmations }}</td>
+          {% if unspent.spendable == true %}
+              <span class="glyphicon glyphicon-ok green-unspent"></span>
+          {% else %}
+              <span class="glyphicon glyphicon-remove red-unspent"></span>
           {% endif %}
+          </td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>

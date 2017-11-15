@@ -73,7 +73,7 @@ def last_sent_tx():
     return all_sent
 
 def get_unspent():
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent 1 100').read()
+    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listunspent 1').read()
     parsed_json = json.loads(p)
     return parsed_json
 
@@ -147,11 +147,13 @@ def send():
 
 @app.route('/receive')
 def receive():
+    date = time
     form = NewAddressForm()
-    return render_template('receive.html', get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
+    return render_template('receive.html', get_received=get_last_tx(), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time(), **locals())
 
 @app.route('/new_address', methods=['POST'])
 def new_address():
+    date = time
     form = NewAddressForm()
     if form.validate_on_submit():
         account_address = form.account_address.data
@@ -168,9 +170,9 @@ def new_address():
                 return redirect(url_for('receive'))
             result = str(out,'utf-8')
             flash(result, 'msg')
-            return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+            return render_template('receive.html', date=time, get_received=get_last_tx(), form=form, qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
     flash(account_address, 'msg')
-    return render_template('receive.html', form=form, qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
+    return render_template('receive.html', date=time, get_received=get_last_tx(), form=form, qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), get_block=get_block(), info_output=get_info(), stake_output=get_stake(), stake_time=get_time())
 
 @app.route('/transaction')
 def transaction():

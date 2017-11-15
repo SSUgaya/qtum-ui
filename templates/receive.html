@@ -62,37 +62,43 @@
           {% endfor %}
           {% else %}
           <div class="qrcode-img col-md-3">
-            <img  src="{{ qrcode('qtum:%s?amount=&label=&message=' % get_address, box_size=4, border=1, error_correction='L', back_color='#312e32', fill_color='#059be9') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
+            <img  src="{{ qrcode('qtum:%s?amount=&label=&message=' % get_address, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
             <small id="new-address" class="col-md-12">Current Address: {{ get_address }}</small>
         {% endif %}
       {% endwith %}
     </div>
   <div class="transactions-index col-md-12">
-    <h3>Unspent Transactions</h3>
-    <table id="table-unspent" class="table table-striped">
+    <h3>Received Transactions</h3>
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th class="text-center col-sm-6">Address</th>
+          <th class="text-center col-sm-3">Date</th>
+          <th class="text-center col-sm-1">Type</th>
+          <th class="text-center col-sm-3">Transaction ID</th>
           <th class="text-center col-sm-2">Amount</th>
+          <th class="text-center col-sm-1">Fee</th>
           <th class="text-center col-sm-2">Confirmations</th>
-          <th class="text-center col-sm-2">Spendable</th>
         </tr>
       </thead>
       <tbody>
-        {% for unspent in get_unspent %}
-        <tr>
-            <td align="center">{{ unspent.address }}</td>
-            <td align="center">{{ unspent.amount }}</td>
-            <td align="center">{{ unspent.confirmations }}</td>
-          <td align="center">
-          {% if unspent.spendable == true %}
-              <span class="glyphicon glyphicon-ok green-unspent"></span>
-          {% else %}
-              <span class="glyphicon glyphicon-remove red-unspent"></span>
+        {% for tx in get_received %}
+          {% if tx.category == "receive" %}
+          <tr>
+            <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
+            <td align="center">
+              <span class="glyphicon glyphicon-download green"></span>
+            </td>
+            <td id="table_padding" align="center" class="text"><span>{{ tx.txid }}</span></td>
+            <td id="table_padding" align="center">{{ tx.amount }}</td>
+            {% if tx.fee == nil %}
+              <td id="table_padding" align="center">0.0000</td>
+            {% else %}
+              <td id="table_padding" align="center">{{ tx.fee }}</td>
+            {% endif %}
+            <td id="table_padding" align="center">{{ tx.confirmations }}</td>
+          </tr>
           {% endif %}
-          </td>
-        </tr>
         {% endfor %}
       </tbody>
     </table>
