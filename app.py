@@ -153,9 +153,9 @@ def new_address():
                 return redirect(url_for('receive'))
             result = str(out,'utf-8')
             flash(result, 'msg')
-            return render_template('receive.html', form=form, date=time, get_received=get_last_tx(), qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
+            return redirect(url_for('receive'))
     flash(account_address, 'msg')
-    return render_template('receive.html', form=form, date=time, get_received=get_last_tx(), qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
+    return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
 @app.route('/transaction')
 def transaction():
