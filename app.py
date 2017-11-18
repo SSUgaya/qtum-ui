@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD']=True
 QRcode(app)
 
-class SendForm(FlaskForm): #See if you can make these 1 form. Can you set a defualt value for fieds not used.
+class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
     amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
     description = StringField('description')
@@ -34,7 +34,7 @@ def qtum_info(x='getwalletinfo', y=''):
     process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s %s" % (x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
     if process.returncode != 0:
-        return redirect(url_for('offline'))
+        return None
     result = str(out,'utf-8')
     parsed_result = json.loads(result)
     return parsed_result
@@ -83,6 +83,8 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
+    if qtum_info() == None:
+        return redirect(url_for('offline'))
     date = time
     return render_template('index.html', qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=get_wallet_version(), stake_output=qtum_info("getstakinginfo"), stake_time=get_time(), **locals())
 
@@ -181,7 +183,6 @@ def encrypt_wallet():
         flash(result, 'msg')
         restart_qtum = ['/users/Boss/qtum-wallet/bin/qtumd', '-daemon']
         time.sleep(2)
-        print("Starting Qtum-CLI")
         subprocess.run(restart_qtum)
         time.sleep(5)
         return redirect(url_for('index'))
@@ -211,7 +212,7 @@ def lock_wallet():
 
 @app.route('/offline')
 def offline():
-    return 'Wallet not running'
+    return render_template('offline.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
