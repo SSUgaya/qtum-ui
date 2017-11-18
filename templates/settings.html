@@ -8,7 +8,7 @@
       {{ form.hidden_tag() }}
     <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
       <span class="input-group-addon">Encrypt Wallet</span>
-    {% if get_block.unlocked_until == nill %}
+    {% if qtum_wallet.unlocked_until == nill %}
       {{ form.passphrase(type="password", class_="form-control", placeholder="Enter New Passphrase to Encrypt Wallet")}}
       <div class="input-group-btn">
         <button type="submit" class="btn btn-primary">Submit</button>

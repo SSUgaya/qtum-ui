@@ -16,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for tx in last_tx[::-1] %}
+            {% for tx in all_tx[::-1] %}
             <tr>
               <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
               <td align="center">
