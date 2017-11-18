@@ -74,7 +74,7 @@ def get_account_addresses():
     return all_addresses
 
 def donate_piui():
-    donation_string = 'qtum:QS1ooMzj2kMLcoFufeVdt3tq4spQWA17Rb?amount=&label=Donation&message=PIUI-Donation'
+    donation_string = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
     return donation_string
 
 def qrcode_format(address, amount, name, msg):
