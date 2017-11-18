@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD']=True
 QRcode(app)
 
-class SendForm(FlaskForm):
+class SendForm(FlaskForm): #See if you can make these 1 form. Can you set a defualt value for fieds not used.
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
     amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
     description = StringField('description')
@@ -27,10 +27,7 @@ class NewAddressForm(FlaskForm):
     requested_amount = StringField('requested_amount')
     message = StringField('message')
 
-class EncryptWallet(FlaskForm):
-    passphrase = PasswordField('passphrase', validators=[DataRequired(message='Passphrase cannot be blank')])
-
-class Staking(FlaskForm):
+class QtumPassword(FlaskForm):
     passphrase = PasswordField('passphrase', validators=[DataRequired(message='Passphrase cannot be blank')])
 
 def qtum_info(x='getwalletinfo', y=''):
@@ -54,13 +51,8 @@ def get_time():
     expected_stake = round(time)
     return expected_stake
 
-def get_last_tx():  #REFACTOR
-    p = os.popen('/users/Boss/qtum-wallet/bin/qtum-cli listtransactions "*" 1000 ').read()
-    parsed_json = json.loads(p)
-    return parsed_json
-
 def last_sent_tx():
-    last_tx = get_last_tx()
+    last_tx = qtum_info("listtransactions '*'", 100)
     all_sent = {}
     for send in last_tx:
         if send['category'] == "send" or  send['category'] == "move":
@@ -92,7 +84,7 @@ def qrcode_format(address, amount, name, msg):
 @app.route('/')
 def index():
     date = time
-    return render_template('index.html', qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), last_tx=get_last_tx(), wallet_version=get_wallet_version(), stake_output=qtum_info("getstakinginfo"), stake_time=get_time(), **locals())
+    return render_template('index.html', qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=get_wallet_version(), stake_output=qtum_info("getstakinginfo"), stake_time=get_time(), **locals())
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
@@ -132,13 +124,13 @@ def send():
         result = str(out,'utf-8')
         flash("Success! TX ID: %s" % result, 'msg')
         return redirect(url_for('send'))
-    return render_template('send.html', last_tx=get_last_tx(), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info(), **locals())
+    return render_template('send.html', last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info(), **locals())
 
 @app.route('/receive')
 def receive():
     date = time
     form = NewAddressForm()
-    return render_template('receive.html', form=form, date=time, get_received=get_last_tx(), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
+    return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
 @app.route('/new_address', methods=['POST'])
 def new_address():
@@ -166,16 +158,16 @@ def new_address():
 @app.route('/transaction')
 def transaction():
     date = time
-    return render_template('transactions.html', date=time, last_tx=get_last_tx())
+    return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 100))
 
 @app.route('/setup')
 def setup():
-    form = EncryptWallet()
+    form = QtumPassword()
     return render_template('settings.html', form=form, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
 
 @app.route('/encrypt_wallet', methods=['POST'])
 def encrypt_wallet():
-    form = EncryptWallet()
+    form = QtumPassword()
     if form.validate_on_submit():
         passphrase = form.passphrase.data
         command = ['/users/Boss/qtum-wallet/bin/qtum-cli', 'encryptwallet']
@@ -197,10 +189,11 @@ def encrypt_wallet():
 
 @app.route('/staking_service', methods=['POST'])
 def staking_service():
-    form = Staking()
+    form = QtumPassword()
     if form.validate_on_submit():
         passphrase = form.passphrase.data
         staking_enable = '~/qtum-wallet/bin/qtum-cli walletpassphrase "%s" 9999999999 true' % passphrase
+        print(staking_enable)
         process = subprocess.Popen(staking_enable, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
         (out,err) = process.communicate()
         if process.returncode != 0:

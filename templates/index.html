@@ -7,8 +7,8 @@
         <h3>Balance</h3> <br />
         <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.balance) }}</span> <br />
         <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.unconfirmed_balance) }}</span> <br />
-        <strong ata-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.immature_balance) }}</span> <br />
-        <strong ata-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ '%0.4f' | format(qtum_wallet.stake) }}</span> <br />
+        <strong data-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Immature:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.immature_balance) }}</span> <br />
+        <strong data-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ '%0.4f' | format(qtum_wallet.stake) }}</span> <br />
         <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ '%0.4f' | format(qtum_wallet.balance + qtum_wallet.unconfirmed_balance + qtum_wallet.immature_balance + qtum_wallet.stake) }} QTUM</div>
       </div>
       <div class="wallet-right col-md-6 col-sm-6">
@@ -20,9 +20,13 @@
         {% else %}
           <strong>Staking:</strong> <span class="pull-right green-sm">{{ stake_output.staking }}</span> <br />
         {% endif %}
+        {% if get_current_block.unlocked_until > 0 %}
+          <strong>Wallet Status:</strong> <span class="pull-right">Unlocked For Staking</span> <br />
+        {% else %}
+          <strong>Wallet Status:</strong> <span class="pull-right">Locked</span> <br />
+        {% endif %}
         <strong>Wallet Weight:</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
         <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
-        <strong>Peers Connected:</strong> <span class="pull-right">{{ get_current_block.connections }}</span> <br />
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
       </div>
     </div>
@@ -40,7 +44,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for tx in last_tx[-4:] %}
+            {% for tx in list_tx[-4:] %}
             <tr>
               <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
               <td align="center">
