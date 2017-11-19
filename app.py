@@ -153,7 +153,7 @@ def new_address():
                 return redirect(url_for('receive'))
             result = str(out,'utf-8')
             flash(result, 'msg')
-            return redirect(url_for('receive'))
+            return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), qrcode_reposnse=qrcode_format(result, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
     flash(account_address, 'msg')
     return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), qrcode_reposnse=qrcode_format(account_address, requested_amount, account_name, message), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
@@ -194,7 +194,6 @@ def staking_service():
     if form.validate_on_submit():
         passphrase = form.passphrase.data
         staking_enable = '~/qtum-wallet/bin/qtum-cli walletpassphrase "%s" 9999999999 true' % passphrase
-        print(staking_enable)
         process = subprocess.Popen(staking_enable, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
         (out,err) = process.communicate()
         if process.returncode != 0:

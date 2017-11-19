@@ -60,15 +60,15 @@
     <div class="send-dropdown col-xs-3">
       <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Sent Address Book <span class="caret"></span></button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-        {% if last_tx.to == nill %}
-          <li class="dropdown-header">No Sent Addresses</li>
-        {% else %}
-          {% for value in last_tx %}
+        {% for value in last_tx %}
+          {% if value.category == null %}
+            <li class="dropdown-header">{{ value.to }}</li>
+          {% elif value.to != null %}
             <li class="divider"></li>
             <li class="dropdown-header">{{ value.to }}</li>
             <li role="presentation"><a role="menuitem" href="#">{{ value.address }}</a></li>
-            {% endfor %}
-        {% endif %}
+          {% endif %}
+        {% endfor %}
       </ul>
     </div>
   </div>
