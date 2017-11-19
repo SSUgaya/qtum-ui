@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="main">
-    <div class="receive-page col-md-12 col-sm-12">
+    <div class="receive-page col-xs-12">
       <h3>Create New Receive Address</h3>
-      <div class="receive-dropdown col-md-3">
+      <div class="receive-dropdown col-lg-3">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
         {% for key, value in account_add.items() %}
@@ -21,7 +21,7 @@
         {% endfor %}
       </ul>
     </div>
-      <form class="receive-form col-md-6" method="post" action="{{ url_for('new_address') }}">
+      <form class="receive-form col-xs-12 col-md-6" method="post" action="{{ url_for('new_address') }}">
         {{ form.hidden_tag() }}
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
@@ -55,20 +55,20 @@
       {% with messages = get_flashed_messages(category_filter=["msg"]) %}
         {% if messages %}
           {% for message in messages %}
-          <div class="qrcode-img col-md-3">
+          <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode(qrcode_reposnse, box_size=4, border=1, error_correction='L', back_color='#312e32', fill_color='#059be9') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-          <small id="new-receive-address" class="col-md-12"> New Receive Address is: {{ message }}</small>
+          <small id="new-receive-address" class="col-xs-12"> New Receive Address is: {{ message }}</small>
           {% endfor %}
           {% else %}
-          <div class="qrcode-img col-md-3">
+          <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode('qtum:%s?amount=&label=&message=' % get_address, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-            <small id="new-address" class="col-md-12">Current Address: {{ get_address }}</small>
+            <small id="new-address" class="col-xs-12">Current Address: {{ get_address }}</small>
         {% endif %}
       {% endwith %}
     </div>
-  <div class="transactions-index col-md-12">
+  <div class="transactions-index table-responsive col-xs-12">
     <h3>Received Transactions</h3>
     <table class="table table-striped">
       <thead>

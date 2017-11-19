@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="main">
-  <div class="send_page col-md-12 col-sm-12">
+  <div class="send_page col-xs-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
-    <form class="send-form col-md-9" method="post" action="{{ url_for('send') }}">
+    <form class="send-form col-xs-12 col-lg-9" method="post" action="{{ url_for('send') }}">
       {{ form.hidden_tag() }}
       <div id="send-wallet" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-share-alt"></i></span>
@@ -57,7 +57,7 @@
         {% endwith %}
       </div>
     </form>
-    <div class="send-dropdown col-md-3">
+    <div class="send-dropdown col-xs-3">
       <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Sent Address Book <span class="caret"></span></button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
         {% if last_tx.to == nill %}
@@ -72,7 +72,7 @@
       </ul>
     </div>
   </div>
-  <div class="transactions-send col-md-12">
+  <div class="transactions-send table-responsive col-xs-12">
     <h3>Unspent Transactions</h3>
     <table id="table-unspent" class="table table-striped">
       <thead>

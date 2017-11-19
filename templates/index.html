@@ -2,8 +2,8 @@
 
 {% block body %}
   <div class="main">
-    <div class="index-page col-md-12 col-sm-12">
-      <div class="wallet col-md-6 col-sm-6">
+    <div class="index-page col-xs-12">
+      <div class="wallet col-xs-12 col-md-6 col-lg-6">
         <h3>Balance</h3> <br />
         <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.balance) }}</span> <br />
         <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.unconfirmed_balance) }}</span> <br />
@@ -11,7 +11,7 @@
         <strong data-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ '%0.4f' | format(qtum_wallet.stake) }}</span> <br />
         <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ '%0.4f' | format(qtum_wallet.balance + qtum_wallet.unconfirmed_balance + qtum_wallet.immature_balance + qtum_wallet.stake) }} QTUM</div>
       </div>
-      <div class="wallet-right col-md-6 col-sm-6">
+      <div class="wallet-right col-xs-12 col-md-6">
         <h3>Information</h3> <br />
         <strong>Wallet Version:</strong> <span class="pull-right">{{ wallet_version.version[29:36] }}</span> <br />
         <strong>Current Block:</strong> <span class="pull-right">{{ get_current_block.blocks }}</span> <br />
@@ -30,7 +30,7 @@
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
       </div>
     </div>
-    <div class="transactions-index col-md-12">
+    <div class="transactions-index table-responsive col-xs-12">
         <h3>Recent Transactions</h3>
         <table class="table table-striped">
           <thead>

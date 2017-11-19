@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="main">
-  <div class="setup-page col-md-12 col-sm-12">
+  <div class="setup-page col-sm-12 col-lg-12">
     <h3>Wallet Settings</h3>
-    <form class="encrypt-form col-md-8" method="post" action="{{ url_for('encrypt_wallet') }}">
+    <form class="encrypt-form col-xs-12 col-lg-8" method="post" action="{{ url_for('encrypt_wallet') }}">
       {{ form.hidden_tag() }}
     <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
       <span class="input-group-addon">Encrypt Wallet</span>
@@ -32,7 +32,7 @@
     {% endwith %}
     </form>
 
-  <form class="stkaing-form col-md-8" method="post" action="{{ url_for('staking_service') }}">
+  <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
     {{ form.hidden_tag() }}
   <div class="input-group">
     <span class="input-group-addon">Start Staking</span>
@@ -70,13 +70,13 @@
     {% endif %}
   {% endwith %}
   </form>
-    <div id="disable-staking" class="btn-group btn-group-justified col-md-2">
+    <div id="disable-staking" class="btn-group btn-group-justified">
     <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
     </div>
   </div>
-  <div class="transactions-index col-md-12">
+  <div class="transactions-index col-xs-12">
     <h3>Feedback</h3>
-    <div class="support-us col-md-6">
+    <div class="support-us col-xs-12 col-md-6">
       <p>
         The Qtum Pi UI is an ongoing project, and your feedback and support are appreciated.
         You can get in contact below or donate using the QRCode or donation address. <br />

@@ -5,12 +5,12 @@ body {
   color: #fafdffab;
   }
 
+
 .sidenav {
   margin-top: 50px;
   margin-bottom: 50px;
   margin-left: 50px;
-
-  width: 320px;
+  width: 300px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -23,6 +23,7 @@ body {
   border-radius: 10px;
 }
 
+
 .sidenav h2 {
   color: #059be9;
   text-align: center;
@@ -30,9 +31,14 @@ body {
   font-size: 30px;
 }
 
+@media screen and (max-width: 768px) {
+  .sidenav {
+    width: 240px;
+    margin-left: 20px;}
+}
 .main {
   margin-top: 50px;
-  margin-left: 320px; /* Same as the width of the sidenav */
+  margin-left: 320px;
 }
 .transactions {
   background-color: #312e32;
