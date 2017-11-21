@@ -4,11 +4,11 @@
 <div class="main">
   <div class="send_page col-xs-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
-    <form class="send-form col-xs-12 col-lg-9" method="post" action="{{ url_for('send') }}">
+    <form class="send-form col-xs-12 col-lg-9" method="post" action="{{ url_for('send_qtum') }}">
       {{ form.hidden_tag() }}
       <div id="send-wallet" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-share-alt"></i></span>
-        {{ form.address(type="text", class_="form-control", placeholder="Send to Address")}}
+        {{ form.address(type="text", value=address, class_="form-control", placeholder="Send to Address")}}
       </div>
       <div id="send-amount" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
@@ -69,7 +69,7 @@
             {% elif value.to != null %}
               <li class="divider"></li>
               <li class="dropdown-header">{{ value.to }}</li>
-              <li role="presentation"><a role="menuitem" href="#">{{ value.address }}</a></li>
+              <li role="presentation"><a role="menuitem" href="/send/{{ value.address }}">{{ value.address }}</a></li>
             {% endif %}
           {% endfor %}
         {% endif %}

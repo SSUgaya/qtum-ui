@@ -97,8 +97,15 @@ def index():
     date = time
     return render_template('index.html', qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time(), **locals())
 
-@app.route('/send', methods=['GET', 'POST'])
-def send():
+@app.route('/send', defaults={'selected_address' : ''})
+@app.route('/send/<selected_address>', methods=['GET', 'POST'])
+def send(selected_address):
+    date = time
+    form = SendForm()
+    return render_template('send.html', address=selected_address, date=date, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+
+@app.route('/send_qtum', methods=['POST'])
+def send_qtum():
     date = time
     form = SendForm()
     max_spend = qtum_info()
@@ -118,13 +125,14 @@ def send():
             return redirect(url_for('send'))
         flash("Success! TX ID: %s" % send_qtum, 'msg')
         return redirect(url_for('send'))
-    return render_template('send.html', last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info(), **locals())
+    return render_template('send.html', date=date, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
-@app.route('/receive')
-def receive():
+@app.route('/receive', defaults={'selected_address' : ''})
+@app.route('/receive/<selected_address>')
+def receive(selected_address):
     date = time
     form = NewAddressForm()
-    return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
+    return render_template('receive.html', address=selected_address, form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
 @app.route('/new_address', methods=['POST'])
 def new_address():
@@ -138,7 +146,7 @@ def new_address():
                 return redirect(url_for('receive'))
             flash(get_new_address, 'msg')
             return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), qrcode_reposnse=qrcode_format(get_new_address, form.requested_amount.data, form.account_name.data, form.message.data), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
-    flash(account_address, 'msg')
+    flash(form.account_address.data, 'msg')
     return render_template('receive.html', form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), qrcode_reposnse=qrcode_format(form.account_address.data, form.requested_amount.data, form.account_name.data, form.message.data), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
 @app.route('/transaction')

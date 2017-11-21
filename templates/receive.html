@@ -16,7 +16,7 @@
             <li class="dropdown-header">{{ key }} Account</li>
           {% endif %}
           {% for x in value[0:99] %}
-            <li role="presentation"><a role="menuitem" href="#">{{ x }}</a></li>
+            <li role="presentation"><a role="menuitem" href="/receive/{{ x }}">{{ x }}</a></li>
           {% endfor %}
         {% endfor %}
       </ul>
@@ -25,7 +25,7 @@
         {{ form.hidden_tag() }}
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
-          {{ form.account_address(type="text", class_="form-control", placeholder="Enter Address or leave blank for new")}}
+          {{ form.account_address(type="text", value=address, class_="form-control", placeholder="Enter Address or leave blank for new")}}
         </div>
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
