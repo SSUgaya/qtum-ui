@@ -13,14 +13,16 @@
       </div>
       <div class="wallet-right col-xs-12 col-md-6">
         <h3>Information</h3> <br />
-        <strong>Wallet Version:</strong> <span class="pull-right">{{ wallet_version.version[29:36] }}</span> <br />
+        <strong>Wallet Version:</strong> <span class="pull-right">{{ wallet_version[29:36] }}</span> <br />
         <strong>Current Block:</strong> <span class="pull-right">{{ get_current_block.blocks }}</span> <br />
         {% if stake_output.staking == false %}
           <strong>Staking:</strong> <span class="pull-right red-sm">{{ stake_output.staking }}</span> <br />
         {% else %}
           <strong>Staking:</strong> <span class="pull-right green-sm">{{ stake_output.staking }}</span> <br />
         {% endif %}
-        {% if get_current_block.unlocked_until > 0 %}
+        {% if get_current_block.unlocked_until == null %}
+          <strong>Wallet Status:</strong> <span class="pull-right">Not Encrypted</span> <br />
+        {% elif get_current_block.unlocked_until > 0 %}
           <strong>Wallet Status:</strong> <span class="pull-right">Unlocked For Staking</span> <br />
         {% else %}
           <strong>Wallet Status:</strong> <span class="pull-right">Locked</span> <br />

@@ -5,7 +5,6 @@ body {
   color: #fafdffab;
   }
 
-
 .sidenav {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -23,7 +22,10 @@ body {
   border-radius: 10px;
 }
 
-
+.container-fluid {
+  margin-left: 50px;
+  padding-right: 50px;
+}
 .sidenav h2 {
   color: #059be9;
   text-align: center;
@@ -34,8 +36,14 @@ body {
 @media screen and (max-width: 768px) {
   .sidenav {
     width: 240px;
-    margin-left: 20px;}
+    margin-left: 60px;
+  }
+  .main {
+    margin-top: 50px;
+    margin-left: 30px;
+  }
 }
+
 .main {
   margin-top: 50px;
   margin-left: 320px;
