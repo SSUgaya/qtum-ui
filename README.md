@@ -4,15 +4,23 @@ The Qtum Wallet UI has been developed to give Raspberry Pi users a browser inter
 
 
 ## Installation
-
-Please standby for instructions..  
+Still working on a guide  
+Dependencies:  
+Python 3.5+
+Flask 0.12.2  
+Flask-QRcode 1.0.1  
+Flask-WTF 0.14.2  
 ```
-pip install Flask-QRcode  
+sudo apt-get install git
+sudo apt-get install python3
+sudo apt-get install python3-pip
+pip3 install flask
+pip3 install Flask-QRcode
+pip3 install Flask-WTF
+pip3 install Pillow
+git clone https://github.com/rpiwalletui/qtum-ui.git  
+cd qtum-ui  
 ```
-```
-pip install Flask-WTF
-```
-
 
 ## Usage
 
