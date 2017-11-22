@@ -11,9 +11,11 @@ Flask 0.12.2
 Flask-QRcode 1.0.1  
 Flask-WTF 0.14.2  
 ```
+sudo apt-get install libjpeg-dev
 sudo apt-get install git
 sudo apt-get install python3
 sudo apt-get install python3-pip
+pip3 install Flask-QR
 pip3 install flask
 pip3 install Flask-QRcode
 pip3 install Flask-WTF

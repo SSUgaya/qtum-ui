@@ -22,7 +22,7 @@
       </ul>
     </div>
       <form class="receive-form col-xs-12 col-md-6" method="post" action="{{ url_for('new_address') }}">
-        {{ form.hidden_tag() }}
+      {{ form.csrf_token }}
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
           {{ form.account_address(type="text", value=address, class_="form-control", placeholder="Enter Address or leave blank for new")}}
