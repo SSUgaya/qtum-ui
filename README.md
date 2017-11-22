@@ -2,14 +2,52 @@
 
 The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet, much like the Desktop version.  
 
+## Please Note  
+
+This Browser UI is meant to run on your LAN only. Allowing access to the UI from the internet  
+puts you at risk of someone accessing your wallet. For security reasons do not open Port 3404
+
 
 ## Installation
-Still working on a guide  
-Dependencies:  
-Python 3.5+
-Flask 0.12.2  
-Flask-QRcode 1.0.1  
-Flask-WTF 0.14.2  
+Still working on a simple install guide.  
+Run the following commands to install the dependencies  
+```
+sudo apt-get update
+```
+```
+sudo apt-get install python3-pip
+```
+```
+sudo apt-get install hamlib-dev libasound-dev  libv4l-dev
+```
+```
+sudo apt-get install libopenjp2-7 libopenjp2-7-dev
+```
+```
+sudo apt-get install libtiff5
+```
+```
+pip3 install flask
+```
+```
+pip3 install Flask-WTF
+```
+```
+pip3 install Flask-QRcode
+```
+```
+sudo apt-get install git
+```
+```
+git clone https://github.com/rpiwalletui/qtum-ui.git
+```
+```
+cd qtum-ui
+```
+To start the UI run.  
+```
+python3 app.py
+```
 
 
 ## Usage
