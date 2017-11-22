@@ -31,8 +31,15 @@ cd qtum-ui
 To start the UI run.  
 ```
 python3 app.py
+```  
+To Access the UI enter the hostname or IP of your Raspberry Pi
 ```
-
+http://YOUR_RASPBERRY_PI_IP:3404
+```
+Or
+````
+http://raspberrypi:3404
+````
 
 ## Usage
 
