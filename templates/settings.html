@@ -5,7 +5,7 @@
   <div class="setup-page col-sm-12 col-lg-12">
     <h3>Wallet Settings</h3>
     <form class="encrypt-form col-xs-12 col-lg-8" method="post" action="{{ url_for('encrypt_wallet') }}">
-      {{ form.hidden_tag() }}
+      {{ form.csrf_token }}
     <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
       <span class="input-group-addon">Encrypt Wallet</span>
     {% if qtum_wallet.unlocked_until == nill %}
@@ -33,7 +33,7 @@
     </form>
 
   <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
-    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
   <div class="input-group">
     <span class="input-group-addon">Start Staking</span>
     {{ form.passphrase(type="password", class_="form-control", placeholder="Enter Passphrase to Enable Staking")}}
