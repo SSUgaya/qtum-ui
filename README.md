@@ -15,33 +15,17 @@ Run the following commands to install the dependencies
 sudo apt-get update
 ```
 ```
-sudo apt-get install python3-pip
+sudo apt-get install python3-pip hamlib-dev libasound-dev  libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 ```
 ```
-sudo apt-get install hamlib-dev libasound-dev  libv4l-dev
+pip3 install flask Flask-WTF Flask-QRcode
 ```
 ```
-sudo apt-get install libopenjp2-7 libopenjp2-7-dev
+wget https://github.com/rpiwalletui/qtum-ui/archive/qtum-piui-0.1.0-beta.tar.gz
 ```
 ```
-sudo apt-get install libtiff5
-```
-```
-pip3 install flask
-```
-```
-pip3 install Flask-WTF
-```
-```
-pip3 install Flask-QRcode
-```
-```
-sudo apt-get install git
-```
-```
-git clone https://github.com/rpiwalletui/qtum-ui.git
-```
-```
+mkdir ~/qtum-ui  
+tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.1.0-beta.tar.gz  
 cd qtum-ui
 ```
 To start the UI run.  
