@@ -3,14 +3,14 @@
 The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet, much like the Desktop version.  
 
 ## Please Note  
+We are still working on a mobile friendly version, at this time the UI is best viewed on a Desktop / Notebook.  
 
 This Browser UI is meant to run on your LAN only. Allowing access to the UI from the internet  
 puts you at risk of someone accessing your wallet. For security reasons do not open Port 3404
 
-
 ## Installation
-Still working on a simple install guide.  
-Run the following commands to install the dependencies  
+Run the following commands to install the Pi UI.  
+You should already have the qtum-cli wallet installed and running on the Raspberry Pi.   
 ```
 sudo apt-get update
 ```
@@ -30,7 +30,7 @@ cd qtum-ui
 ```
 To start the UI run.  
 ```
-python3 app.py
+python3 app.py &
 ```  
 To Access the UI enter the hostname or IP of your Raspberry Pi
 ```
