@@ -4,6 +4,7 @@ The Qtum Wallet UI has been developed to give Raspberry Pi users a browser inter
 
 ## Please Note  
 We are still working on a mobile-friendly version, at this time the UI is best viewed on a Desktop / Notebook.  
+Currently only tested on [RASPBIAN STRETCH.](https://www.raspberrypi.org/downloads/raspbian/)
 
 This Browser UI is meant to run on your LAN only.  
 Allowing internet access to the UI puts you at risk of someone gaining accessing to your wallet.  
@@ -34,7 +35,7 @@ wget https://github.com/rpiwalletui/qtum-ui/archive/qtum-piui-0.1.0-beta.tar.gz
 ```
 mkdir ~/qtum-ui  
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.1.0-beta.tar.gz  
-cd qtum-ui
+cd ~/qtum-ui
 ```
 To start the UI run.  
 ```
