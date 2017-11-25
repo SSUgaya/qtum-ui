@@ -16,14 +16,14 @@ You should already have the qtum-cli wallet installed and running on the Raspber
 1 line install, run the following command.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-setup)  
 ```
-curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | sudo bash
+curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | bash
 ```
 Or Step by Step.
 ```
 sudo apt-get update
 ```
 ```
-sudo apt-get install python3-pip hamlib-dev libasound-dev  libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
+sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 ```
 ```
 pip3 install flask Flask-WTF Flask-QRcode
