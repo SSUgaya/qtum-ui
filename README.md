@@ -12,7 +12,8 @@ puts you at risk of someone accessing your wallet. For security reasons do not o
 Run the following commands to install the Pi UI.  
 You should already have the qtum-cli wallet installed and running on the Raspberry Pi.   
 
-1 line install
+1 line install, run the following command.
+You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-setup)
 ```
 curl -L https://github.com/rpiwalletui/qtum-ui/blob/master/ui-stetup | sudo bash
 ```
@@ -40,7 +41,7 @@ python3 app.py &
 ```  
 To Access the UI enter the hostname or IP of your Raspberry Pi
 ```
-http://YOUR_RASPBERRY_PI_IP:3404
+http://YOUR_RASPBERRY_PI_LAN_IP:3404
 ```
 Or
 ````
