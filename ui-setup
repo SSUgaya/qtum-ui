@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ~
-DIR="./qtum-ui"
+DIR="~/qtum-ui"
 if [ -d "$DIR" ]
 then
   echo Qtum-Ui Already Installed
