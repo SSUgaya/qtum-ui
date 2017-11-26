@@ -37,7 +37,8 @@ def qtum_info(x='getwalletinfo', y=''):
     (out,err) = process.communicate()
     if process.returncode != 0:
         return None
-    parsed_result = json.loads(out)
+    result = str(out,'utf-8')
+    parsed_result = json.loads(result)
     return parsed_result
 
 def qtum(x):
