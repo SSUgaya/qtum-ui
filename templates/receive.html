@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
+{% block content %}
 <div class="main">
     <div class="receive-page col-xs-12">
       <h3>Create New Receive Address</h3>
@@ -83,7 +83,7 @@
       </thead>
       <tbody>
         {% for tx in get_received %}
-          {% if tx.category == "receive" %}
+          {% if "receive" in tx.category %}
           <tr>
             <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
             <td align="center">
