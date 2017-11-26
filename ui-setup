@@ -17,5 +17,5 @@ else
   cd  ~/qtum-ui
   python3 app.py &
   sleep 3
+  echo The UI is now starting.
 fi
-echo The UI is now starting.
