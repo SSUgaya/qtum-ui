@@ -27,7 +27,7 @@ sudo apt-get update
 sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 ```
 ```
-pip3 install flask Flask-WTF Flask-QRcode
+pip3 install flask Flask-WTF Flask-QRcode Flask-Bootstrap
 ```
 ```
 wget https://github.com/rpiwalletui/qtum-ui/archive/qtum-piui-0.1.0-beta.tar.gz

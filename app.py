@@ -3,6 +3,7 @@ from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, PasswordField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
+from flask_bootstrap import Bootstrap
 import time
 import json
 import os
@@ -13,6 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD']=True
 QRcode(app)
+Bootstrap(app)
 
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
@@ -35,8 +37,7 @@ def qtum_info(x='getwalletinfo', y=''):
     (out,err) = process.communicate()
     if process.returncode != 0:
         return None
-    result = str(out,'utf-8')
-    parsed_result = json.loads(result)
+    parsed_result = json.loads(out)
     return parsed_result
 
 def qtum(x):
@@ -125,14 +126,14 @@ def send_qtum():
             return redirect(url_for('send'))
         flash("Success! TX ID: %s" % send_qtum, 'msg')
         return redirect(url_for('send'))
-    return render_template('send.html', date=date, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+    return render_template('send.html', date=date, form=form, last_tx=qtum_info("listtransactions '*' 100"), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
 @app.route('/receive', defaults={'selected_address' : ''})
 @app.route('/receive/<selected_address>')
 def receive(selected_address):
     date = time
     form = NewAddressForm()
-    return render_template('receive.html', address=selected_address, form=form, date=time, get_received=qtum_info("listtransactions '*'", 100), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
+    return render_template('receive.html', address=selected_address, form=form, date=time, get_received=qtum_info("listtransactions '*' 100"), get_address=get_address(), account_add=get_account_addresses(), qtum_wallet=qtum_info())
 
 @app.route('/new_address', methods=['POST'])
 def new_address():

@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
+{% extends "bootstrap/base.html" %}
+{% block html %}
+  {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Qtum-Walllet Pi UI</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    <link rel="icon" href="data:;base64,="> <!-- Stops request for favicon.ico -->
-  </head>
-  <body>
+    {% block styles %}
+    {{super()}}
+      <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+      <link rel="icon" href="data:;base64,="> <!-- Stops request for favicon.ico -->
+    {% endblock %}
+  {% endblock %}
+  {% block body %}
     <div class="container-fluid">
       {% include 'includes/_sidebar.html' %}
-      {% block body %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% block scripts %}
+        <script src="bootstrap.static/bootstrap.min.js"></script>
+        {{super()}}
+      {% endblock %}
     </div>
-  </body>
-</html>
+  {% endblock %}
+{% endblock %}

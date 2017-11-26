@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
+{% block content %}
   <div class="main">
     <div class="index-page col-xs-12">
       <div class="wallet col-xs-12 col-md-6 col-lg-6">
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for tx in list_tx[-4:] %}
+            {% for tx in list_tx[-4:][::-1] %}
             <tr>
               <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
               <td align="center">

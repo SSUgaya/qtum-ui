@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
+{% block content %}
 <div class="main">
   <div class="send_page col-xs-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
@@ -94,7 +94,7 @@
             <td align="center">{{ unspent.amount }}</td>
             <td align="center">{{ unspent.confirmations }}</td>
           <td align="center">
-          {% if unspent.spendable == true %}
+          {% if unspent.spendable %}
               <span class="glyphicon glyphicon-ok green-unspent"></span>
           {% else %}
               <span class="glyphicon glyphicon-remove red-unspent"></span>
