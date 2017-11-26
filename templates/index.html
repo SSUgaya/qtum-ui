@@ -30,6 +30,7 @@
         <strong>Wallet Weight:</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
         <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
+        <strong>Connections:</strong> <span class="pull-right">{{ get_current_block.connections }} Nodes</span> <br />
       </div>
     </div>
     <div class="transactions-index table-responsive col-xs-12">
