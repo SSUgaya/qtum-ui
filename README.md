@@ -2,7 +2,7 @@
 
 The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet, much like the Desktop version.  
 
-[Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/)
+<!-- [Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/) -->
 
 ## Please Note  
 We are still working on a mobile-friendly version, at this time the UI is best viewed on a Desktop / Notebook.  
