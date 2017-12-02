@@ -2,7 +2,8 @@
 
 The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet.
 
-[Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/)
+[Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/)  
+
 [A tutorial for setting up a firewall to prevent internet access to the UI](https://steemit.com/qtum/@trevsadev/raspberry-pi-3-firewall-tutorial-for-the-qtum-pi-user-interface-https-github-com-rpiwalletui-qtum-ui-releases)
 ## Please Note  
 We are still working on a mobile-friendly version, at this time the UI is best viewed on a Desktop / Notebook.  
