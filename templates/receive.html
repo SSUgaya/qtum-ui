@@ -77,7 +77,6 @@
           <th class="text-center col-sm-1">Type</th>
           <th class="text-center col-sm-3">Transaction ID</th>
           <th class="text-center col-sm-2">Amount</th>
-          <th class="text-center col-sm-1">Fee</th>
           <th class="text-center col-sm-2">Confirmations</th>
         </tr>
       </thead>
@@ -85,17 +84,12 @@
         {% for tx in get_received %}
           {% if "receive" in tx.category %}
           <tr>
-            <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
+            <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
             <td align="center">
               <span class="glyphicon glyphicon-download green"></span>
             </td>
-            <td id="table_padding" align="center" class="text"><span>{{ tx.txid }}</span></td>
+            <td id="table_padding" align="center" class="text"><span><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ tx.txid}}</a></span></td>
             <td id="table_padding" align="center">{{ tx.amount }}</td>
-            {% if tx.fee == nil %}
-              <td id="table_padding" align="center">0.0000</td>
-            {% else %}
-              <td id="table_padding" align="center">{{ tx.fee }}</td>
-            {% endif %}
             <td id="table_padding" align="center">{{ tx.confirmations }}</td>
           </tr>
           {% endif %}

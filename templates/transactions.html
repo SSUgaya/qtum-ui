@@ -18,7 +18,7 @@
           <tbody>
             {% for tx in all_tx[::-1] %}
             <tr>
-              <td align="left"><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</a></td>
+              <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
               <td align="center">
                 {% if tx.category == "receive" %}
                   <span class="glyphicon glyphicon-download green"></span>
@@ -28,7 +28,7 @@
                   <span class="glyphicon glyphicon-refresh blue"></span>
                 {% endif %}
               </td>
-              <td id="table_padding" align="center" class="text"><span>{{ tx.txid }}</span></td>
+              <td id="table_padding" align="center" class="text"><span><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ tx.txid}}</a></span></td>
               <td id="table_padding" align="center">{{ tx.amount }}</td>
               {% if tx.fee == nil %}
                 <td id="table_padding" align="center">0.0000</td>
