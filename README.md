@@ -1,6 +1,7 @@
 # RPI Qtum Wallet UI
 
-The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet.
+The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet.  
+Join our Telegram channel to be notified of updates [here.](https://t.me/joinchat/AAAAAFH1sNgqkoX7UQSWhw)
 
 [Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/)  
 
@@ -20,34 +21,28 @@ You should already have the qtum-cli wallet installed and running on the Raspber
 1 line install, run the following command.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-setup)  
 ```
-curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | bash
+$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | bash
 ```
 Or Step by Step.
 ```
-sudo apt-get update
-sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
-pip3 install flask Flask-WTF Flask-QRcode Flask-Bootstrap
-wget https://github.com/rpiwalletui/qtum-ui/releases/download/qtum-piui-0.2.1-beta/qtum-piui-0.2.1-beta.tar.gz
-mkdir ~/qtum-ui  
-tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.2.1-beta.tar.gz  
-cd ~/qtum-ui
+$ sudo apt-get update
+$ sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
+$ pip3 install flask Flask-WTF Flask-QRcode Flask-Bootstrap
+$ wget https://github.com/rpiwalletui/qtum-ui/releases/download/qtum-piui-0.2.1-beta/qtum-piui-0.2.1-beta.tar.gz
+$ mkdir ~/qtum-ui  
+$ tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.2.1-beta.tar.gz  
+$ cd ~/qtum-ui
 ```
 To start the UI run.  
 ```
-python3 app.py &
+$ python3 app.py &
 ```  
 To stop the UI run.
 ```
-pkill -9 python3
+$ pkill -9 python3
 ```
 To Access the UI enter the hostname or IP of your Raspberry Pi  
-```
-http://YOUR_RASPBERRY_PI_LAN_IP:3404
-```
-Or
-````
-http://raspberrypi:3404
-````
+http://YOUR_RASPBERRY_PI_LAN_IP:3404 or http://raspberrypi:3404
 
 ## Usage
 
