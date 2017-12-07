@@ -21,7 +21,7 @@
     {% endif %}
     </div>
     <small>NOTE: You will be returned to the overview page after the wallet restarts</small>
-    {% with messages = get_flashed_messages(category_filter=["error1"]) %}
+    {% with messages = get_flashed_messages(category_filter=["error_encrypt"]) %}
       {% if messages %}
         {% for message in messages %}
         <div id="send-alert" class="alert alert-danger">
@@ -41,7 +41,7 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
-  <br />
+    <br />
   {% if form.errors %}
     {% for field, errors in form.errors.items() %}
       <div id="send-alert" class="alert alert-danger">
@@ -60,7 +60,49 @@
     {% endif %}
   {% endwith %}
 
-  {% with messages = get_flashed_messages(category_filter=["error"]) %}
+  {% with messages = get_flashed_messages(category_filter=["error_staking"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <br />
+  </form>
+
+
+  <form class="addnode-form col-xs-12 col-lg-8" method="post" action="{{ url_for('add_node') }}">
+    {{ form_addnode.csrf_token }}
+  <div class="input-group">
+    <span class="input-group-addon">Add Node.....</span>
+    {{ form_addnode.nodeaddress(type="text", class_="form-control", placeholder="Enter Node IP, Include Port if not :3888")}}
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+  <small>NOTE: It can take a few minutes to update connected nodes</small>
+  <br />
+  {% if form_addnode.errors %}
+    {% for field, errors in form_addnode.errors.items() %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ ', '.join(errors) }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% with messages = get_flashed_messages(category_filter=["msg_node"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% with messages = get_flashed_messages(category_filter=["error_node"]) %}
     {% if messages %}
       {% for message in messages %}
       <div id="send-alert" class="alert alert-danger">
@@ -70,6 +112,7 @@
     {% endif %}
   {% endwith %}
   </form>
+
     <div id="disable-staking" class="btn-group btn-group-justified">
     <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
     </div>

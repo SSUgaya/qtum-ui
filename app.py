@@ -32,6 +32,9 @@ class NewAddressForm(FlaskForm):
 class QtumPassword(FlaskForm):
     passphrase = PasswordField('passphrase', validators=[DataRequired(message='Passphrase cannot be blank')])
 
+class AddNode(FlaskForm):
+    nodeaddress = StringField('nodeaddress', validators=[DataRequired(message='Please enter a vaild IP Address')])
+
 def qtum_info(x='getwalletinfo', y=''):
     process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s %s" % (x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
@@ -44,10 +47,19 @@ def qtum_info(x='getwalletinfo', y=''):
 def qtum(x):
     process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s" % x, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
+    print(x)
     if process.returncode != 0:
         return None
     result = str(out,'utf-8')
     return result
+
+def wallet_start_up():
+    start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
+    process = subprocess.Popen(start_wallet, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
+    (out,err) = process.communicate()
+    if process.returncode != 0:
+        return None
+    return out
 
 def qtum_unlock(passwd, duration, stake='false'):
     wallet_unlock = '~/qtum-wallet/bin/qtum-cli walletpassphrase "%s" %d %s' % (passwd, duration, stake)
@@ -159,7 +171,8 @@ def transaction():
 @app.route('/setup')
 def setup():
     form = QtumPassword()
-    return render_template('settings.html', form=form, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
+    form_addnode = AddNode()
+    return render_template('settings.html', form=form, form_addnode=form_addnode, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
 
 @app.route('/encrypt_wallet', methods=['POST'])
 def encrypt_wallet():
@@ -167,14 +180,16 @@ def encrypt_wallet():
     if form.validate_on_submit():
         encrypt = qtum("encryptwallet '%s'" % form.passphrase.data)
         if encrypt == None:
-            flash('Opps! Something went wrong.', 'error1')
+            flash('Opps! Something went wrong.', 'error_encrypt')
             return redirect(url_for('setup'))
         flash(encrypt, 'msg')
         time.sleep(2)
         subprocess.run("~/qtum-wallet/bin/qtumd -daemon", shell=True)
         time.sleep(5)
         return redirect(url_for('index'))
-    return render_template('settings.html', form=form, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
+    else:
+        flash('Passphrase Cannot be Blank!!', 'error_encrypt')
+        return redirect(url_for('setup'))
 
 @app.route('/staking_service', methods=['POST'])
 def staking_service():
@@ -182,21 +197,43 @@ def staking_service():
     if form.validate_on_submit():
         start_stake = qtum_unlock(form.passphrase.data, 99999999, 'true')
         if start_stake == None:
-            flash('Opps! Wallet Passphrase is Incorrect.', 'error')
+            flash('Opps! Wallet Passphrase is Incorrect.', 'error_staking')
             return redirect(url_for('setup'))
-        flash('Success! Wallet is now Staking.', 'msg')
+        flash('Success! Wallet is now Staking.', 'msg_stake')
         return redirect(url_for('setup'))
-    return render_template('settings.html', form=form, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
+    else:
+        flash('Passphrase Cannot be Blank!!', 'error_staking')
+        return redirect(url_for('setup'))
+
+@app.route('/add_node', methods=['POST'])
+def add_node():
+    form_addnode = AddNode()
+    if form_addnode.validate_on_submit():
+        addnode = qtum("addnode '%s' 'add'" % form_addnode.nodeaddress.data)
+        if addnode == None:
+            flash('Opps! Something went wrong', 'error_node')
+            return redirect(url_for('setup'))
+        flash('Success! Node Added.', 'msg_node')
+        return redirect(url_for('setup'))
+    else:
+        flash('Please Enter a Node Address!', 'error_node')
+        return redirect(url_for('setup'))
 
 @app.route('/lock_wallet')
 def lock_wallet():
     qtum("walletlock")
-    flash('Success! Wallet is Locked', 'msg')
+    flash('Success! Wallet is Locked', 'msg_node')
     return redirect(url_for('setup'))
 
 @app.route('/offline')
 def offline():
     return render_template('offline.html')
 
+@app.route('/start_wallet')
+def start_wallet():
+    wallet_start_up()
+    time.sleep(2)
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3404)
+    app.run(host='0.0.0.0', debug=True)
