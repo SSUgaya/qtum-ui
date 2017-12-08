@@ -198,7 +198,7 @@ def staking_service():
         if start_stake == None:
             flash('Opps! Wallet Passphrase is Incorrect.', 'error_staking')
             return redirect(url_for('setup'))
-        flash('Success! Wallet is now Staking.', 'msg_stake')
+        flash('Success! Wallet is now Staking.', 'msg')
         return redirect(url_for('setup'))
     else:
         flash('Passphrase Cannot be Blank!!', 'error_staking')
