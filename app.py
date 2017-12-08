@@ -47,7 +47,6 @@ def qtum_info(x='getwalletinfo', y=''):
 def qtum(x):
     process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s" % x, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
-    print(x)
     if process.returncode != 0:
         return None
     result = str(out,'utf-8')
