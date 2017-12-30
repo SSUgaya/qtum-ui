@@ -135,7 +135,6 @@ def send_qtum():
             flash('Opps! Wallet Passphrase is Incorrect.', 'error')
             return redirect(url_for('send'))
         send_qtum = qtum("sendtoaddress '%s' %f '%s' '%s' %s" % (form.address.data, amount, form.description.data, form.to_label.data, fee.lower()))
-        print(fee)
         if send_qtum == None:
             flash('Opps! You Entered an Invalid Address.', 'error')
             return redirect(url_for('send'))
