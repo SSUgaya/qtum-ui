@@ -12,7 +12,10 @@
       </div>
       <div id="send-amount" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-        {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send")}}
+        {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send. (Use The Checkbox to Subtract Fee From Amount )")}}
+        <span class="input-group-addon">
+          {{ form.include_fee(type="checkbox", class_="checkbox-inline")}}
+      </span>
       </div>
       <div id="send-description" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -25,9 +28,6 @@
       <div id="send-passwd" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
-      </div>
-      <div id="send-fee">
-        <label>Subtract Fee from Send Amount {{ form.include_fee(type="checkbox", class_="checkbox-inline")}}</label>
       </div>
       <div id="send-form">
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
