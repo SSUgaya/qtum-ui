@@ -26,8 +26,12 @@
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
       </div>
+      <div id="send-fee">
+        <label>Subtract Fee from Send Amount {{ form.include_fee(type="checkbox", class_="checkbox-inline")}}</label>
+      </div>
       <div id="send-form">
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
+
         {% if form.errors %}
           {% for field, errors in form.errors.items() %}
             <div id="send-alert" class="alert alert-danger">
@@ -40,7 +44,7 @@
           {% if messages %}
             {% for message in messages %}
             <div id="send-alert" class="alert alert-success">
-              <a href="https://explorer.qtum.org/tx/{{ message }}"  target="_blank" class="text"><span>{{ message }}</span></a>
+              <a href="https://explorer.qtum.org/tx/{{ message[16:] }}"  target="_blank" class="text"><span>{{ message }}</span></a>
             </div>
             {% endfor %}
           {% endif %}

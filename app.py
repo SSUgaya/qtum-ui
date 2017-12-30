@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, url_for, redirect, send_file
 from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
-from wtforms import StringField, DecimalField, PasswordField
+from wtforms import StringField, DecimalField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
 from flask_bootstrap import Bootstrap
 import time
@@ -22,6 +22,7 @@ class SendForm(FlaskForm):
     description = StringField('description')
     to_label = StringField('to_label')
     passwd = PasswordField('password', validators=[DataRequired(message='Passphrase cannot be blank')])
+    include_fee = BooleanField('include_fee', default=False)
 
 class NewAddressForm(FlaskForm):
     account_address = StringField('account_address')
@@ -122,6 +123,7 @@ def send_qtum():
     date = time
     form = SendForm()
     max_spend = qtum_info()
+    fee = str(form.include_fee.data)
     if form.validate_on_submit():
         spendable = float(max_spend['balance'])
         amount = float(form.amount.data)
@@ -132,7 +134,8 @@ def send_qtum():
         if start_unlock == None:
             flash('Opps! Wallet Passphrase is Incorrect.', 'error')
             return redirect(url_for('send'))
-        send_qtum = qtum("sendtoaddress '%s' %f '%s' '%s'" % (form.address.data, amount, form.description.data, form.to_label.data))
+        send_qtum = qtum("sendtoaddress '%s' %f '%s' '%s' %s" % (form.address.data, amount, form.description.data, form.to_label.data, fee.lower()))
+        print(fee)
         if send_qtum == None:
             flash('Opps! You Entered an Invalid Address.', 'error')
             return redirect(url_for('send'))
@@ -235,4 +238,4 @@ def start_wallet():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3404)
+    app.run(host='0.0.0.0', debug=True)

@@ -81,7 +81,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for tx in get_received %}
+        {% for tx in get_received[::-1] %}
           {% if "receive" in tx.category %}
           <tr>
             <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
