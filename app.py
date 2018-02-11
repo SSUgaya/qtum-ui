@@ -109,7 +109,7 @@ def index():
     if qtum_info() == None:
         return redirect(url_for('offline'))
     date = time
-    return render_template('index.html',date=date, qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
+    return render_template('index.html',date=date, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])

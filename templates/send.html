@@ -5,7 +5,7 @@
   <div class="send_page col-xs-12">
     <div class="send-total"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
     <form class="send-form col-xs-12 col-lg-9" method="post" action="{{ url_for('send_qtum') }}">
-        {{ form.csrf_token }}
+      {{ form.csrf_token }}
       <div id="send-wallet" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-share-alt"></i></span>
         {{ form.address(type="text", value=address, class_="form-control", placeholder="Send to Address")}}
@@ -15,7 +15,7 @@
         {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send. (Use The Checkbox to Subtract Fee From Amount )")}}
         <span class="input-group-addon">
           {{ form.include_fee(type="checkbox", class_="checkbox-inline")}}
-      </span>
+        </span>
       </div>
       <div id="send-description" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -25,13 +25,12 @@
         <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
         {{ form.to_label(type="text", class_="form-control", placeholder="Enter Name and save it to the address book (optional)")}}
       </div>
-      <div id="send-passwd" class="input-group">
+        <div id="send-passwd" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
         {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
       </div>
       <div id="send-form">
         <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
-
         {% if form.errors %}
           {% for field, errors in form.errors.items() %}
             <div id="send-alert" class="alert alert-danger">

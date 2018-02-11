@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+{% extends 'bootstrap/base.html' %}
 {% block html %}
   {% block head %}
     <meta charset="utf-8">
@@ -14,10 +14,6 @@
     <div class="container-fluid">
       {% include 'includes/_sidebar.html' %}
       {% block content %}{% endblock %}
-      {% block scripts %}
-        <script src="bootstrap.static/bootstrap.min.js"></script>
-        {{super()}}
-      {% endblock %}
     </div>
   {% endblock %}
 {% endblock %}
