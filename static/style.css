@@ -18,7 +18,7 @@ body {
   overflow-x: hidden;
   padding: 10px;
   padding-bottom: 55px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 
@@ -48,9 +48,13 @@ body {
   margin-top: 50px;
   margin-left: 320px;
 }
+.main-offline {
+  margin-top: 50px;
+
+}
 .transactions {
   background-color: #312e32;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   margin-bottom: 40px;
   padding-bottom: 10px;
@@ -59,7 +63,7 @@ body {
 .transactions-index, .transactions-send {
   margin-top: 18px;
   background-color: #312e32;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   margin-bottom: 40px;
   padding-bottom: 10px;
@@ -72,7 +76,7 @@ body {
 .index-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   padding-bottom: 20px;
   height: 100%;
@@ -81,7 +85,7 @@ body {
 .receive-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
 }
@@ -89,7 +93,7 @@ body {
 .setup-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   height: 100%;
 }
@@ -102,7 +106,15 @@ body {
   background-color: #312e32;
   padding-bottom: 70px;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.offline_page {
+  background-color: #312e32;
+  padding-bottom: 70px;
+  font-size: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 

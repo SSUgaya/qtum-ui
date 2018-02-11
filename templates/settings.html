@@ -4,34 +4,6 @@
 <div class="main">
   <div class="setup-page col-sm-12 col-lg-12">
     <h3>Wallet Settings</h3>
-    <form class="encrypt-form col-xs-12 col-lg-8" method="post" action="{{ url_for('encrypt_wallet') }}">
-      {{ form.csrf_token }}
-    <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
-      <span class="input-group-addon">Encrypt Wallet</span>
-    {% if qtum_wallet.unlocked_until == nill %}
-      {{ form.passphrase(type="password", class_="form-control", placeholder="Enter New Passphrase to Encrypt Wallet")}}
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    {% else %}
-      <input class="form-control" value="This wallet is already encrypted" type="text" disabled>
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary" disabled>Submit</button>
-      </div>
-    {% endif %}
-    </div>
-    <small>NOTE: You will be returned to the overview page after the wallet restarts</small>
-    {% with messages = get_flashed_messages(category_filter=["error_encrypt"]) %}
-      {% if messages %}
-        {% for message in messages %}
-        <div id="send-alert" class="alert alert-danger">
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </form>
-
   <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
     {{ form.csrf_token }}
   <div class="input-group">
@@ -115,6 +87,7 @@
 
     <div id="disable-staking" class="btn-group btn-group-justified">
     <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
+    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Stop Wallet</a>
     <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Backup Wallet</a>
     <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Restore Wallet</a>
   </div>

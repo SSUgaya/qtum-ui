@@ -1,15 +1,58 @@
-{% extends 'layout.html' %}
+{% extends 'bootstrap/base.html' %}
+{% block html %}
+  {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% block styles %}
+    {{super()}}
+      <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+      <link rel="icon" href="data:;base64,="> <!-- Stops request for favicon.ico -->
+    {% endblock %}
+  {% endblock %}
+  {% block body %}
+    <div class="container-fluid">
+      {% block content %}
+      <div class="main-offline">
+          <div class="offline_page col-md-12 col-sm-12">
+            <h1>No Qtum Wallet found</h1>
+            <p>
+              You can install the latest wallet by clicking the button below <br />
+              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Install Now</a>
+            </p>
 
-{% block content %}
-<div class="main">
-    <div class="send_page col-md-12 col-sm-12">
-      <h1>OFFLINE!!</h1>
-      <p>
-        Qtum Wallet is not running, please start the wallet and <a href="/">refresh this page</a> <br />
-        <br />
-        <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Qtum Wallet</a>
-        Rember to unlock your wallet for staking.
-      </p>
+            <h1>Qtum Wallet not running</h1>
+            <p>
+              Your Qtum wallet is not running click the button to start now. <br />
+              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Wallet</a>
+            </p>
+
+            <h1>Qtum Wallet not encrypted</h1>
+            <h4>  Your wallet must be encrypted to use the Pi Web UI</h4>
+            <form class="encrypt-form col-xs-8 col-lg-6" method="post" action="{{ url_for('encrypt_wallet') }}">
+              {{ form.csrf_token }}
+            <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
+              <span class="input-group-addon">Encrypt Wallet</span>
+              {{ form.passphrase(type="password", class_="form-control", placeholder="Enter New Passphrase to Encrypt Wallet")}}
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+
+            </div>
+            <small>NOTE: This page will refresh after the wallet starts</small>
+            {% with messages = get_flashed_messages(category_filter=["error_encrypt"]) %}
+              {% if messages %}
+                {% for message in messages %}
+                <div id="send-alert" class="alert alert-danger">
+                  {{ message }}
+                </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            </form>
+
+          </div>
+      </div>
+      {% endblock %}
     </div>
-</div>
+  {% endblock %}
 {% endblock %}

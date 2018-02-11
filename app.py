@@ -228,12 +228,13 @@ def lock_wallet():
 
 @app.route('/offline')
 def offline():
-    return render_template('offline.html')
+    form = QtumPassword()
+    return render_template('offline.html', form=form)
 
 @app.route('/start_wallet')
 def start_wallet():
     wallet_start_up()
-    time.sleep(2)
+    time.sleep(8)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
