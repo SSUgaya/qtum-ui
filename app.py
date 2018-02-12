@@ -16,6 +16,7 @@ app.config['TEMPLATES_AUTO_RELOAD']=True
 QRcode(app)
 Bootstrap(app)
 
+
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
     amount = StringField('amount', validators=[InputRequired(message='Invalid amount')])
@@ -52,6 +53,19 @@ def qtum(x):
         return None
     result = str(out,'utf-8')
     return result
+
+def wallet_checks():
+    process = subprocess.Popen("cd ~/qtum-wallet", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    (out,err) = process.communicate()
+    if process.returncode != 0:
+        return None
+    check_wallet = qtum_info()
+    if check_wallet == None:
+        return None
+    result = list(check_wallet.keys())
+    if result[8] != 'unlocked_until':
+        return None
+    return check_wallet
 
 def wallet_start_up():
     start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
@@ -106,7 +120,8 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
-    if qtum_info() == None:
+    checks = wallet_checks()
+    if checks == None:
         return redirect(url_for('offline'))
     date = time
     return render_template('index.html',date=date, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
