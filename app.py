@@ -58,14 +58,14 @@ def wallet_checks():
     process = subprocess.Popen("cd ~/qtum-wallet", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
     if process.returncode != 0:
-        return None
+        return 'No_Wallet'
     check_wallet = qtum_info()
     if check_wallet == None:
-        return None
+        return 'Not_Running'
     result = list(check_wallet.keys())
     if result[8] != 'unlocked_until':
-        return None
-    return check_wallet
+        return 'Not_Encrypted'
+    return 'OK'
 
 def wallet_start_up():
     start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
@@ -120,8 +120,7 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
-    checks = wallet_checks()
-    if checks == None:
+    if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
     date = time
     return render_template('index.html',date=date, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
@@ -200,12 +199,12 @@ def encrypt_wallet():
             return redirect(url_for('setup'))
         flash(encrypt, 'msg')
         time.sleep(2)
-        subprocess.run("~/qtum-wallet/bin/qtumd -daemon", shell=True)
-        time.sleep(5)
+        wallet_start_up()
+        time.sleep(8)
         return redirect(url_for('index'))
     else:
         flash('Passphrase Cannot be Blank!!', 'error_encrypt')
-        return redirect(url_for('setup'))
+        return redirect(url_for('offline'))
 
 @app.route('/staking_service', methods=['POST'])
 def staking_service():
@@ -244,7 +243,9 @@ def lock_wallet():
 @app.route('/offline')
 def offline():
     form = QtumPassword()
-    return render_template('offline.html', form=form)
+    if wallet_checks() == 'OK':
+        return redirect(url_for('index'))
+    return render_template('offline.html', form=form, checks=wallet_checks())
 
 @app.route('/start_wallet')
 def start_wallet():
