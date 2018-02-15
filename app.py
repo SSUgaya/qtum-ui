@@ -54,6 +54,14 @@ def qtum(x):
     result = str(out,'utf-8')
     return result
 
+def not_mature_coins():
+    total_coins = 0
+    unspent_coins = qtum_info('listunspent', 0)
+    for unspent in unspent_coins:
+        if unspent['confirmations'] < 500:
+            total_coins += unspent['amount']
+    return total_coins
+
 def wallet_checks():
     process = subprocess.Popen("cd ~/qtum-wallet", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
@@ -123,7 +131,7 @@ def index():
     if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
     date = time
-    return render_template('index.html',date=date, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
+    return render_template('index.html',date=date, not_mature_coins=not_mature_coins(), best_block_hash=qtum("getbestblockhash"), qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])
