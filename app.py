@@ -1,21 +1,27 @@
 from flask import Flask, render_template, request, flash, url_for, redirect, send_file
 from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, DecimalField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
 from flask_bootstrap import Bootstrap
+from werkzeug.utils import secure_filename
 import time
 import json
 import os
 import subprocess
 
+UPLOAD_FOLDER = '/.qtum'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD']=True
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 QRcode(app)
 Bootstrap(app)
 
+class ImportWallet(FlaskForm):
+    wallet = FileField(validators=[FileRequired(),FileAllowed(['dat'], 'Wallet.dat File Only!')])
 
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
@@ -191,11 +197,12 @@ def transaction():
     date = time
     return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 100))
 
-@app.route('/setup')
+@app.route('/setup', methods=['GET', 'POST'])
 def setup():
+    wallet_upload = ImportWallet()
     form = QtumPassword()
     form_addnode = AddNode()
-    return render_template('settings.html', form=form, form_addnode=form_addnode, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
+    return render_template('settings.html', wallet_upload=wallet_upload, form=form, form_addnode=form_addnode, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
 
 @app.route('/encrypt_wallet', methods=['POST'])
 def encrypt_wallet():
@@ -261,6 +268,18 @@ def start_wallet():
     wallet_start_up()
     time.sleep(8)
     return redirect(url_for('index'))
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    wallet_upload = ImportWallet()
+    if wallet_upload.validate_on_submit():
+        f = wallet_upload.wallet.data
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('Success! Please restart your wallet.', 'upload_msg')
+        return redirect(url_for('setup'))
+    flash('Something went wrong please try again', 'upload_error')
+    return redirect(url_for('setup'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

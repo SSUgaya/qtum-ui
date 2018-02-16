@@ -3,7 +3,7 @@
 {% block content %}
 <div class="main">
   <div class="setup-page col-sm-12 col-lg-12">
-    <h3>Wallet Settings</h3>
+    <h3>Wallet Options</h3>
   <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
     {{ form.csrf_token }}
   <div class="input-group">
@@ -44,6 +44,44 @@
   <br />
   </form>
 
+  <form class="stkaing-form col-xs-12 col-lg-8" method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+    {{ form.csrf_token }}
+  <div class="input-group">
+        {{ wallet_upload.wallet(class_="form-control")}}
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Upload Backup</button>
+    </div>
+  </div>
+    <br />
+  {% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ ', '.join(errors) }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% with messages = get_flashed_messages(category_filter=["upload_msg"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% with messages = get_flashed_messages(category_filter=["upload_error"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <br />
+  </form>
 
   <form class="addnode-form col-xs-12 col-lg-8" method="post" action="{{ url_for('add_node') }}">
     {{ form_addnode.csrf_token }}
@@ -84,12 +122,14 @@
     {% endif %}
   {% endwith %}
   </form>
-    <div id="disable-staking" class="btn-group btn-group-justified">
+
+  <div id="disable-staking" class="btn-group btn-group-justified">
     <a href="/send_req/walletlock" class="btn btn-primary">Lock Wallet</a>
     <a href="/send_req/stop" class="btn btn-primary">Stop Wallet</a>
+    <a href="/" class="btn btn-primary">Restart Wallet</a>
     <a href="/" class="btn btn-primary">Backup Wallet</a>
-    <a href="/" class="btn btn-primary">Import Wallet</a>
   </div>
+
   </div>
   <div class="transactions-index col-xs-12">
     <h3>Feedback</h3>
@@ -107,6 +147,6 @@
     <div class="qrcode-donate-img col-md-6">
         <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
     </div>
-</div>
+  </div>
 </div>
 {% endblock %}
