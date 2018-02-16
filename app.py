@@ -242,11 +242,12 @@ def add_node():
         flash('Please Enter a Node Address!', 'error_node')
         return redirect(url_for('setup'))
 
-@app.route('/lock_wallet')
-def lock_wallet():
-    qtum("walletlock")
-    flash('Success! Wallet is Locked', 'msg_node')
-    return redirect(url_for('setup'))
+@app.route('/send_req', defaults={'selected_cmd' : ''})
+@app.route('/send_req/<selected_cmd>', methods=['GET'])
+def send_req(selected_cmd):
+    qtum(selected_cmd)
+    time.sleep(1)
+    return redirect(url_for('index'))
 
 @app.route('/offline')
 def offline():

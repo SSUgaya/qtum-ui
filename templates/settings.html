@@ -84,12 +84,11 @@
     {% endif %}
   {% endwith %}
   </form>
-
     <div id="disable-staking" class="btn-group btn-group-justified">
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Stop Wallet</a>
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Backup Wallet</a>
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Restore Wallet</a>
+    <a href="/send_req/walletlock" class="btn btn-primary">Lock Wallet</a>
+    <a href="/send_req/stop" class="btn btn-primary">Stop Wallet</a>
+    <a href="/" class="btn btn-primary">Backup Wallet</a>
+    <a href="/" class="btn btn-primary">Import Wallet</a>
   </div>
   </div>
   <div class="transactions-index col-xs-12">
