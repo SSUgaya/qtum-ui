@@ -6,7 +6,7 @@
         <h3>Balance</h3> <br />
         <strong data-toggle="tooltip" title="Qtum availabe to spend.">Available:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.balance) }}</span> <br />
         <strong data-toggle="tooltip" title="Unconfirmed Qtum">Pending:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.unconfirmed_balance) }}</span> <br />
-        <strong data-toggle="tooltip" title="Qtum with less then 500 confirmations">Immature:</strong><span class="pull-right">{{ '%0.4f' | format(not_mature_coins) }}</span> <br />
+        <strong data-toggle="tooltip" title="Qtum with less then 500 confirmations">Immature:</strong><span class="pull-right">{{ '%0.4f' | format(immature_coins) }}</span> <br />
         <strong data-toggle="tooltip" title="Staking Rewards available after 500 Blocks">Stake Reward:</strong> <span class="pull-right">{{ '%0.4f' | format(qtum_wallet.immature_balance) }}</span> <br />
         <strong data-toggle="tooltip" title="Coins Locked from Staking a Block">Staked:</strong><span class="pull-right">{{ '%0.4f' | format(qtum_wallet.stake) }}</span> <br />
         <div class="q-total"><hr /> <span data-toggle="tooltip" title="Combined total Qtum, including pending and staked" class="pull-left">Total</span> {{ '%0.4f' | format(qtum_wallet.balance + qtum_wallet.unconfirmed_balance + qtum_wallet.immature_balance + qtum_wallet.stake) }} QTUM</div>

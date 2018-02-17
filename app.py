@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, url_for, redirect, send_file
+from flask import Flask, render_template, request, flash, url_for, redirect, send_from_directory
 from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -11,12 +11,12 @@ import json
 import os
 import subprocess
 
-UPLOAD_FOLDER = '/.qtum'
+WALLET_DIR = os.path.expanduser('~/.qtum')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD']=True
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['WALLET_DIR'] = WALLET_DIR
 QRcode(app)
 Bootstrap(app)
 
@@ -60,7 +60,7 @@ def qtum(x):
     result = str(out,'utf-8')
     return result
 
-def not_mature_coins():
+def immature_coins():
     total_coins = 0
     unspent_coins = qtum_info('listunspent', 0)
     for unspent in unspent_coins:
@@ -136,19 +136,16 @@ def qrcode_format(address, amount, name, msg):
 def index():
     if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
-    date = time
-    return render_template('index.html',date=date, not_mature_coins=not_mature_coins(), best_block_hash=qtum("getbestblockhash"), qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
+    return render_template('index.html', immature_coins=immature_coins(), best_block_hash=qtum("getbestblockhash"), qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])
 def send(selected_address):
-    date = time
     form = SendForm()
-    return render_template('send.html', address=selected_address, date=date, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+    return render_template('send.html', address=selected_address, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
 @app.route('/send_qtum', methods=['POST'])
 def send_qtum():
-    date = time
     form = SendForm()
     max_spend = qtum_info()
     fee = str(form.include_fee.data)
@@ -168,7 +165,7 @@ def send_qtum():
             return redirect(url_for('send'))
         flash("Success! TX ID: %s" % send_qtum, 'msg')
         return redirect(url_for('send'))
-    return render_template('send.html', date=date, form=form, last_tx=qtum_info("listtransactions '*' 100"), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+    return render_template('send.html', form=form, last_tx=qtum_info("listtransactions '*' 100"), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
 @app.route('/receive', defaults={'selected_address' : ''})
 @app.route('/receive/<selected_address>')
@@ -275,11 +272,16 @@ def upload():
     if wallet_upload.validate_on_submit():
         f = wallet_upload.wallet.data
         filename = secure_filename(f.filename)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        f.save(os.path.join(app.config['WALLET_DIR'], filename))
+        os.rename(WALLET_DIR+"/"+filename, WALLET_DIR+"/"+"wallet.dat")
         flash('Success! Please restart your wallet.', 'upload_msg')
         return redirect(url_for('setup'))
     flash('Something went wrong please try again', 'upload_error')
     return redirect(url_for('setup'))
+
+@app.route('/download', methods=['GET'])
+def download():
+    return send_from_directory(app.config['WALLET_DIR'], filename='wallet.dat', as_attachment=True, attachment_filename='wallet_backup.dat')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

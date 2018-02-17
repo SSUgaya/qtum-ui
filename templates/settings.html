@@ -52,6 +52,7 @@
       <button type="submit" class="btn btn-primary">Upload Backup</button>
     </div>
   </div>
+  <small>NOTE: The file will be renamed wallet.dat</small>
     <br />
   {% if form.errors %}
     {% for field, errors in form.errors.items() %}
@@ -127,7 +128,7 @@
     <a href="/send_req/walletlock" class="btn btn-primary">Lock Wallet</a>
     <a href="/send_req/stop" class="btn btn-primary">Stop Wallet</a>
     <a href="/" class="btn btn-primary">Restart Wallet</a>
-    <a href="/" class="btn btn-primary">Backup Wallet</a>
+    <a href="/download" class="btn btn-primary">Download Backup</a>
   </div>
 
   </div>
