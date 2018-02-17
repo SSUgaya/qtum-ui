@@ -49,9 +49,23 @@ body {
   margin-left: 320px;
 }
 .main-offline {
-  margin-top: 50px;
-
+  margin: 100px;
+  text-align: center;
+  padding-left: 100px;
+  padding-right: 100px;
 }
+
+.offline-page {
+  background-color: #312e32;
+  padding-bottom: 70px;
+  font-size: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 10px;
+}
+
 .transactions {
   background-color: #312e32;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
@@ -110,21 +124,13 @@ body {
   border-radius: 10px;
 }
 
-.offline_page {
-  background-color: #312e32;
-  padding-bottom: 70px;
-  font-size: 16px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 10px;
-}
-
 
 #send-form, #send-wallet, #send-amount, #send-passwd, #send-to_label, #send-description {
   padding: 5px;
     font-weight: 350;
 }
 
-#receive-form, #receive-wallet, #receive-amount, #receive-passwd, #receive-to_label, #receive-description {
+#receive-form, #receive-wallet, #receive-amount, #receive-passwd, #receive-to_label, #receive-description, #encrypt-form {
   padding: 5px;
   font-weight: 350;
 }
@@ -284,12 +290,6 @@ a.text span {
 }
 
 .receive-form {
-  padding-top: 12px;
-  padding-bottom: 20px;
-  /*padding-left: 20px;*/
-}
-
-.encrypt-form {
   padding-top: 12px;
   padding-bottom: 20px;
   /*padding-left: 20px;*/

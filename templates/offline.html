@@ -13,24 +13,27 @@
     <div class="container-fluid">
       {% block content %}
       <div class="main-offline">
-          <div class="offline_page col-md-12 col-sm-12">
+          <div class="offline-page">
             {% if checks == 'No_Wallet' %}
               <h1>Qtum Wallet not Installed</h1>
               <p>
-                You can install the latest wallet by clicking the button below <br />
-                <br />
-                <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Install Now</a>
+                Install the latest wallet from the Qtum Team by clicking the button below <br />
+                <hr>
+                <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Install Qtum Wallet</a>
               </p>
             {% elif checks == 'Not_Running' %}
             <h1>The Qtum Wallet is not Running</h1>
             <p>
-              Click the button to start now the wallet. This page will auto reload. <br />
+              Click the button to start now the wallet. This page will automatically reload.
+            <hr>
+            <br />
               <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Wallet</a>
             </p>
             {% else %}
             <h1>Qtum Wallet is not Encrypted</h1>
             <h4>  Your wallet must be encrypted to use the Pi Web UI</h4>
-            <form class="encrypt-form col-xs-6 col-lg-6" method="post" action="{{ url_for('encrypt_wallet') }}">
+            <hr>
+            <form class="encrypt-form" method="post" action="{{ url_for('encrypt_wallet') }}">
               {{ form.csrf_token }}
             <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
               {{ form.passphrase(type="password", class_="form-control", placeholder="Enter Passphrase to Encrypt Your Wallet")}}
@@ -51,6 +54,8 @@
             {% endwith %}
             </form>
           {% endif %}
+          <br />
+          <small>Join us on <a href="https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A">Telegram</a></small>
           </div>
       </div>
       {% endblock %}
