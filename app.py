@@ -55,12 +55,16 @@ def procedure_call(x='', y='', path=QTUM_PATH):
 
 def qtum_info(x='getwalletinfo', y=''):
     call = procedure_call(x,y)
+    if call == None:
+        return None
     result = str(call,'utf-8')
     parsed_result = json.loads(result)
     return parsed_result
 
 def qtum(x):
     call = procedure_call(x)
+    if call == None:
+        return None
     result = str(call,'utf-8')
     return result
 
@@ -85,9 +89,9 @@ def wallet_checks(a='', b=''):
         return 'Not_Encrypted'
     return 'OK'
 
-def wallet_start_up():
+def wallet_start_up(a='',b=''):
     start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
-    call = procedure_call(start_wallet)
+    call = procedure_call(a, b, start_wallet)
     if call == None:
         return None
     return call
