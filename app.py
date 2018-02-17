@@ -12,11 +12,14 @@ import os
 import subprocess
 
 WALLET_DIR = os.path.expanduser('~/.qtum')
+QTUM_PATH = '~/qtum-wallet/bin/qtum-cli'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['TEMPLATES_AUTO_RELOAD']=True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['WALLET_DIR'] = WALLET_DIR
+app.config['QTUM_PATH'] = QTUM_PATH
+
 QRcode(app)
 Bootstrap(app)
 
@@ -43,21 +46,22 @@ class QtumPassword(FlaskForm):
 class AddNode(FlaskForm):
     nodeaddress = StringField('nodeaddress', validators=[DataRequired(message='Please enter a vaild IP Address')])
 
-def qtum_info(x='getwalletinfo', y=''):
-    process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s %s" % (x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+def procedure_call(x='', y='', path=QTUM_PATH):
+    process = subprocess.Popen("%s %s %s" % (path, x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
     if process.returncode != 0:
         return None
-    result = str(out,'utf-8')
+    return out
+
+def qtum_info(x='getwalletinfo', y=''):
+    call = procedure_call(x,y)
+    result = str(call,'utf-8')
     parsed_result = json.loads(result)
     return parsed_result
 
 def qtum(x):
-    process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s" % x, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
-        return None
-    result = str(out,'utf-8')
+    call = procedure_call(x)
+    result = str(call,'utf-8')
     return result
 
 def immature_coins():
@@ -68,34 +72,32 @@ def immature_coins():
             total_coins += unspent['amount']
     return total_coins
 
-def wallet_checks():
-    process = subprocess.Popen("cd ~/qtum-wallet", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+def wallet_checks(a='', b=''):
+    path = 'cd ~/qtum-wallet'
+    call = procedure_call(a, b, path)
+    if call == None:
         return 'No_Wallet'
     check_wallet = qtum_info()
     if check_wallet == None:
         return 'Not_Running'
     result = list(check_wallet.keys())
-    if result[8] != 'unlocked_until':
+    if 'unlocked_until' not in result:
         return 'Not_Encrypted'
     return 'OK'
 
 def wallet_start_up():
     start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
-    process = subprocess.Popen(start_wallet, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+    call = procedure_call(start_wallet)
+    if call == None:
         return None
-    return out
+    return call
 
 def qtum_unlock(passwd, duration, stake='false'):
-    wallet_unlock = '~/qtum-wallet/bin/qtum-cli walletpassphrase "%s" %d %s' % (passwd, duration, stake)
-    process = subprocess.Popen(wallet_unlock, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+    wallet_unlock = 'walletpassphrase "%s" %d %s' % (passwd, duration, stake)
+    call = procedure_call(wallet_unlock)
+    if call == None:
         return None
-    return out
+    return call
 
 def get_time():
     time_to_stake = qtum("getstakinginfo | grep expectedtime | cut -d':' -f2")
@@ -210,6 +212,7 @@ def encrypt_wallet():
             flash('Opps! Something went wrong.', 'error_encrypt')
             return redirect(url_for('setup'))
         flash(encrypt, 'msg')
+        qtum('stop')
         time.sleep(2)
         wallet_start_up()
         time.sleep(8)
@@ -262,6 +265,8 @@ def offline():
 
 @app.route('/start_wallet')
 def start_wallet():
+    qtum('stop')
+    time.sleep(1)
     wallet_start_up()
     time.sleep(8)
     return redirect(url_for('index'))
