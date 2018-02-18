@@ -19,9 +19,9 @@ Run the following commands to install the Pi UI.
 You should already have the qtum-cli wallet installed and running on the Raspberry Pi.   
 
 1 line install, run the following command.  
-You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-setup)  
+You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
 ```
-$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | bash
+$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-install | bash
 ```
 Or Step by Step.
 ```
