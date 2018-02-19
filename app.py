@@ -12,7 +12,7 @@ import os
 import subprocess
 
 WALLET_DIR = os.path.expanduser('~/.qtum')
-QTUM_PATH = '~/qtum-wallet/bin/qtum-cli'
+QTUM_PATH = 'qtum-cli'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -77,7 +77,7 @@ def immature_coins():
     return total_coins
 
 def wallet_checks(a='', b=''):
-    path = 'cd ~/qtum-wallet'
+    path = 'cd ~/.qtum'
     call = procedure_call(a, b, path)
     if call == None:
         return 'No_Wallet'
@@ -90,7 +90,7 @@ def wallet_checks(a='', b=''):
     return 'OK'
 
 def wallet_start_up(a='',b=''):
-    start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
+    start_wallet = 'qtumd -daemon'
     call = procedure_call(a, b, start_wallet)
     if call == None:
         return None
