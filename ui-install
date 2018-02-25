@@ -14,7 +14,7 @@ else
   echo Installing...
   tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.2.3-beta.tar.gz
   rm qtum-piui-0.2.3-beta.tar.gz
-  pip3 install flask Flask-WTF Flask-QRcode Flask-Bootstrap
+  pip3 install --upgrade -r requirements.txt
   cd  ~/qtum-ui
   python3 app.py &
   sleep 3

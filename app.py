@@ -78,11 +78,7 @@ def immature_coins():
             total_coins += unspent['amount']
     return total_coins
 
-def wallet_checks(a='', b=''):
-    path = 'cd ~/.qtum'
-    call = procedure_call(a, b, path)
-    if call == None:
-        return 'No_Wallet'
+def wallet_checks():
     check_wallet = qtum_info()
     if check_wallet == None:
         return 'Not_Running'

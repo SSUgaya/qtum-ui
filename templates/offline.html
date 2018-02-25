@@ -14,14 +14,7 @@
       {% block content %}
       <div class="main-offline">
           <div class="offline-page">
-            {% if checks == 'No_Wallet' %}
-              <h1>Qtum Wallet not Installed</h1>
-              <p>
-                Install the latest wallet from the Qtum Team by clicking the button below <br />
-                <hr>
-                <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Install Qtum Wallet</a>
-              </p>
-            {% elif checks == 'Not_Running' %}
+            {% if checks == 'Not_Running' %}
             <h1>The Qtum Wallet is not Running</h1>
             <p>
               Click the button to start now the wallet. This page will automatically reload.
