@@ -13,12 +13,14 @@ import subprocess
 
 WALLET_DIR = os.path.expanduser('~/.qtum')
 QTUM_PATH = 'qtum-cli'
+DONATION_ADDR = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['WALLET_DIR'] = WALLET_DIR
 app.config['QTUM_PATH'] = QTUM_PATH
+app.config['DONATION_ADDR'] = DONATION_ADDR
 
 QRcode(app)
 Bootstrap(app)
@@ -131,7 +133,7 @@ def get_account_addresses():
     return all_addresses
 
 def donate_piui():
-    donation_string = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
+    donation_string = DONATION_ADDR
     return donation_string
 
 def qrcode_format(address, amount, name, msg):
