@@ -138,9 +138,11 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
+    block_info = qtum_info("getblockchaininfo")
+    block_time =  qtum_info("getblock", block_info["bestblockhash"])
     if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
-    return render_template('index.html', immature_coins=immature_coins(), best_block_hash=qtum("getbestblockhash"), qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
+    return render_template('index.html', stake_time=get_time(), time=time, immature_coins=immature_coins(), block_time=block_time["time"], block_info=block_info, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo"))
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])

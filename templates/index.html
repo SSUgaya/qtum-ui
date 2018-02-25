@@ -30,23 +30,23 @@
         <strong>Net Weight:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
         <strong>Connections:</strong> <span class="pull-right">{{ get_current_block.connections }} Nodes</span> <br />
-        <strong>Blockchain Size on Disk:</strong> <span class="pull-right"> 636MB </span> <br />
       </div>
     </div>
     <div class="transactions-index table-responsive col-xs-12">
     <h3>Network Information</h3>
-        {%  if get_current_block.connections > 0 %}
-          <strong>Network:</strong><span class="green-sm"> Online</span><br />
-            {% else %}
-          <strong>Network:</strong><span class="red-sm"> Offline</span><br />
-        {% endif %}
-      <strong>Total Sent:</strong> {{ qtum_network.totalbytessent }}  <br />
-      <strong>Total Received:</strong> {{ qtum_network.totalbytesrecv }} <br />
+      {%  if get_current_block.connections > 0 %}
+        <strong>Network:</strong><span class="green-sm"> Online</span><br />
+          {% else %}
+        <strong>Network:</strong><span class="red-sm"> Offline</span><br />
+      {% endif %}
+        <strong>Last Block Time:</strong> {{ time.strftime('%B %d %Y, %I:%M%p %Z', time.localtime(block_time)) }} <br />
+      <strong>Total Sent:</strong> {{ '%0.2f'| format(qtum_network.totalbytessent|float / 1024 / 1024) }} MB  <br />
+      <strong>Total Received:</strong> {{ '%0.2f'| format(qtum_network.totalbytesrecv|float / 1024 / 1024) }} MB <br />
       <hr>
       <strong>Current Block:</strong> {{ get_current_block.blocks }} <br />
       <strong>TX in current block:</strong> {{ qtum_mempool.size }} <br />
-      <strong>Bestblock Hash:</strong><a href="https://explorer.qtum.org/block/{{ best_block_hash }}" target="_blank"> {{ best_block_hash }}</a> <br />
-      <strong>Total Qtum Supply:</strong> {{'%0.6f'| format( get_current_block.moneysupply|float / 1000000)}} Million
+      <strong>Bestblock Hash:</strong><a href="https://explorer.qtum.org/block/{{ block_info.bestblockhash }}" target="_blank"> {{ block_info.bestblockhash }}</a> <br />
+      <strong>Total Qtum Supply:</strong> {{ get_current_block.moneysupply}}
     </div>
   </div>
 {% endblock %}
