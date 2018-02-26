@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, flash, url_for, redirect, send_from_directory
+from flask_bootstrap import Bootstrap
 from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, DecimalField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
-from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import time
 import json

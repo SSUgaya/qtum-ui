@@ -39,11 +39,10 @@
           {% else %}
         <strong>Network:</strong><span class="red-sm"> Offline</span><br />
       {% endif %}
-        <strong>Last Block Time:</strong> {{ time.strftime('%B %d %Y, %I:%M%p %Z', time.localtime(block_time)) }} <br />
+      <strong>Last Block Time:</strong> {{ time.strftime('%B %d %Y, %I:%M%p %Z', time.localtime(block_time)) }} <br />
+      <strong>Current Block:</strong> {{ get_current_block.blocks }} <br />
       <strong>Total Sent:</strong> {{ '%0.2f'| format(qtum_network.totalbytessent|float / 1024 / 1024) }} MB  <br />
       <strong>Total Received:</strong> {{ '%0.2f'| format(qtum_network.totalbytesrecv|float / 1024 / 1024) }} MB <br />
-      <hr>
-      <strong>Current Block:</strong> {{ get_current_block.blocks }} <br />
       <strong>TX in current block:</strong> {{ qtum_mempool.size }} <br />
       <strong>Bestblock Hash:</strong><a href="https://explorer.qtum.org/block/{{ block_info.bestblockhash }}" target="_blank"> {{ block_info.bestblockhash }}</a> <br />
       <strong>Total Qtum Supply:</strong> {{ get_current_block.moneysupply}}
