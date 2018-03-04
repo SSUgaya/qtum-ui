@@ -10,10 +10,10 @@ else
   sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
   mkdir ~/qtum-ui
   echo Downloading Qtum-Ui
-  wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.2.3-beta/qtum-piui-0.2.3-beta.tar.gz
+  wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.3.0-beta/qtum-ui-0.3.0-beta.tar.gz
   echo Installing...
-  tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.2.3-beta.tar.gz
-  rm qtum-piui-0.2.3-beta.tar.gz
+  tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui-0.3.0-beta.tar.gz
+  rm qtum-ui-0.3.0-beta.tar.gz
   pip3 install --upgrade -r requirements.txt
   cd  ~/qtum-ui
   python3 app.py &
