@@ -142,7 +142,7 @@ def index():
         return redirect(url_for('offline'))
     block_info = qtum_info("getblockchaininfo")
     block_time =  qtum_info("getblock", block_info["bestblockhash"])
-    return render_template('index.html', get_address=get_address(), stake_time=get_time(), time=time, immature_coins=immature_coins(), block_time=block_time["time"], block_info=block_info, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo"))
+    return render_template('index.html', get_received=qtum_info("listtransactions '*' 100"), get_address=get_address(), stake_time=get_time(), time=time, immature_coins=immature_coins(), block_time=block_time["time"], block_info=block_info, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo"))
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])
@@ -182,7 +182,6 @@ def receive(selected_address):
 
 @app.route('/new_address', methods=['POST'])
 def new_address():
-    date = time
     form = NewAddressForm()
     if form.validate_on_submit():
         if form.account_address.data == '':
@@ -197,7 +196,6 @@ def new_address():
 
 @app.route('/transaction')
 def transaction():
-    date = time
     return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 100))
 
 @app.route('/setup', methods=['GET', 'POST'])
