@@ -138,10 +138,10 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
-    block_info = qtum_info("getblockchaininfo")
-    block_time =  qtum_info("getblock", block_info["bestblockhash"])
     if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
+    block_info = qtum_info("getblockchaininfo")
+    block_time =  qtum_info("getblock", block_info["bestblockhash"])
     return render_template('index.html', get_address=get_address(), stake_time=get_time(), time=time, immature_coins=immature_coins(), block_time=block_time["time"], block_info=block_info, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo"))
 
 @app.route('/send', defaults={'selected_address' : ''})
@@ -258,6 +258,7 @@ def add_node():
 def send_req(selected_cmd):
     qtum(selected_cmd)
     time.sleep(1)
+    flash('Success! Node Added.', 'msg_node') #THIS NEEDS TO BE IMPLEMENTED ON THE INDEX PAGE
     return redirect(url_for('index'))
 
 @app.route('/offline')

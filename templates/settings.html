@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="main">
-  <div class="setup-page col-sm-12 col-lg-12">
+  <div class="setup-page col-xs-12">
     <h3>Wallet Options</h3>
-  <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
+  <form class="stkaing-form col-xs-12 col-lg-7" method="post" action="{{ url_for('staking_service') }}">
     {{ form.csrf_token }}
   <div class="input-group">
     <span class="input-group-addon">Start Staking</span>
@@ -44,7 +44,7 @@
   <br />
   </form>
 
-  <form class="stkaing-form col-xs-12 col-lg-8" method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+  <form class="stkaing-form col-xs-12 col-lg-7" method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
     {{ form.csrf_token }}
   <div class="input-group">
         {{ wallet_upload.wallet(class_="form-control")}}
@@ -84,7 +84,7 @@
   <br />
   </form>
 
-  <form class="addnode-form col-xs-12 col-lg-8" method="post" action="{{ url_for('add_node') }}">
+  <form class="addnode-form col-xs-12 col-lg-7" method="post" action="{{ url_for('add_node') }}">
     {{ form_addnode.csrf_token }}
   <div class="input-group">
     <span class="input-group-addon">Add Node.....</span>
