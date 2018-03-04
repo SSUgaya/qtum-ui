@@ -22,7 +22,7 @@ You should already have the qtum-cli wallet installed and running on the Raspber
 1 line install, run the following command.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
 ```
-$ curl -L https://github.com/rpiwalletui/qtum-ui/tree/qtum-pkg/ui-install | bash
+$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/qtum-pkg/ui-install | bash
 ```
 Or Step by Step.
 ```
