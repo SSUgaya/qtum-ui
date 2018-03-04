@@ -14,30 +14,7 @@
   {% endblock %}
   {% block body %}
     <div class="container-fluid">
-      <nav class="navbar navbar-inverse sidebar" role="navigation">
-  		<!-- Brand and toggle get grouped for better mobile display -->
-  		<div class="navbar-header">
-  			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-  				<span class="sr-only">Toggle navigation</span>
-  				<span class="icon-bar"></span>
-  				<span class="icon-bar"></span>
-  				<span class="icon-bar"></span>
-  			</button>
-  			<a class="navbar-brand" href="/">Qtum-Wallet Pi UI</a>
-  		</div>
-  		<!-- Collect the nav links, forms, and other content for toggling -->
-  		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-  			<ul class="nav navbar-nav">
-  				<li><a href="/">Overview<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>
-  				<li><a href="/send">Send<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-upload"></span></a></li>
-  				<li><a href="/receive">Receive<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-download"></span></a></li>
-  				<li><a href="/transaction">Transactions<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-sort"></span></a></li>
-          <li><a href="/send_req/walletlock">Lock Wallet<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-lock"></span></a></li>
-  				<li><a href="/send_req/stop">Stop Wallet<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-remove-circle"></span></a></li>
-          <li><a href="/setup">Setup<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
-  			</ul>
-  		</div>
-  </nav>
+       {% include 'includes/_sidebar.html' %}
       {% block content %}{% endblock %}
     </div>
   {% endblock %}
