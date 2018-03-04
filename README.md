@@ -28,11 +28,11 @@ Or Step by Step.
 ```
 $ sudo apt-get update
 $ sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
-$ pip3 install --upgrade -r requirements.txt
 $ wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.3.0-beta/qtum-ui-0.3.0-beta.tar.gz
 $ mkdir ~/qtum-ui  
 $ tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui-0.3.0-beta.tar.gz  
 $ cd ~/qtum-ui
+$ pip3 install --upgrade -r requirements.txt
 ```
 To start the UI run.  
 ```
