@@ -339,7 +339,7 @@ nav.sidebar, .main{
   nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
     width: 100%;
     margin-left: 0px;
-    font-size: 24px;
+    font-size: 0px;
   }
 
   /*Center Icons*/
@@ -366,12 +366,11 @@ nav.sidebar, .main{
   /*gives sidebar width/height*/
   nav.sidebar{
     margin-top: 40px;
-    width: 200px;
-    margin-left: -260px;
+    width: 240px;
+    margin-left: -305px;
     float: left;
     z-index: 8000;
-    margin-bottom: 0px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
   }
 
   /*give sidebar 100% width;*/
@@ -390,16 +389,15 @@ nav.sidebar, .main{
 @media (min-width: 1330px) {
   /*Allow main to be next to Nav*/
   .main {
-    margin-left: 220px;
-    margin-right: 280px;
     margin-top: 40px;
-    padding-left: 120px;
+    padding-left: 260px;
+    padding-right: 80px;
   }
 
   /*Show all nav*/
   nav.sidebar{
     margin-top: 40px;
-    margin-left: 120px;
+    margin-left: 0px;
     float: left;
   }
   /*Show hidden items on nav*/
