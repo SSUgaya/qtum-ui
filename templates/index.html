@@ -31,7 +31,7 @@
         <strong>Approx TTS:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
         <strong>Connections:</strong> <span class="pull-right">{{ get_current_block.connections }} Nodes</span> <br />
       </div>
-      <small id="new-address" class="col-xs-12">Deposit Address: {{ get_address }}</small>
+      <small id="current-address" class="col-xs-12">Deposit Address: {{ get_address }}</small>
     </div>
     <div class="transactions-index col-xs-12">
         <div class="wallet col-xs-12 col-lg-6">
@@ -46,8 +46,8 @@
       <strong>Total Sent:</strong> {{ '%0.2f'| format(qtum_network.totalbytessent|float / 1024 / 1024) }} MB  <br />
       <strong>Total Received:</strong> {{ '%0.2f'| format(qtum_network.totalbytesrecv|float / 1024 / 1024) }} MB <br />
       <strong>TX in current block:</strong> {{ qtum_mempool.size }} <br />
-      <strong>Bestblock Hash:</strong><a href="https://explorer.qtum.org/block/{{ block_info.bestblockhash }}" target="_blank"> {{ block_info.bestblockhash }}</a> <br />
-      <strong>Total Qtum Supply:</strong> {{ get_current_block.moneysupply}}
+      <strong>Total Qtum Supply:</strong> {{ get_current_block.moneysupply}} <br />
+      <strong id="block-hash"> Bestblock Hash:<a href="https://explorer.qtum.org/block/{{ block_info.bestblockhash }}" target="_blank"> {{ block_info.bestblockhash }}</a></strong>
         </div>
         <div class="transactions-last col-xs-12 col-lg-6">
           <h3>Recent Transactions</h3>
@@ -56,7 +56,6 @@
               <tr>
                 <th class="text-center col-sm-3">Date</th>
                 <th class="text-center col-sm-1">Type</th>
-
                 <th class="text-center col-sm-2">Amount</th>
                 <th class="text-center col-sm-2">Confirmations</th>
               </tr>

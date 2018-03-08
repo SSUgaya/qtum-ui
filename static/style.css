@@ -34,30 +34,6 @@ nav.sidebar .navbar-brand{
   padding-top: 10px;
 }
 
-@media only screen and (max-width: 768px) {
-
-    .main {
-      margin-top: 10px;
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-    .offline-page {
-      background-color: #312e32;
-      font-size: 16px;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-      border-radius: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 10px;
-    }
-    .main-offline {
-      margin: 20px;
-      text-align: center;
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-}
-
 .transactions {
   background-color: #312e32;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
@@ -66,7 +42,7 @@ nav.sidebar .navbar-brand{
   padding-bottom: 10px;
 }
 
-.transactions-index, .transactions-send {
+.transactions-index, .transactions-received, .transactions-send {
   margin-top: 22px;
   background-color: #312e32;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
@@ -75,7 +51,7 @@ nav.sidebar .navbar-brand{
   padding-bottom: 10px;
 }
 
-.transactions h3, .transactions-index h3, .transactions-send h3, .receive-page h3, .setup-page h3 {
+.transactions h3, .transactions-received h3, .transactions-index h3, .transactions-send h3, .receive-page h3, .setup-page h3 {
   color: #059be9;
 }
 
@@ -230,12 +206,14 @@ a.text span {
   font-size: 14px
 }
 
-#new-address {
+#new-address, #current-address {
   font-size: 17px;
   text-align: center;
   padding-bottom: 20px;
+  padding-top: 5px;
   color: #c7c7c7;
 }
+
 
 #disable-staking {
   font-size: 15px;
@@ -299,6 +277,39 @@ a.text span {
   padding:0px 15px;
 }
 
+@media only screen and (max-width: 414px) {
+    #current-address, #block-hash, .transactions-last, .transactions-received, .transactions-send {
+      visibility: hidden;
+      display: none;
+    }
+    #new-address, #new-receive-address {
+      font-size: 12px;
+      text-align: center;
+      padding-bottom: 20px;
+      padding-top: 5px;
+      color: #c7c7c7;
+    }
+    .main {
+      margin-top: 10px;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .offline-page {
+      background-color: #312e32;
+      font-size: 16px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+      border-radius: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+    }
+    .main-offline {
+      margin: 20px;
+      text-align: center;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+}
 
  /*Remove rounded coners*/
 

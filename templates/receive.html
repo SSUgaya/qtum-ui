@@ -57,17 +57,17 @@
           <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode(qrcode_reposnse, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-          <small id="new-receive-address" class="col-xs-12"> Address is: {{ message }}</small>
+          <small id="new-receive-address" class="col-lg-12"> Address is: {{ message }}</small>
           {% endfor %}
           {% else %}
           <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode('qtum:%s?amount=&label=&message=' % get_address, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-            <small id="new-address" class="col-xs-12">Current Address: {{ get_address }}</small>
+            <small id="new-address" class="col-lg-12">Current Address: {{ get_address }}</small>
         {% endif %}
       {% endwith %}
     </div>
-  <div class="transactions-index table-responsive col-xs-12">
+  <div class="transactions-received table-responsive col-xs-12">
     <h3>Received Transactions</h3>
     <table class="table table-striped">
       <thead>
@@ -80,7 +80,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for tx in get_received[::-1] %}
+        {% for tx in get_received[-15:][::-1] %}
           {% if "receive" in tx.category %}
           <tr>
             <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
