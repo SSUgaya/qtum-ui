@@ -76,7 +76,6 @@ nav.sidebar .navbar-brand{
   font-size: 16px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-
 }
 
 .wallet h3, .wallet-right h3 {
@@ -214,12 +213,6 @@ a.text span {
   color: #c7c7c7;
 }
 
-
-#disable-staking {
-  font-size: 15px;
-  padding: 30px;
-}
-
 #psswd-change {
   font-size: 17px;
   padding-bottom: 20px;
@@ -246,6 +239,11 @@ a.text span {
   padding-bottom: 40px;
 }
 
+.disable-staking {
+  padding-left: 100px;
+  padding-bottom: 40px;
+}
+
 #donate-address {
   font-size: 8px;
 }
@@ -254,6 +252,9 @@ a.text span {
   font-size: 13px;
 }
 
+.addnode-form {
+  padding-bottom: 10px;
+}
 .receive-form {
   padding-top: 12px;
   padding-bottom: 20px;
@@ -277,7 +278,17 @@ a.text span {
   padding:0px 15px;
 }
 
-@media only screen and (max-width: 414px) {
+#lockModal, #stopModal {
+  margin-top: 100px;
+}
+.modal-content{
+  background-color: #312e32;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 667px) {
     #current-address, #block-hash, .transactions-last, .transactions-received, .transactions-send {
       visibility: hidden;
       display: none;

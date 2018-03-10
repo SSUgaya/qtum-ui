@@ -123,14 +123,10 @@
     {% endif %}
   {% endwith %}
   </form>
-
-  <div id="disable-staking" class="btn-group btn-group-justified">
-    <a href="/send_req/walletlock" class="btn btn-primary">Lock Wallet</a>
-    <a href="/send_req/stop" class="btn btn-primary">Stop Wallet</a>
+  <div class="disable-staking col-xs-12 col-lg-5">
     <a href="/start_wallet" class="btn btn-primary">Restart Wallet</a>
     <a href="/download" class="btn btn-primary">Download Backup</a>
   </div>
-
   </div>
   <div class="transactions-index col-xs-12">
     <h3>Feedback</h3>
@@ -145,7 +141,7 @@
         View source code on <a href="https://github.com/rpiwalletui/qtum-ui">Github</a>
       </p>
     </div>
-    <div class="qrcode-donate-img col-md-6">
+    <div class="qrcode-donate-img col-xs-12 col-md-6">
         <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
     </div>
   </div>
