@@ -1,5 +1,4 @@
 #!/bin/bash
-./qtum-install
 
 latest_release() {
     curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
@@ -21,6 +20,7 @@ echo "Installing........."
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz
 cd  ~/qtum-ui
+./qtum-install
 pip3 install --upgrade -r requirements.txt
 cd ~
 if [ ! -f "$FILE" ]; then
