@@ -18,8 +18,8 @@ wget -O qtum-ui.tar.gz $LATEST -q --show-progress
 echo "Installing........."
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz
-./qtum-install
 cd  ~/qtum-ui
+./qtum-install
 pip3 install --upgrade -r requirements.txt
 cd ~
 if [ ! -f "$FILE" ]; then
