@@ -1,5 +1,4 @@
 #!/bin/bash
-
 latest_release() {
     curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
       grep '"browser_download_url":' |
@@ -31,12 +30,11 @@ if [ ! -f "$FILE" ]; then
 else
   sudo systemctl restart qtum-ui.service
 fi
-clear
 echo "########################################################################"
 echo "Would you like to download the Blockchain via direct download?"
 read -p "This can be faster than syncing the blockchain (y/n) " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo
+  clear
   echo "Downloading Qtum Blockchain"
   wget https://www.dropbox.com/s/5fdkac89yrjfgbz/blockchain.tar.gz -q --show-progress
   sudo systemctl stop qtumd.service
