@@ -1,5 +1,14 @@
 #!/bin/bash
 ./qtum-install
+
+latest_release() {
+    curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
+      grep '"browser_download_url":' |
+      sed -E 's/.*"([^"]+)".*/\1/'  |
+      head -n 1
+}
+
+LATEST="$(latest_release)"
 FILE="/etc/systemd/system/qtum-ui.service"
 cd ~
 rm -rf qtum-ui
@@ -7,14 +16,13 @@ sudo apt-get update
 sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
 echo "Downloading Qtum-Ui..........."
-wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.3.0-beta/qtum-ui-0.3.0-beta.tar.gz
+wget -O qtum-ui.tar.gz $LATEST q --show-progress
 echo "Installing........."
-tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui-0.3.0-beta.tar.gz
-rm qtum-ui-0.3.0-beta.tar.gz
+tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
+rm qtum-ui.tar.gz
 cd  ~/qtum-ui
 pip3 install --upgrade -r requirements.txt
-echo "The UI is now starting."
-echo "to stop the UI type sudo systemctl stop qtum-ui.service"
+cd ~
 if [ ! -f "$FILE" ]; then
   sudo wget https://www.dropbox.com/s/1o2s256pwaol1cq/qtum-ui.service -P /etc/systemd/system/
   sudo systemctl daemon-reload
@@ -22,4 +30,30 @@ if [ ! -f "$FILE" ]; then
   sudo systemctl start qtum-ui.service
 else
   sudo systemctl restart qtum-ui.service
+fi
+clear
+echo "########################################################################"
+echo "Would you like to download the Blockchain via direct download?"
+read -p "This can be faster than syncing the blockchain (y/n) " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  echo
+  echo "Downloading Qtum Blockchain"
+  wget https://www.dropbox.com/s/5fdkac89yrjfgbz/blockchain.tar.gz -q --show-progress
+  sudo systemctl stop qtumd.service
+  rm -rf ~/.qtum/blocks
+  rm -rf ~/.qtum/stateQtum
+  tar -xvf ~/blockchain.tar.gz -C ~/.qtum
+  rm ~/blockchain.tar.gz
+  sudo systemctl start qtumd.service
+  echo "Download Complete, Qtum Wallet restarting..."
+  echo "The Pi UI is now starting"
+  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
+  echo "sudo systemctl stop qtum-ui.service to stop the UI"
+  echo "sudo systemctl start qtum-ui.service to start the UI"
+else
+  clear
+  echo "The Pi UI is now starting"
+  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
+  echo "sudo systemctl stop qtum-ui.service to stop the UI"
+  echo "sudo systemctl start qtum-ui.service to start the UI"
 fi
