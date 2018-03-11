@@ -14,12 +14,12 @@ sudo apt-get update
 sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
 echo "Downloading Qtum-Ui..........."
-wget -O qtum-ui.tar.gz $LATEST q --show-progress
+wget -O qtum-ui.tar.gz $LATEST -q --show-progress
 echo "Installing........."
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz
-cd  ~/qtum-ui
 ./qtum-install
+cd  ~/qtum-ui
 pip3 install --upgrade -r requirements.txt
 cd ~
 if [ ! -f "$FILE" ]; then
@@ -34,7 +34,6 @@ echo "########################################################################"
 echo "Would you like to download the Blockchain via direct download?"
 read -p "This can be faster than syncing the blockchain (y/n) " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  clear
   echo "Downloading Qtum Blockchain"
   wget https://www.dropbox.com/s/5fdkac89yrjfgbz/blockchain.tar.gz -q --show-progress
   sudo systemctl stop qtumd.service
