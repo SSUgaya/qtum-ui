@@ -1,16 +1,33 @@
 #!/bin/bash
 cd ~
 DIR=".qtum"
-if [ -d "$DIR" ]
-then
+FILE="/etc/systemd/system/qtumd.service"
+if [ -d "$DIR" ]; then
   qtum-cli stop
   sleep 2
   echo "Updating the Qtum Wallet"
-  sudo su -c "apt update && apt install —only-upgrade qtum"
-  qtumd -daemon
-else
+  sudo su -c "sudo apt update && sudo apt install qtum"
+  if [ ! -f "$FILE" ]; then
+    sudo wget https://www.dropbox.com/s/4re64to7i8zm4y8/qtumd.service -P /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable qtumd.service
+    sudo systemctl start qtumd.service
+  else
+    sudo systemctl restart qtumd.service
+  fi
+fi
+
+if [ ! -d "$DIR" ]; then
+  echo "Installing Qtum-Core Wallet"
   wget -qO - http://repo.qtum.info/apt/public.key | sudo apt-key add -
   sudo su -c "echo 'deb http://repo.qtum.info/apt/raspbian/ stretch main' >> /etc/apt/sources.list"
   sudo apt update && sudo apt install qtum
-  qtumd -daemon
+  if [ ! -f "$FILE" ]; then
+    sudo wget https://www.dropbox.com/s/4re64to7i8zm4y8/qtumd.service -P /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable qtumd.service
+    sudo systemctl start qtumd.service
+  else
+  sudo systemctl restart qtumd.service
+  fi
 fi
