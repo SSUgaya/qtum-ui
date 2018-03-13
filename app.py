@@ -269,9 +269,9 @@ def offline():
 @app.route('/start_wallet')
 def start_wallet():
     qtum('stop')
-    time.sleep(2)
+    time.sleep(5)
     wallet_start_up()
-    time.sleep(10)
+    time.sleep(20)
     return redirect(url_for('index'))
 
 @app.route('/upload', methods=['POST'])

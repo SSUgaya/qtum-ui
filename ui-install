@@ -10,8 +10,7 @@ LATEST="$(latest_release)"
 FILE="/etc/systemd/system/qtum-ui.service"
 cd ~
 rm -rf qtum-ui
-sudo apt-get update
-sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
+sudo apt-get update && sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
 echo "Downloading Qtum-Ui..........."
 wget -O qtum-ui.tar.gz $LATEST -q --show-progress
@@ -20,7 +19,6 @@ tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz
 cd  ~/qtum-ui
 ./qtum-install
-pip3 install flask
 pip3 install --upgrade -r requirements.txt
 cd ~
 if [ ! -f "$FILE" ]; then
@@ -28,32 +26,18 @@ if [ ! -f "$FILE" ]; then
   sudo systemctl daemon-reload
   sudo systemctl enable qtum-ui.service
 else
-  sudo systemctl restart qtum-ui.service
+  sudo systemctl stop qtum-ui.service
 fi
-echo "########################################################################"
-echo "Would you like to download the Blockchain via direct download?"
-read -p "This can be faster than syncing the blockchain (y/n) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo "Downloading Qtum Blockchain"
-  wget https://www.dropbox.com/s/5fdkac89yrjfgbz/blockchain.tar.gz -q --show-progress
-  sudo systemctl stop qtumd.service
-  rm -rf ~/.qtum/blocks
-  rm -rf ~/.qtum/stateQtum
-  echo "Extracting Blockchain Data....."
-  tar -xvf ~/blockchain.tar.gz -C ~/.qtum
-  rm ~/blockchain.tar.gz
-  echo "Download Complete, Qtum Wallet restarting..."
-  echo "The Pi UI is now starting"
-  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
-  echo "sudo systemctl stop qtum-ui.service to stop the UI"
-  echo "sudo systemctl start qtum-ui.service to start the UI"
-  sudo systemctl start qtum-ui.service
-else
-  clear
-  echo "The Pi UI is now starting"
-  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
-  echo "sudo systemctl stop qtum-ui.service to stop the UI"
-  echo "sudo systemctl start qtum-ui.service to start the UI"
-  sudo systemctl start qtum-ui.service
-fi
+
+echo "Downloading Qtum Blockchain"
+wget https://www.dropbox.com/s/6aqrr62dgnc7pmj/qtum-full.tar.gz -q --show-progress
+echo "Extracting Blockchain Data....."
+tar -xvf qtum-full.tar.gz -C ~/.qtum
+rm qtum-full.tar.gz
+echo "Download Complete, Qtum Wallet restarting..."
+echo "The Pi UI is now starting"
+echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
+echo "sudo systemctl stop qtum-ui.service to stop the UI"
+echo "sudo systemctl start qtum-ui.service to start the UI"
+qtumd -daemon
+sudo systemctl start qtum-ui.service

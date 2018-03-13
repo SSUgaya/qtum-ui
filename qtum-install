@@ -11,3 +11,4 @@ echo "Installing Qtum-Core Wallet via apt-install......"
 wget -qO - http://repo.qtum.info/apt/public.key | sudo apt-key add -
 sudo su -c "echo 'deb http://repo.qtum.info/apt/raspbian/ stretch main' >> /etc/apt/sources.list"
 sudo apt update && sudo apt install qtum
+mkdir .qtum
