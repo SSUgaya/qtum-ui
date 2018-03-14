@@ -1,8 +1,7 @@
 {% extends 'layout.html' %}
-
 {% block content %}
   <div class="main">
-    <div class="transactions table-responsive col-lg-12">
+    <div class="transactions table-responsive col-xs-12">
         <h3>Transaction History</h3>
         <table class="table table-striped">
           <thead>
@@ -21,12 +20,12 @@
               <td align="left">{{ date.strftime('%B %d %Y %I:%M%p %Z', date.localtime(tx.time)) }}</td>
               <td align="center">
                 {% if tx.category == "receive" %}
-                  <span class="glyphicon glyphicon-download green"></span>
-                {% elif tx.category == "send" %}
-                  <span class="glyphicon glyphicon-upload red"></span>
-                {% else %}
-                  <span class="glyphicon glyphicon-refresh blue"></span>
-                {% endif %}
+                    <span class="glyphicon glyphicon-download green"></span>
+                  {% elif tx.category == "send" %}
+                    <span class="glyphicon glyphicon-upload red"></span>
+                  {% else %}
+                    <span class="glyphicon glyphicon-refresh blue"></span>
+                  {% endif %}
               </td>
               <td id="table_padding" align="center" class="text"><span><a href="https://explorer.qtum.org/tx/{{tx.txid}}" target="_blank">{{ tx.txid}}</a></span></td>
               <td id="table_padding" align="center">{{ tx.amount }}</td>

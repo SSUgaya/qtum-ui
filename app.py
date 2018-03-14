@@ -1,20 +1,32 @@
-from flask import Flask, render_template, request, flash, url_for, redirect, send_file
+from flask import Flask, render_template, request, flash, url_for, redirect, send_from_directory
+from flask_bootstrap import Bootstrap
 from flask_qrcode import QRcode
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, DecimalField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
-from flask_bootstrap import Bootstrap
+from werkzeug.utils import secure_filename
 import time
 import json
 import os
 import subprocess
 
+WALLET_DIR = os.path.expanduser('~/.qtum')
+QTUM_PATH = 'qtum-cli'
+DONATION_ADDR = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['TEMPLATES_AUTO_RELOAD']=True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['WALLET_DIR'] = WALLET_DIR
+app.config['QTUM_PATH'] = QTUM_PATH
+app.config['DONATION_ADDR'] = DONATION_ADDR
+
 QRcode(app)
 Bootstrap(app)
+
+class ImportWallet(FlaskForm):
+    wallet = FileField(validators=[FileRequired(),FileAllowed(['dat'], 'Wallet.dat File Only!')])
 
 class SendForm(FlaskForm):
     address = StringField('address', validators=[InputRequired(message='Address cannot be blank')])
@@ -36,38 +48,58 @@ class QtumPassword(FlaskForm):
 class AddNode(FlaskForm):
     nodeaddress = StringField('nodeaddress', validators=[DataRequired(message='Please enter a vaild IP Address')])
 
-def qtum_info(x='getwalletinfo', y=''):
-    process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s %s" % (x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+def procedure_call(x='', y='', path=QTUM_PATH):
+    process = subprocess.Popen("%s %s %s" % (path, x, y), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out,err) = process.communicate()
     if process.returncode != 0:
         return None
-    result = str(out,'utf-8')
+    return out
+
+def qtum_info(x='getwalletinfo', y=''):
+    call = procedure_call(x,y)
+    if call == None:
+        return None
+    result = str(call,'utf-8')
     parsed_result = json.loads(result)
     return parsed_result
 
 def qtum(x):
-    process = subprocess.Popen("~/qtum-wallet/bin/qtum-cli %s" % x, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+    call = procedure_call(x)
+    if call == None:
         return None
-    result = str(out,'utf-8')
+    result = str(call,'utf-8')
     return result
 
-def wallet_start_up():
-    start_wallet = '~/qtum-wallet/bin/qtumd -daemon=1'
-    process = subprocess.Popen(start_wallet, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+def immature_coins():
+    total_coins = 0
+    unspent_coins = qtum_info('listunspent', 0)
+    for unspent in unspent_coins:
+        if unspent['confirmations'] < 500:
+            total_coins += unspent['amount']
+    return total_coins
+
+def wallet_checks():
+    check_wallet = qtum_info()
+    if check_wallet == None:
+        return 'Not_Running'
+    result = list(check_wallet.keys())
+    if 'unlocked_until' not in result:
+        return 'Not_Encrypted'
+    return 'OK'
+
+def wallet_start_up(a='',b=''):
+    start_wallet = 'qtumd -daemon'
+    call = procedure_call(a, b, start_wallet)
+    if call == None:
         return None
-    return out
+    return call
 
 def qtum_unlock(passwd, duration, stake='false'):
-    wallet_unlock = '~/qtum-wallet/bin/qtum-cli walletpassphrase "%s" %d %s' % (passwd, duration, stake)
-    process = subprocess.Popen(wallet_unlock, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
-    (out,err) = process.communicate()
-    if process.returncode != 0:
+    wallet_unlock = 'walletpassphrase "%s" %d %s' % (passwd, duration, stake)
+    call = procedure_call(wallet_unlock)
+    if call == None:
         return None
-    return out
+    return call
 
 def get_time():
     time_to_stake = qtum("getstakinginfo | grep expectedtime | cut -d':' -f2")
@@ -97,7 +129,7 @@ def get_account_addresses():
     return all_addresses
 
 def donate_piui():
-    donation_string = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
+    donation_string = DONATION_ADDR
     return donation_string
 
 def qrcode_format(address, amount, name, msg):
@@ -106,21 +138,20 @@ def qrcode_format(address, amount, name, msg):
 
 @app.route('/')
 def index():
-    if qtum_info() == None:
+    if wallet_checks() != 'OK':
         return redirect(url_for('offline'))
-    date = time
-    return render_template('index.html',date=date, qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo", ""), stake_time=get_time())
+    block_info = qtum_info("getblockchaininfo")
+    block_time =  qtum_info("getblock", block_info["bestblockhash"])
+    return render_template('index.html', get_received=qtum_info("listtransactions '*' 100"), get_address=get_address(), stake_time=get_time(), time=time, immature_coins=immature_coins(), block_time=block_time["time"], block_info=block_info, qtum_mempool=qtum_info("getmempoolinfo"), qtum_network=qtum_info("getnettotals"), qtum_wallet=qtum_info(), get_current_block=qtum_info("getinfo"), list_tx=qtum_info("listtransactions '*'", 100), wallet_version=qtum("--version"), stake_output=qtum_info("getstakinginfo"))
 
 @app.route('/send', defaults={'selected_address' : ''})
 @app.route('/send/<selected_address>', methods=['GET', 'POST'])
 def send(selected_address):
-    date = time
     form = SendForm()
-    return render_template('send.html', address=selected_address, date=date, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+    return render_template('send.html', address=selected_address, form=form, last_tx=qtum_info("listtransactions '*'", 100), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
 @app.route('/send_qtum', methods=['POST'])
 def send_qtum():
-    date = time
     form = SendForm()
     max_spend = qtum_info()
     fee = str(form.include_fee.data)
@@ -140,7 +171,7 @@ def send_qtum():
             return redirect(url_for('send'))
         flash("Success! TX ID: %s" % send_qtum, 'msg')
         return redirect(url_for('send'))
-    return render_template('send.html', date=date, form=form, last_tx=qtum_info("listtransactions '*' 100"), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
+    return render_template('send.html', form=form, last_tx=qtum_info("listtransactions '*' 100"), get_unspent=qtum_info('listunspent', 0), qtum_wallet=qtum_info())
 
 @app.route('/receive', defaults={'selected_address' : ''})
 @app.route('/receive/<selected_address>')
@@ -151,7 +182,6 @@ def receive(selected_address):
 
 @app.route('/new_address', methods=['POST'])
 def new_address():
-    date = time
     form = NewAddressForm()
     if form.validate_on_submit():
         if form.account_address.data == '':
@@ -166,14 +196,14 @@ def new_address():
 
 @app.route('/transaction')
 def transaction():
-    date = time
     return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 100))
 
-@app.route('/setup')
+@app.route('/setup', methods=['GET', 'POST'])
 def setup():
+    wallet_upload = ImportWallet()
     form = QtumPassword()
     form_addnode = AddNode()
-    return render_template('settings.html', form=form, form_addnode=form_addnode, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
+    return render_template('settings.html', wallet_upload=wallet_upload, form=form, form_addnode=form_addnode, qtum_wallet=qtum_info("getinfo"), donate_piui=donate_piui())
 
 @app.route('/encrypt_wallet', methods=['POST'])
 def encrypt_wallet():
@@ -184,13 +214,14 @@ def encrypt_wallet():
             flash('Opps! Something went wrong.', 'error_encrypt')
             return redirect(url_for('setup'))
         flash(encrypt, 'msg')
+        qtum('stop')
         time.sleep(2)
-        subprocess.run("~/qtum-wallet/bin/qtumd -daemon", shell=True)
-        time.sleep(5)
+        wallet_start_up()
+        time.sleep(8)
         return redirect(url_for('index'))
     else:
         flash('Passphrase Cannot be Blank!!', 'error_encrypt')
-        return redirect(url_for('setup'))
+        return redirect(url_for('offline'))
 
 @app.route('/staking_service', methods=['POST'])
 def staking_service():
@@ -220,21 +251,45 @@ def add_node():
         flash('Please Enter a Node Address!', 'error_node')
         return redirect(url_for('setup'))
 
-@app.route('/lock_wallet')
-def lock_wallet():
-    qtum("walletlock")
-    flash('Success! Wallet is Locked', 'msg_node')
-    return redirect(url_for('setup'))
+@app.route('/send_req', defaults={'selected_cmd' : ''})
+@app.route('/send_req/<selected_cmd>', methods=['GET'])
+def send_req(selected_cmd):
+    qtum(selected_cmd)
+    time.sleep(1)
+    flash('Success! Node Added.', 'msg_node') #THIS NEEDS TO BE IMPLEMENTED ON THE INDEX PAGE
+    return redirect(url_for('index'))
 
 @app.route('/offline')
 def offline():
-    return render_template('offline.html')
+    form = QtumPassword()
+    if wallet_checks() == 'OK':
+        return redirect(url_for('index'))
+    return render_template('offline.html', form=form, checks=wallet_checks())
 
 @app.route('/start_wallet')
 def start_wallet():
+    qtum('stop')
+    time.sleep(5)
     wallet_start_up()
-    time.sleep(2)
+    time.sleep(20)
     return redirect(url_for('index'))
 
+@app.route('/upload', methods=['POST'])
+def upload():
+    wallet_upload = ImportWallet()
+    if wallet_upload.validate_on_submit():
+        f = wallet_upload.wallet.data
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(app.config['WALLET_DIR'], filename))
+        os.rename(WALLET_DIR+"/"+filename, WALLET_DIR+"/"+"wallet.dat")
+        flash('Success! Please restart your wallet.', 'upload_msg')
+        return redirect(url_for('setup'))
+    flash('Something went wrong please try again', 'upload_error')
+    return redirect(url_for('setup'))
+
+@app.route('/download', methods=['GET'])
+def download():
+    return send_from_directory(app.config['WALLET_DIR'], filename='wallet.dat', as_attachment=True, attachment_filename='wallet_backup.dat')
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=3404)

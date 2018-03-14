@@ -1,0 +1,13 @@
+#!/bin/bash
+cd ~
+DIR="qtum-wallet"
+if [ ! -d "$DIR" ]; then
+  pkill -9 qtumd
+elif [ -d "$DIR" ]; then
+  ~/qtum-wallet/bin/qtum-cli stop
+  rm -rf qtum-wallet
+fi
+echo "Installing Qtum-Core Wallet via apt-install......"
+wget -qO - http://repo.qtum.info/apt/public.key | sudo apt-key add -
+sudo su -c "echo 'deb http://repo.qtum.info/apt/raspbian/ stretch main' >> /etc/apt/sources.list"
+sudo apt update && sudo apt install qtum

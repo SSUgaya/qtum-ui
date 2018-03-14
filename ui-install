@@ -1,0 +1,57 @@
+#!/bin/bash
+latest_release() {
+    curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
+      grep '"browser_download_url":' |
+      sed -E 's/.*"([^"]+)".*/\1/'  |
+      head -n 1
+}
+
+LATEST="$(latest_release)"
+UISERVICE="/etc/systemd/system/qtum-ui.service"
+QTUMDIR=".qtum"
+cd ~
+rm -rf qtum-ui
+sudo apt-get update && sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
+mkdir ~/qtum-ui
+echo "Downloading Qtum-Ui..........."
+wget -O qtum-ui.tar.gz $LATEST -q --show-progress
+echo "Installing........."
+tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
+rm qtum-ui.tar.gz
+cd  ~/qtum-ui
+./qtum-install
+pip3 install --upgrade -r requirements.txt
+cd ~
+if [ ! -f "$UISERVICE" ]; then
+  sudo wget https://www.dropbox.com/s/1o2s256pwaol1cq/qtum-ui.service -P /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl enable qtum-ui.service
+else
+  sudo systemctl stop qtum-ui.service
+fi
+
+if [ ! -f "$QTUMDIR" ]; then
+  echo "Downloading Qtum Blockchain"
+  wget https://www.dropbox.com/s/e2h49w8899z8mfp/qtum-full.tar.gz -q --show-progress
+  echo "Extracting Blockchain Data....."
+  tar -xvf qtum-full.tar.gz #-C ~/.qtum
+  rm qtum-full.tar.gz
+  clear
+  echo "Download Complete, Qtum Wallet Starting..."
+  echo "The Pi UI is now starting"
+  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
+  echo
+  echo "sudo systemctl stop qtum-ui.service to stop the UI"
+  echo "sudo systemctl start qtum-ui.service to start the UI"
+  qtumd -daemon
+  sudo systemctl start qtum-ui.service
+else
+  clear
+  qtumd -damon
+  echo "The Pi UI is now starting"
+  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
+  echo
+  echo "sudo systemctl stop qtum-ui.service to stop the UI"
+  echo "sudo systemctl start qtum-ui.service to start the UI"
+  sudo systemctl start qtum-ui.service
+fi

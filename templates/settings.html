@@ -2,37 +2,9 @@
 
 {% block content %}
 <div class="main">
-  <div class="setup-page col-sm-12 col-lg-12">
-    <h3>Wallet Settings</h3>
-    <form class="encrypt-form col-xs-12 col-lg-8" method="post" action="{{ url_for('encrypt_wallet') }}">
-      {{ form.csrf_token }}
-    <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
-      <span class="input-group-addon">Encrypt Wallet</span>
-    {% if qtum_wallet.unlocked_until == nill %}
-      {{ form.passphrase(type="password", class_="form-control", placeholder="Enter New Passphrase to Encrypt Wallet")}}
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    {% else %}
-      <input class="form-control" value="This wallet is already encrypted" type="text" disabled>
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary" disabled>Submit</button>
-      </div>
-    {% endif %}
-    </div>
-    <small>NOTE: You will be returned to the overview page after the wallet restarts</small>
-    {% with messages = get_flashed_messages(category_filter=["error_encrypt"]) %}
-      {% if messages %}
-        {% for message in messages %}
-        <div id="send-alert" class="alert alert-danger">
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </form>
-
-  <form class="stkaing-form col-xs-12 col-lg-8" method="post" action="{{ url_for('staking_service') }}">
+  <div class="setup-page col-xs-12">
+    <h3>Wallet Options</h3>
+  <form class="stkaing-form col-xs-12 col-lg-7" method="post" action="{{ url_for('staking_service') }}">
     {{ form.csrf_token }}
   <div class="input-group">
     <span class="input-group-addon">Start Staking</span>
@@ -72,8 +44,47 @@
   <br />
   </form>
 
+  <form class="stkaing-form col-xs-12 col-lg-7" method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+    {{ form.csrf_token }}
+  <div class="input-group">
+        {{ wallet_upload.wallet(class_="form-control")}}
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Upload Backup</button>
+    </div>
+  </div>
+  <small>NOTE: The file will be renamed wallet.dat</small>
+    <br />
+  {% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ ', '.join(errors) }}
+      </div>
+    {% endfor %}
+  {% endif %}
 
-  <form class="addnode-form col-xs-12 col-lg-8" method="post" action="{{ url_for('add_node') }}">
+  {% with messages = get_flashed_messages(category_filter=["upload_msg"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-success">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% with messages = get_flashed_messages(category_filter=["upload_error"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="send-alert" class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <br />
+  </form>
+
+  <form class="addnode-form col-xs-12 col-lg-7" method="post" action="{{ url_for('add_node') }}">
     {{ form_addnode.csrf_token }}
   <div class="input-group">
     <span class="input-group-addon">Add Node.....</span>
@@ -112,11 +123,10 @@
     {% endif %}
   {% endwith %}
   </form>
-
-    <div id="disable-staking" class="btn-group btn-group-justified">
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Lock Wallet</a>
-    <a href="{{ url_for('lock_wallet') }}" class="btn btn-primary">Backup Wallet</a>
-  </div>``
+  <div class="disable-staking col-xs-12 col-lg-5">
+    <a href="/start_wallet" class="btn btn-primary">Restart Wallet</a>
+    <a href="/download" class="btn btn-primary">Download Backup</a>
+  </div>
   </div>
   <div class="transactions-index col-xs-12">
     <h3>Feedback</h3>
@@ -131,9 +141,9 @@
         View source code on <a href="https://github.com/rpiwalletui/qtum-ui">Github</a>
       </p>
     </div>
-    <div class="qrcode-donate-img col-md-6">
+    <div class="qrcode-donate-img col-xs-12 col-md-6">
         <img  src="{{ qrcode(donate_piui, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
     </div>
-</div>
+  </div>
 </div>
 {% endblock %}

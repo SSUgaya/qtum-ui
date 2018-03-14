@@ -1,4 +1,5 @@
-# RPI Qtum Wallet UI
+# RPI Qtum Wallet UI APT VERSION ONLY
+This for poeple who have installed the qtum wallet using the [instructions here.](https://github.com/qtumproject/qtum/wiki/Installing-Qtum-on-Raspberry-Pi)
 
 The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet.  
 Join our Telegram [here.](https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A)
@@ -19,19 +20,19 @@ Run the following commands to install the Pi UI.
 You should already have the qtum-cli wallet installed and running on the Raspberry Pi.   
 
 1 line install, run the following command.  
-You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-setup)  
+You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
 ```
-$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-setup | bash
+$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/qtum-pkg/ui-install | bash
 ```
 Or Step by Step.
 ```
 $ sudo apt-get update
 $ sudo apt-get -y install python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
-$ pip3 install flask Flask-WTF Flask-QRcode Flask-Bootstrap
-$ wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.2.3-beta/qtum-piui-0.2.3-beta.tar.gz
+$ wget https://github.com/rpiwalletui/qtum-ui/releases/download/0.3.0-beta/qtum-ui-0.3.0-beta.tar.gz
 $ mkdir ~/qtum-ui  
-$ tar --strip 1 -C ~/qtum-ui -xf ~/qtum-piui-0.2.3-beta.tar.gz  
+$ tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui-0.3.0-beta.tar.gz  
 $ cd ~/qtum-ui
+$ pip3 install --upgrade -r requirements.txt
 ```
 To start the UI run.  
 ```

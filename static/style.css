@@ -1,97 +1,81 @@
-body {
-    background-color: #393e44;
-  /*background-color: #35495e;*/
-  /*color: #959396;*/
+body, html {
+  height: 100%;
+  background-color: #393e44;
   color: #fafdffab;
-  }
-
-.sidenav {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-left: 50px;
-  width: 300px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #312e32;
-  overflow-x: hidden;
-  padding: 10px;
-  padding-bottom: 55px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 10px;
-}
-
-.container-fluid {
-  margin-left: 50px;
-  padding-right: 50px;
-}
-.sidenav h2 {
-  color: #059be9;
-  text-align: center;
-  margin: 8px;
-  font-size: 30px;
-}
-
-@media screen and (max-width: 768px) {
-  .sidenav {
-    width: 240px;
-    margin-left: 60px;
-  }
-  .main {
-    margin-top: 50px;
-    margin-left: 30px;
-  }
 }
 
 .main {
-  margin-top: 50px;
-  margin-left: 320px;
+  margin-top: 40px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
+
+nav.sidebar .navbar-brand{
+  margin-top: 0px;
+  color: #059be9;
+  font-size: 22px
+}
+
+.main-offline {
+  margin: 80px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.offline-page {
+  background-color: #312e32;
+  padding-bottom: 70px;
+  font-size: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 10px;
+}
+
 .transactions {
   background-color: #312e32;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   margin-bottom: 40px;
   padding-bottom: 10px;
 }
 
-.transactions-index, .transactions-send {
-  margin-top: 18px;
+.transactions-index, .transactions-received, .transactions-send {
+  margin-top: 22px;
   background-color: #312e32;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   margin-bottom: 40px;
   padding-bottom: 10px;
 }
 
-.transactions h3, .transactions-index h3, .transactions-send h3, .receive-page h3, .setup-page h3 {
+.transactions h3, .transactions-received h3, .transactions-index h3, .transactions-send h3, .receive-page h3, .setup-page h3 {
   color: #059be9;
 }
 
 .index-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  padding-bottom: 20px;
-  height: 100%;
+  /*padding-bottom: 10px;*/
 }
 
 .receive-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  height: 100%;
+
 }
 
 .setup-page {
   background-color: #312e32;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  height: 100%;
 }
 
 .wallet h3, .wallet-right h3 {
@@ -102,17 +86,17 @@ body {
   background-color: #312e32;
   padding-bottom: 70px;
   font-size: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 
 
 #send-form, #send-wallet, #send-amount, #send-passwd, #send-to_label, #send-description {
   padding: 5px;
-    font-weight: 350;
+  font-weight: 350;
 }
 
-#receive-form, #receive-wallet, #receive-amount, #receive-passwd, #receive-to_label, #receive-description {
+#receive-form, #receive-wallet, #receive-amount, #receive-passwd, #receive-to_label, #receive-description, #encrypt-form {
   padding: 5px;
   font-weight: 350;
 }
@@ -221,29 +205,21 @@ a.text span {
   font-size: 14px
 }
 
-#new-address {
+#new-address, #current-address {
   font-size: 17px;
   text-align: center;
   padding-bottom: 20px;
+  padding-top: 5px;
   color: #c7c7c7;
-}
-
-#disable-staking {
-  padding-top: 20px;
-  font-size: 17px;
-  /*text-align: center;*/
-  padding-bottom: 20px;
 }
 
 #psswd-change {
   font-size: 17px;
-  /*text-align: center;*/
   padding-bottom: 20px;
 }
 
 #backup-wallet {
   font-size: 17px;
-  /*text-align: center;*/
   padding-bottom: 20px;
 }
 
@@ -263,6 +239,11 @@ a.text span {
   padding-bottom: 40px;
 }
 
+.disable-staking {
+  padding-left: 100px;
+  padding-bottom: 40px;
+}
+
 #donate-address {
   font-size: 8px;
 }
@@ -271,13 +252,10 @@ a.text span {
   font-size: 13px;
 }
 
-.receive-form {
-  padding-top: 12px;
-  padding-bottom: 20px;
-  /*padding-left: 20px;*/
+.addnode-form {
+  padding-bottom: 10px;
 }
-
-.encrypt-form {
+.receive-form {
   padding-top: 12px;
   padding-bottom: 20px;
   /*padding-left: 20px;*/
@@ -299,3 +277,193 @@ a.text span {
   line-height:30px;
   padding:0px 15px;
 }
+
+#lockModal, #stopModal {
+  margin-top: 100px;
+}
+.modal-content{
+  background-color: #312e32;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 667px) {
+    #current-address, #block-hash, .transactions-last, .transactions-received, .transactions-send {
+      visibility: hidden;
+      display: none;
+    }
+    #new-address, #new-receive-address {
+      font-size: 12px;
+      text-align: center;
+      padding-bottom: 20px;
+      padding-top: 5px;
+      color: #c7c7c7;
+    }
+    .main {
+      margin-top: 10px;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .offline-page {
+      background-color: #312e32;
+      font-size: 16px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+      border-radius: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+    }
+    .main-offline {
+      margin: 20px;
+      text-align: center;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+}
+
+ /*Remove rounded coners*/
+
+ nav.sidebar.navbar {
+   background-color: #312e32;
+   font-size: 18px;
+   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.0), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+   border-radius: 10px;
+ }
+
+ nav.sidebar, .main{
+   -webkit-transition: margin 200ms ease-out;
+     -moz-transition: margin 200ms ease-out;
+     -o-transition: margin 200ms ease-out;
+     transition: margin 200ms ease-out;
+ }
+
+ /* Add gap to nav and right windows.*/
+ .main{
+   padding: 10px 10px 0 10px;
+ }
+
+ /* .....NavBar: Icon only with coloring/layout.....*/
+
+ /*small/medium side display*/
+ @media (min-width: 768px) {
+
+   /*Allow main to be next to Nav*/
+   .main{
+     position: absolute;
+     margin-left: 40px;
+     float: right;
+     margin-right: 40px;
+   }
+
+   /*lets nav bar to be showed on mouseover*/
+   nav.sidebar:hover + .main{
+     margin-left: 210px;
+   }
+
+   /*Center Brand*/
+   nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+     margin-left: 0px;
+   }
+   /*Center Brand*/
+   nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+     text-align: center;
+     width: 100%;
+     margin-left: 0px;
+   }
+
+   /*Center Icons*/
+   nav.sidebar a{
+     padding-right: 13px;
+   }
+
+   /*adds border top to first nav box */
+   nav.sidebar .navbar-nav > li:first-child{
+     border-top: 1px #e5e5e5 solid;
+   }
+
+   /*adds border to bottom nav boxes*/
+   nav.sidebar .navbar-nav > li{
+     border-bottom: 1px #e5e5e5 solid;
+   }
+
+   /* Colors/style dropdown box*/
+   nav.sidebar .navbar-nav .open .dropdown-menu {
+     position: static;
+     float: none;
+     width: auto;
+     margin-top: 0;
+     background-color: transparent;
+     border: 0;
+     -webkit-box-shadow: none;
+     box-shadow: none;
+   }
+
+   /*allows nav box to use 100% width*/
+   nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+     padding: 0 0px 0 0px;
+   }
+
+   /*colors dropdown box text */
+   .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+     color: #777;
+   }
+
+   /*gives sidebar width/height*/
+   nav.sidebar{
+     width: 200px;
+     height: 100%;
+     margin-left: -170px;
+     float: left;
+     z-index: 8000;
+     margin-bottom: 0px;
+     margin-top: 50px;
+     padding-bottom: 10px;
+   }
+
+   /*give sidebar 100% width;*/
+   nav.sidebar li {
+     width: 100%;
+   }
+
+   /* Move nav to full on mouse over*/
+   nav.sidebar:hover{
+     margin-left: 0px;
+   }
+   /*for hiden things when navbar hidden*/
+   .forAnimate{
+     opacity: 0;
+   }
+ }
+
+ /* .....NavBar: Fully showing nav bar..... */
+
+ @media (min-width: 1330px) {
+
+   /*Allow main to be next to Nav*/
+   .main{
+     margin-left: 210px;
+   }
+
+   /*Show all nav*/
+   nav.sidebar{
+     margin-left: 0px;
+     float: left;
+   }
+   /*Show hidden items on nav*/
+   nav.sidebar .forAnimate{
+     opacity: 1;
+   }
+ }
+
+ nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+   color: #CCC;
+   background-color: transparent;
+ }
+
+ nav:hover .forAnimate{
+   opacity: 1;
+ }
+ section{
+   padding-left: 15px;
+ }
