@@ -1,20 +1,30 @@
 #!/bin/bash
 latest_release() {
+    curl --silent "https://api.github.com/repos/$1/releases/latest" |
+      grep '"tag_name":' |
+      sed -E 's/.*"([^"]+)".*/\1/' |
+      head -n 1
+}
+latest_ui() {
     curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
       grep '"browser_download_url":' |
-      sed -E 's/.*"([^"]+)".*/\1/'  |
+      sed -E 's/.*"([^"]+)".*/\1/' |
       head -n 1
 }
 
-LATEST="$(latest_release)"
+UILATEST="$(latest_release "rpiwalletui/qtum-ui")"
+QTUMLATEST="$(latest_release "qtumproject/qtum")"
 UISERVICE="/etc/systemd/system/qtum-ui.service"
 QTUMDIR=".qtum"
+PIHOST="$(hostname)"
+DLLATEST="$(latest_release)"
+
 cd ~
 rm -rf qtum-ui
 sudo apt-get update && sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
 echo "Downloading Qtum-Ui..........."
-wget -O qtum-ui.tar.gz $LATEST -q --show-progress
+wget -O qtum-ui.tar.gz $DLLATEST -q --show-progress
 echo "Installing........."
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz
@@ -32,26 +42,31 @@ fi
 
 if [ ! -f "$QTUMDIR" ]; then
   echo "Downloading Qtum Blockchain"
-  wget https://www.dropbox.com/s/e2h49w8899z8mfp/qtum-full.tar.gz -q --show-progress
+  wget https://www.dropbox.com/s/sg8qvin0xo6aarn/qtum-full.tar.gz -q --show-progress
   echo "Extracting Blockchain Data....."
-  tar -xvf qtum-full.tar.gz #-C ~/.qtum
+  tar -xvf qtum-full.tar.gz
   rm qtum-full.tar.gz
-  clear
-  echo "Download Complete, Qtum Wallet Starting..."
-  echo "The Pi UI is now starting"
-  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
-  echo
-  echo "sudo systemctl stop qtum-ui.service to stop the UI"
-  echo "sudo systemctl start qtum-ui.service to start the UI"
   qtumd -daemon
   sudo systemctl start qtum-ui.service
 else
   clear
   qtumd -damon
-  echo "The Pi UI is now starting"
-  echo "Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A"
-  echo
-  echo "sudo systemctl stop qtum-ui.service to stop the UI"
-  echo "sudo systemctl start qtum-ui.service to start the UI"
   sudo systemctl start qtum-ui.service
+  sleep 5
 fi
+clear
+echo "///////////////////////////////////////////////////////////////////////"
+echo "// The Qtum Pi UI is now starting......                              //"
+echo "//                                                                   //"
+echo "// Join us on Telegram https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A  //"
+echo "//                                                                   //"
+echo "// View the source code https://github.com/rpiwalletui/qtum-ui       //"
+echo "//                                                                   //"
+echo "// Latest Qtum Pi UI Version "$UILATEST"                              //"
+echo "//                                                                   //"
+echo "// Latest Qtum Wallet "$QTUMLATEST"                      //"
+echo "//                                                                   //"
+echo "// Contact: trevsadev@protonmail.com                                 //"
+echo "//                                                                   //"
+echo "// The Qtum Pi UI is now running at http://"$PIHOST":3404               //"
+echo "///////////////////////////////////////////////////////////////////////"
