@@ -61,27 +61,6 @@
       </div>
     {% endfor %}
   {% endif %}
-
-  {% with messages = get_flashed_messages(category_filter=["upload_msg"]) %}
-    {% if messages %}
-      {% for message in messages %}
-      <div id="send-alert" class="alert alert-success">
-        {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-
-  {% with messages = get_flashed_messages(category_filter=["upload_error"]) %}
-    {% if messages %}
-      {% for message in messages %}
-      <div id="send-alert" class="alert alert-danger">
-        {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  <br />
   </form>
 
   <form class="addnode-form col-xs-12 col-lg-7" method="post" action="{{ url_for('add_node') }}">

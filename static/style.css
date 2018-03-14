@@ -10,6 +10,11 @@ body, html {
   padding-right: 0px;
 }
 
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
 nav.sidebar .navbar-brand{
   margin-top: 0px;
   color: #059be9;
@@ -322,7 +327,6 @@ a.text span {
     }
 }
 
- /*Remove rounded coners*/
 
  nav.sidebar.navbar {
    background-color: #312e32;

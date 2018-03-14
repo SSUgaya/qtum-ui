@@ -88,12 +88,12 @@ def wallet_checks():
         return 'Not_Encrypted'
     return 'OK'
 
-def wallet_start_up(a='',b=''):
-    start_wallet = 'qtumd -daemon'
-    call = procedure_call(a, b, start_wallet)
-    if call == None:
+def wallet_start_up():
+    process = subprocess.Popen("qtumd -daemon", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    (out,err) = process.communicate()
+    if process.returncode != 0:
         return None
-    return call
+    return process
 
 def qtum_unlock(passwd, duration, stake='false'):
     wallet_unlock = 'walletpassphrase "%s" %d %s' % (passwd, duration, stake)
@@ -213,8 +213,8 @@ def encrypt_wallet():
         encrypt = qtum("encryptwallet '%s'" % form.passphrase.data)
         if encrypt == None:
             flash('Opps! Something went wrong.', 'error_encrypt')
-            return redirect(url_for('setup'))
-        flash(encrypt, 'msg')
+            return redirect(url_for('offline'))
+        flash(encrypt, 'flash_msg')
         qtum('stop')
         time.sleep(2)
         wallet_start_up()
@@ -257,22 +257,26 @@ def add_node():
 def send_req(selected_cmd):
     qtum(selected_cmd)
     time.sleep(1)
-    flash('Success! Node Added.', 'msg_node') #THIS NEEDS TO BE IMPLEMENTED ON THE INDEX PAGE
-    return redirect(url_for('index'))
+    if selected_cmd == "walletlock":
+        flash('Success! Wallet Locked.', 'flash_msg')
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('offline'))
 
 @app.route('/offline')
 def offline():
+    wallet_upload = ImportWallet()
     form = QtumPassword()
     if wallet_checks() == 'OK':
         return redirect(url_for('index'))
-    return render_template('offline.html', form=form, checks=wallet_checks())
+    return render_template('offline.html', wallet_upload=wallet_upload, form=form, checks=wallet_checks())
 
 @app.route('/start_wallet')
 def start_wallet():
     qtum('stop')
     time.sleep(5)
     wallet_start_up()
-    time.sleep(20)
+    time.sleep(15)
     return redirect(url_for('index'))
 
 @app.route('/upload', methods=['POST'])
@@ -283,14 +287,18 @@ def upload():
         filename = secure_filename(f.filename)
         f.save(os.path.join(app.config['WALLET_DIR'], filename))
         os.rename(WALLET_DIR+"/"+filename, WALLET_DIR+"/"+"wallet.dat")
-        flash('Success! Please restart your wallet.', 'upload_msg')
-        return redirect(url_for('setup'))
-    flash('Something went wrong please try again', 'upload_error')
-    return redirect(url_for('setup'))
+        qtum('stop')
+        time.sleep(4)
+        wallet_start_up()
+        time.sleep(15)
+        flash('Success! Your wallet has been updated.', 'flash_msg')
+        return redirect(url_for('index'))
+    flash('Something went wrong please try again', 'flash_error')
+    return redirect(url_for('index'))
 
 @app.route('/download', methods=['GET'])
 def download():
     return send_from_directory(app.config['WALLET_DIR'], filename='wallet.dat', as_attachment=True, attachment_filename='wallet_backup.dat')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=3404)
