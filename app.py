@@ -214,7 +214,7 @@ def encrypt_wallet():
         if encrypt == None:
             flash('Opps! Something went wrong.', 'error_encrypt')
             return redirect(url_for('offline'))
-        flash(encrypt, 'flash_msg')
+        flash('Wallet Now Encypted', 'flash_msg')
         qtum('stop')
         time.sleep(2)
         wallet_start_up()
@@ -301,4 +301,4 @@ def download():
     return send_from_directory(app.config['WALLET_DIR'], filename='wallet.dat', as_attachment=True, attachment_filename='wallet_backup.dat')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3404)
+    app.run(host='0.0.0.0', debug=True)

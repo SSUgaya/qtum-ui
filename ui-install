@@ -17,7 +17,7 @@ QTUMLATEST="$(latest_release "qtumproject/qtum")"
 UISERVICE="/etc/systemd/system/qtum-ui.service"
 QTUMDIR=".qtum"
 PIHOST="$(hostname)"
-DLLATEST="$(latest_release)"
+DLLATEST="$(latest_ui)"
 
 cd ~
 rm -rf qtum-ui
