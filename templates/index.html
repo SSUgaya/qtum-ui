@@ -59,7 +59,7 @@
         <div class="wallet col-xs-12 col-lg-6">
     <h3>Network Information</h3>
       {%  if get_current_block.moneysupply == 0 %}
-        <strong>Network:</strong><span class="blue-sm"> Syncing</span><br />
+        <strong>Network:</strong><span class="blue-sm"> Syncing.....</span><br />
           {% elif get_current_block.connections > 0 %}
         <strong>Network:</strong><span class="green-sm"> Online</span><br />
           {% else %}

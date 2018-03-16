@@ -17,11 +17,10 @@
             {% if checks == 'Not_Running' %}
             <h1>The Qtum Wallet is not Running</h1>
             <p>
-              Click the button to start now the wallet. This page will automatically reload.
+              Only click once, the wallet can take upto 1 minute to startup and respond to the UI.
             <hr>
             <br />
-              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Wallet</a>
-              <a href="{{ url_for('index') }}" class="btn btn-primary">Home Page</a>
+              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Qtum Wallet</a>
             </p>
             {% else %}
             <h1>Qtum Wallet is not Encrypted</h1>
