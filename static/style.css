@@ -183,6 +183,11 @@ a.text span {
   font-size: 20px
 }
 
+.blue-sm {
+  color: #3379b7;
+  font-size: 16px
+}
+
 .dropdown-header {
   font-size: 18px;
   color: #059be9;
