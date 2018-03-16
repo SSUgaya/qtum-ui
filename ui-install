@@ -50,9 +50,8 @@ if [ ! -f "$QTUMDIR" ]; then
   sudo systemctl start qtum-ui.service
 else
   clear
-  qtumd -damon
+  qtumd -daemon
   sudo systemctl start qtum-ui.service
-  sleep 5
 fi
 clear
 echo "///////////////////////////////////////////////////////////////////////"
