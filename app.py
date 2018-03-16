@@ -93,6 +93,8 @@ def wallet_start_up():
     (out,err) = process.communicate()
     if process.returncode != 0:
         return None
+    while qtum('getinfo') == None:
+        time.sleep(3)
     return process
 
 def qtum_unlock(passwd, duration, stake='false'):
@@ -218,7 +220,6 @@ def encrypt_wallet():
         qtum('stop')
         time.sleep(2)
         wallet_start_up()
-        time.sleep(8)
         return redirect(url_for('index'))
     else:
         flash('Passphrase Cannot be Blank!!', 'error_encrypt')
@@ -274,9 +275,8 @@ def offline():
 @app.route('/start_wallet')
 def start_wallet():
     qtum('stop')
-    time.sleep(5)
+    time.sleep(3)
     wallet_start_up()
-    time.sleep(15)
     return redirect(url_for('index'))
 
 @app.route('/upload', methods=['POST'])
@@ -288,9 +288,8 @@ def upload():
         f.save(os.path.join(app.config['WALLET_DIR'], filename))
         os.rename(WALLET_DIR+"/"+filename, WALLET_DIR+"/"+"wallet.dat")
         qtum('stop')
-        time.sleep(4)
+        time.sleep(3)
         wallet_start_up()
-        time.sleep(15)
         flash('Success! Your wallet has been updated.', 'flash_msg')
         return redirect(url_for('index'))
     flash('Something went wrong please try again', 'flash_error')
@@ -301,4 +300,4 @@ def download():
     return send_from_directory(app.config['WALLET_DIR'], filename='wallet.dat', as_attachment=True, attachment_filename='wallet_backup.dat')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=3404)
