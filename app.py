@@ -14,7 +14,7 @@ import subprocess
 WALLET_DIR = os.path.expanduser('~/.qtum')
 QTUM_PATH = 'qtum-cli'
 DONATION_ADDR = 'qtum:QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ?amount=&label=Donation&message=PIUI-Donation'
-UIVERSION = 'v0.3.2-Beta'
+UIVERSION = 'v0.3.3-Beta'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
