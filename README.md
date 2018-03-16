@@ -37,9 +37,9 @@ $ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-instal
 To Access the UI enter the hostname or IP of your Raspberry Pi  
 http://YOUR_RASPBERRY_PI_LAN_IP:3404 or http://raspberrypi:3404
 
-## Usage
-
-TODO: Use cases and example code coming soon.  
+## Issues
+Button does not display on Modal in mobile view  < 414px  
+UI slow when wallet is scyncing can seem like the UI is not responding.  
 
 ## Contributing
 

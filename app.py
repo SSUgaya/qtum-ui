@@ -199,7 +199,7 @@ def new_address():
 
 @app.route('/transaction')
 def transaction():
-    return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 100))
+    return render_template('transactions.html', date=time, all_tx=qtum_info("listtransactions '*'", 200))
 
 @app.route('/setup', methods=['GET', 'POST'])
 def setup():
