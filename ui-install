@@ -20,6 +20,7 @@ PIHOST="$(hostname)"
 DLLATEST="$(latest_ui)"
 
 cd ~
+rm qtum-full.tar.gz
 rm -rf qtum-ui
 sudo apt-get update && sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
@@ -40,7 +41,7 @@ else
   sudo systemctl stop qtum-ui.service
 fi
 
-if [ ! -f "$QTUMDIR" ]; then
+if [ ! -d "$QTUMDIR" ]; then
   echo "Downloading Qtum Blockchain"
   wget https://www.dropbox.com/s/sg8qvin0xo6aarn/qtum-full.tar.gz -q --show-progress
   echo "Extracting Blockchain Data....."
