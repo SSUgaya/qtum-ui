@@ -48,10 +48,12 @@ if [ ! -d "$QTUMDIR" ]; then
   tar -xvf qtum-full.tar.gz
   rm qtum-full.tar.gz
   qtumd -daemon
+  sleep 20
   sudo systemctl start qtum-ui.service
 else
   clear
   qtumd -daemon
+  sleep 20
   sudo systemctl start qtum-ui.service
 fi
 clear
