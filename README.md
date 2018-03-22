@@ -37,8 +37,17 @@ $ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-instal
 To Access the UI enter the hostname or IP of your Raspberry Pi  
 http://YOUR_RASPBERRY_PI_LAN_IP:3404 or http://raspberrypi:3404
 
+## Direct image download
+If you would prefer you can download and burn this image directly to your MicroSD Card.
+This image is Raspbian Lite and includes the Pi UI and Qtum Wallet.
+[Download Here](https://www.dropbox.com/s/6al4ooi648gdhu7/qtum_ui_0.3.3_beta.img.zip?dl=1)
+Once finished go to http://stakeqtums:3404 to finish setting up your wallet.
+Please, note the UI maybe slow why the wallet syncs with the network.
+The user for this image is pi and the password is qtumpiui
+To change the password type `passwd` in the terminal and follow the prompts.
+Also, type `sudo raspi-config` and change the time zone then `sudo reboot`
+
 ## Issues
-Button does not display on Modal in mobile view  < 414px  
 UI slow when wallet is scyncing can seem like the UI is not responding.  
 
 ## Contributing
