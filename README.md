@@ -28,7 +28,7 @@ PLEASE BACKUP YOUR WALLET.DAT FILE BEFORE INSTALLING.
 Run the following commands to install the Pi UI.  
 This will also install/update the Qtum core wallet so no need to install it first.   
 
-Copy and past the install script below.
+Copy and past the install script below.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
 NOTE: Installation takes 10-20min if it's a new install.
 ```
@@ -38,14 +38,14 @@ To Access the UI enter the hostname or IP of your Raspberry Pi
 http://YOUR_RASPBERRY_PI_LAN_IP:3404 or http://raspberrypi:3404
 
 ## Direct image download
-If you would prefer you can download and burn this image directly to your MicroSD Card.
-This image is Raspbian Lite and includes the Pi UI and Qtum Wallet.
-[Download Here](https://www.dropbox.com/s/6al4ooi648gdhu7/qtum_ui_0.3.3_beta.img.zip?dl=1)
-Once finished go to http://stakeqtums:3404 to finish setting up your wallet.
-Please, note the UI maybe slow why the wallet syncs with the network.
-The user for this image is pi and the password is qtumpiui
-To change the password type `passwd` in the terminal and follow the prompts.
-Also, type `sudo raspi-config` and change the time zone then `sudo reboot`
+If you would prefer you can download and burn this image directly to your MicroSD Card.  
+This image is Raspbian Lite and includes the Pi UI and Qtum Wallet.  
+[Download Here](https://www.dropbox.com/s/6al4ooi648gdhu7/qtum_ui_0.3.3_beta.img.zip?dl=1)  
+Once finished go to http://stakeqtums:3404 to finish setting up your wallet.  
+Please, note the UI maybe slow why the wallet syncs with the network.  
+The user for this image is `pi` and the password is `qtumpiui`  
+To change the password type `passwd` in the terminal and follow the prompts.  
+Also, type `sudo raspi-config` and change the time zone then `sudo reboot`  
 
 ## Issues
 UI slow when wallet is scyncing can seem like the UI is not responding.  
