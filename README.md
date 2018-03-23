@@ -1,6 +1,5 @@
-# RPI Qtum Wallet UI  
-The Qtum Wallet UI has been developed to give Raspberry Pi users a browser interface for interacting with the wallet.  
-Join our Telegram [here.](https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A)
+# Qtum Wallet UI for Ubuntu
+ Join our Telegram [here.](https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A)
 
 [Demo running on a Raspberry Pi 3](http://110.145.75.228:5000/)  
 
@@ -17,39 +16,46 @@ UI will run on Pi reboot
 The UI checks and installs/updates the latest Qtum Wallet.  
 
 ## Please Note  
-Currently only tested using a Raspberry Pi 3 running [RASPBIAN STRETCH.](https://www.raspberrypi.org/downloads/raspbian/)
-
 This Browser UI is meant to run on your LAN only.  
 Allowing internet access to the UI puts you at risk of someone gaining accessing to your wallet.  
 By default the UI is not accessible from the Internet.  
 
 ## Installation  
 PLEASE BACKUP YOUR WALLET.DAT FILE BEFORE INSTALLING.  
-Run the following commands to install the Pi UI.  
+Run the following commands to install  
 This will also install/update the Qtum core wallet so no need to install it first.   
 
 Copy and past the install script below.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
-NOTE: Installation takes 10-20min if it's a new install.
 ```
 $ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-install | bash
 ```
-To Access the UI enter the hostname or IP of your Raspberry Pi  
-http://YOUR_RASPBERRY_PI_LAN_IP:3404 or http://raspberrypi:3404
+## Setup the UI as s Service  
+Follow this guide if you want the UI to run on startup.  
+Create the following file `sudo nano /etc/systemd/system/qtum-ui.service`  
+(enter your password if prompted and press `y` to continue) then add the following.
+Making sure to replace `USER` with your current user.
+```
+[Unit]
+Description=Qtum Pi UI
+After=multi-user.target
 
-## Direct image download
-If you would prefer you can download and burn this image directly to your MicroSD Card.  
-This image is Raspbian Lite and includes the Pi UI and Qtum Wallet.  
-[Download Here](https://www.dropbox.com/s/6al4ooi648gdhu7/qtum_ui_0.3.3_beta.img.zip?dl=1)  
-Once finished go to http://stakeqtums:3404 to finish setting up your wallet.  
-Please, note the UI maybe slow why the wallet syncs with the network.  
-The user for this image is `pi` and the password is `qtumpiui`  
-To change the password type `passwd` in the terminal and follow the prompts.  
-Also, type `sudo raspi-config` and change the time zone then `sudo reboot`  
+[Service]
+Type=idle
+User=USER
+WorkingDirectory=/home/USER/qtum-ui
+ExecStart=/usr/bin/python3 /home/USER/qtum-ui/app.py
+
+[Install]
+WantedBy=multi-user.target
+```
+To exit and save the file `Ctrl+x` then `y` then `enter`
+Restart systemctl `sudo systemctl daemon-reload`  
+Now enable the UI service `sudo systemctl enable qtum-ui.service`
+Lastly is to start the UI `sudo systemctl start qtum-ui.service`  
 
 ## Issues
 UI slow when wallet is scyncing can seem like the UI is not responding.  
 
 ## Contributing
-
 Bug reports and pull requests are welcome on GitHub at https://github.com/rpiwalletui/qtum-ui.  
