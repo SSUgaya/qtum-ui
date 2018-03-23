@@ -5,18 +5,11 @@ latest_release() {
       sed -E 's/.*"([^"]+)".*/\1/' |
       head -n 1
 }
-latest_ui() {
-    curl --silent "https://api.github.com/repos/rpiwalletui/qtum-ui/releases/latest" |
-      grep '"browser_download_url":' |
-      sed -E 's/.*"([^"]+)".*/\1/' |
-      head -n 1
-}
 
 UILATEST="$(latest_release "rpiwalletui/qtum-ui")"
 QTUMLATEST="$(latest_release "qtumproject/qtum")"
 QTUMDIR=".qtum"
 HOST="$(hostname)"
-DLLATEST="$(latest_ui)"
 
 cd ~
 rm qtum-full.tar.gz
@@ -24,7 +17,7 @@ rm -rf qtum-ui
 sudo apt-get update && sudo apt-get install -y python3-pip libv4l-dev libopenjp2-7 libopenjp2-7-dev libtiff5
 mkdir ~/qtum-ui
 echo "Downloading Qtum-Ui..........."
-wget -O qtum-ui.tar.gz $DLLATEST -q --show-progress
+wget -O qtum-ui.tar.gz https://github.com/rpiwalletui/qtum-ui/releases/download/0.3.3-beta/qtum-ui-ubuntu-0.3.3-beta.tar.gz -q --show-progress
 echo "Installing........."
 tar --strip 1 -C ~/qtum-ui -xf ~/qtum-ui.tar.gz
 rm qtum-ui.tar.gz

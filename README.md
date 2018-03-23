@@ -28,7 +28,7 @@ This will also install/update the Qtum core wallet so no need to install it firs
 Copy and past the install script below.  
 You can see the [ui-setup script here.](https://github.com/rpiwalletui/qtum-ui/blob/master/ui-install)  
 ```
-$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/master/ui-install | bash
+$ curl -L https://raw.githubusercontent.com/rpiwalletui/qtum-ui/ubuntu/ui-install | bash
 ```
 ## Setup the UI as s Service  
 Follow this guide if you want the UI to run on startup.  
