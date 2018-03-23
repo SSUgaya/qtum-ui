@@ -2,17 +2,17 @@
 {% block content %}
 <div class="main">
     <div class="receive-page col-xs-12">
-      <h3>Create New Receive Address</h3>
+      <h3>새 입금주소 생성하기</h3>
       <div class="receive-dropdown col-lg-3">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account Addresses <span class="caret"></span></button>
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">기존 지갑 주소 <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
         {% for key, value in account_add.items() %}
           {% if key == "" %}
             <li class="divider"></li>
-            <li class="dropdown-header">Default Account</li>
+            <li class="dropdown-header">기본 주소</li>
           {% else %}
             <li class="divider"></li>
-            <li class="dropdown-header">{{ key }} Account</li>
+            <li class="dropdown-header">{{ key }} 주소</li>
           {% endif %}
           {% for x in value[0:99] %}
             <li role="presentation"><a role="menuitem" href="/receive/{{ x }}">{{ x }}</a></li>
@@ -24,22 +24,22 @@
       {{ form.csrf_token }}
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
-          {{ form.account_address(type="text", value=address, class_="form-control", placeholder="Enter Address or leave blank for new")}}
+          {{ form.account_address(type="text", value=address, class_="form-control", placeholder="기존 주소를 입력해주세요 , 새로만드실꺼면 비워두세요.")}}
         </div>
         <div id="receive-to_label" data-toggle="tooltip" title="Enter Qtum amount to request in QRcode. Can be left blank." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
-          {{ form.account_name(type="text", class_="form-control", placeholder="Account Name for New Addresses Only")}}
+          {{ form.account_name(type="text", class_="form-control", placeholder="새로만드실 주소 이름")}}
         </div>
         <div id="receive-amount" data-toggle="tooltip" title="Use existing account name or create a new account if left blank the default account will be used."  class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-          {{ form.requested_amount(type="number", step="any", class_="form-control", placeholder="Request Amount for QRCode (optional)")}}
+          {{ form.requested_amount(type="number", step="any", class_="form-control", placeholder="이 주소에 얼마나 퀀텀을 받을것인지 (빈칸으로 두셔도 됩니다. 옵션)")}}
         </div>
         <div id="receive-description" data-toggle="tooltip" title="Enter message to include in transaction." class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-          {{ form.message(type="text", class_="form-control", placeholder="Message for QRCode (optional)")}}
+          {{ form.message(type="text", class_="form-control", placeholder="QR코드 메세지 (빈칸으로 두셔도 됩니다. 옵션.)")}}
         </div>
         <div id="receive-form">
-          <button type="submit" class="btn btn-primary btn-sm pull-right">Request</button>
+          <button type="submit" class="btn btn-primary btn-sm pull-right">요청</button>
           {% with messages = get_flashed_messages(category_filter=["error"]) %}
             {% if messages %}
               {% for message in messages %}
@@ -57,26 +57,26 @@
           <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode(qrcode_reposnse, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-          <small id="new-receive-address" class="col-lg-12"> Address is: {{ message }}</small>
+          <small id="new-receive-address" class="col-lg-12"> 주소는 : {{ message }}</small>
           {% endfor %}
           {% else %}
           <div class="qrcode-img col-xs-12 col-md-3">
             <img  src="{{ qrcode('qtum:%s?amount=&label=&message=' % get_address, box_size=4, border=1, error_correction='L') }}" width="160" height="160" class="img-thumbnail" alt="Cinque Terre">
           </div>
-            <small id="new-address" class="col-lg-12">Current Address: {{ get_address }}</small>
+            <small id="new-address" class="col-lg-12">현재 주소: {{ get_address }}</small>
         {% endif %}
       {% endwith %}
     </div>
   <div class="transactions-received table-responsive col-xs-12">
-    <h3>Received Transactions</h3>
+    <h3>받은 트랜젝션</h3>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th class="text-center col-sm-3">Date</th>
-          <th class="text-center col-sm-1">Type</th>
-          <th class="text-center col-sm-3">Transaction ID</th>
-          <th class="text-center col-sm-2">Amount</th>
-          <th class="text-center col-sm-2">Confirmations</th>
+          <th class="text-center col-sm-3">날짜</th>
+          <th class="text-center col-sm-1">종류</th>
+          <th class="text-center col-sm-3">트랜제션 ID</th>
+          <th class="text-center col-sm-2">수량</th>
+          <th class="text-center col-sm-2">컨펌</th>
         </tr>
       </thead>
       <tbody>
