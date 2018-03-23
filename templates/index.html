@@ -34,7 +34,7 @@
       </div>
       <div class="wallet-right col-xs-12 col-lg-6">
         <h3>지갑 정보</h3> <br />
-        <strong>지갑버젼:</strong> <span class="pull-right">{{ wallet_version[29:37] }}</span> <br />
+        <strong>지갑 버젼:</strong> <span class="pull-right">{{ wallet_version[29:37] }}</span> <br />
         <strong>UI 버젼:</strong> <span class="pull-right">{{ ui_version }}</span> <br />
         {% if stake_output.staking == false %}
           <strong>스테이킹:</strong> <span class="pull-right red-sm">미작동</span> <br />
@@ -50,7 +50,7 @@
         {% endif %}
         <strong>지갑 무게(총수량):</strong> <span class="pull-right">{{'%0.8f'| format(stake_output.weight|float / 100000000)}}</span> <br />
         <strong>네트워크 무게:</strong> <span class="pull-right">{{'%0.2f'| format(stake_output.netstakeweight|float / 100000000000000)}} M</span> <br />
-        <strong>예측된 보상시간:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
+        <strong>예측 보상시간:</strong> <span class="pull-right">{{ stake_time }} Days</span> <br />
         <strong>연결 수:</strong> <span class="pull-right">{{ get_current_block.connections }} Nodes</span> <br />
       </div>
       <small id="current-address" class="col-xs-12">입금주소: {{ get_address }}</small>
@@ -65,10 +65,10 @@
           {% else %}
         <strong>네트워크:</strong><span class="red-sm"> 오프라인</span><br />
       {% endif %}
-      <strong>마지막블록 시간:</strong> {{ time.strftime('%B %d %Y, %I:%M%p %Z', time.localtime(block_time)) }} <br />
+      <strong>마지막 블록 시간:</strong> {{ time.strftime('%B %d %Y, %I:%M%p %Z', time.localtime(block_time)) }} <br />
       <strong>현재블록:</strong> {{ get_current_block.blocks }} <br />
-      <strong>Total Sent:</strong> {{ '%0.2f'| format(qtum_network.totalbytessent|float / 1024 / 1024) }} MB  <br />
-      <strong>Total Received:</strong> {{ '%0.2f'| format(qtum_network.totalbytesrecv|float / 1024 / 1024) }} MB <br />
+      <strong>총 보낸 데이터:</strong> {{ '%0.2f'| format(qtum_network.totalbytessent|float / 1024 / 1024) }} MB  <br />
+      <strong>총 받은 데이터:</strong> {{ '%0.2f'| format(qtum_network.totalbytesrecv|float / 1024 / 1024) }} MB <br />
       <strong>TX in current block:</strong> {{ qtum_mempool.size }} <br />
       <strong>총 퀀텀 물량:</strong> {{ get_current_block.moneysupply}} <br />
       <strong id="block-hash"> Bestblock Hash:<a href="https://explorer.qtum.org/block/{{ block_info.bestblockhash }}" target="_blank"> {{ block_info.bestblockhash }}</a></strong>

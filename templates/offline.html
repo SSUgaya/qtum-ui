@@ -17,24 +17,24 @@
       <div class="main-offline">
           <div class="offline-page">
             {% if checks == 'Not_Running' %}
-            <h1>The Qtum Wallet is not Running</h1>
+            <h1>퀀텀 지갑은 작동하지 않고 있습니다!</h1>
             <p>
-              Only click once, the wallet can take upto 1 minute to startup and respond to the UI.
+              클릭 한번으로 최대 2분내로 지갑설정이 가능해집니다.
             <hr>
             <br />
-              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">Start Qtum Wallet</a>
+              <a href="{{ url_for('start_wallet') }}" class="btn btn-primary">시작</a>
             </p>
             {% else %}
-            <h1>Qtum Wallet is not Encrypted</h1>
-            <h4>Your wallet must be encrypted to use the Pi Web UI</h4> <br />
-                  Please enter a password or upload you backup wallet
+            <h1>지갑이 암호화되있지 않습니다.</h1>
+            <h4>웹 UI를 사용하시려면 암호화를 하셔야합니다.</h4> <br />
+                  비밀번호를 입력하거나 기존 백업해두셨던 Wallet.dat을 사용해주세요.
             <hr>
             <form class="encrypt-form col-xs-12 col-lg-6" method="post" action="{{ url_for('encrypt_wallet') }}">
               {{ form.csrf_token }}
             <div class="input-group" data-toggle="tooltip" title="Disabled if wallet already encrypted.">
               {{ form.passphrase(type="password", class_="form-control", placeholder="Enter Passphrase to Encrypt Your Wallet")}}
               <div class="input-group-btn">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">제출</button>
               </div>
 
             </div>
@@ -55,10 +55,10 @@
             <div class="input-group">
                   {{ wallet_upload.wallet(class_="form-control")}}
               <div class="input-group-btn">
-                <button type="submit" class="btn btn-primary">Upload Backup</button>
+                <button type="submit" class="btn btn-primary">백업파일 업로드</button>
               </div>
             </div>
-            <small>NOTE: The file will be renamed wallet.dat</small>
+            <small>주의: 파일이름은 wallet.dat 으로 변경될것입니다. </small>
               <br />
             {% if form.errors %}
               {% for field, errors in form.errors.items() %}
