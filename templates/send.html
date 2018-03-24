@@ -2,34 +2,34 @@
 {% block content %}
 <div class="main">
   <div class="send_page col-xs-12">
-  <div class="send-total col-xs-12"><span class="pull-left">Send QTUM</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
+  <div class="send-total col-xs-12"><span class="pull-left">퀀텀 송금</span><span class="pull-right">{{ qtum_wallet.balance }} QTUM</span></div>
     <form class="send-form col-xs-12 col-md-8" method="post" action="{{ url_for('send_qtum') }}">
       {{ form.csrf_token }}
       <div id="send-wallet" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-share-alt"></i></span>
-        {{ form.address(type="text", value=address, class_="form-control", placeholder="Send to Address")}}
+        {{ form.address(type="text", value=address, class_="form-control", placeholder="보낼 주소")}}
       </div>
       <div id="send-amount" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-        {{ form.amount(type="number", step="any", class_="form-control", placeholder="Amount to send. (Use The Checkbox to Subtract Fee From Amount )")}}
+        {{ form.amount(type="number", step="any", class_="form-control", placeholder="보낼 갯수. (갯수에서 수수료를 제공하려면 우측에 체크박스를 눌러주세요. )")}}
         <span class="input-group-addon">
           {{ form.include_fee(type="checkbox", class_="checkbox-inline")}}
         </span>
       </div>
       <div id="send-description" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        {{ form.description(type="text", class_="form-control", placeholder="Enter description (optional)")}}
+        {{ form.description(type="text", class_="form-control", placeholder="설명 (빈칸으로 두셔도 됩니다.)")}}
       </div>
       <div id="send-to_label" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-floppy-save"></i></span>
-        {{ form.to_label(type="text", class_="form-control", placeholder="Enter Name and save it to the address book (optional)")}}
+        {{ form.to_label(type="text", class_="form-control", placeholder="이름을 입력하고 주소록에 저장 (빈칸으로 두셔도 됩니다.)")}}
       </div>
         <div id="send-passwd" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        {{ form.passwd(type="password", class_="form-control", placeholder="Wallet Passphrase")}}
+        {{ form.passwd(type="password", class_="form-control", placeholder="지갑 비밀번호")}}
       </div>
       <div id="send-form">
-        <button type="submit" class="btn btn-primary btn-sm pull-right">Send Qtum</button>
+        <button type="submit" class="btn btn-primary btn-sm pull-right">퀀텀 송금</button>
         {% if form.errors %}
           {% for field, errors in form.errors.items() %}
             <div id="send-alert" class="alert alert-danger">
@@ -60,10 +60,10 @@
       </div>
     </form>
     <div class="send-dropdown col-xs-4">
-      <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Sent Address Book <span class="caret"></span></button>
+      <button title="Previously saved sent to Names." class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">주소록에 주소로 보내기 <span class="caret"></span></button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
         {% if last_tx == [] %}
-          <li class="dropdown-header">No Sent Address</li>
+          <li class="dropdown-header">보낸 주소가 없습니다.</li>
         {% else %}
           {% for value in last_tx %}
             {% if value.category == null %}
@@ -83,10 +83,10 @@
     <table id="table-unspent" class="table table-striped">
       <thead>
         <tr>
-          <th class="text-center col-sm-6">Address</th>
-          <th class="text-center col-sm-2">Amount</th>
-          <th class="text-center col-sm-2">Confirmations</th>
-          <th class="text-center col-sm-2">Spendable</th>
+          <th class="text-center col-sm-6">주소</th>
+          <th class="text-center col-sm-2">수량</th>
+          <th class="text-center col-sm-2">컨펌</th>
+          <th class="text-center col-sm-2">사용가능</th>
         </tr>
       </thead>
       <tbody>

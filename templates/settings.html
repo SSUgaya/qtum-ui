@@ -3,14 +3,14 @@
 {% block content %}
 <div class="main">
   <div class="setup-page col-xs-12">
-    <h3>Wallet Options</h3>
+    <h3>지갑 옵션</h3>
   <form class="stkaing-form col-xs-12 col-lg-7" method="post" action="{{ url_for('staking_service') }}">
     {{ form.csrf_token }}
   <div class="input-group">
-    <span class="input-group-addon">Start Staking</span>
-    {{ form.passphrase(type="password", class_="form-control", placeholder="Enter Passphrase to Enable Staking")}}
+    <span class="input-group-addon">스테이킹 시작하기</span>
+    {{ form.passphrase(type="password", class_="form-control", placeholder="비밀번호를 입력하여 스테이킹을 시작하세요.")}}
     <div class="input-group-btn">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">전송</button>
     </div>
   </div>
     <br />
@@ -49,10 +49,10 @@
   <div class="input-group">
         {{ wallet_upload.wallet(class_="form-control")}}
     <div class="input-group-btn">
-      <button type="submit" class="btn btn-primary">Upload Backup</button>
+      <button type="submit" class="btn btn-primary">백업파일 업로드</button>
     </div>
   </div>
-  <small>NOTE: The file will be renamed wallet.dat</small>
+  <small>주의: 파일이름은 wallet.dat 으로 변경될것입니다.</small>
     <br />
   {% if form.errors %}
     {% for field, errors in form.errors.items() %}
@@ -66,13 +66,13 @@
   <form class="addnode-form col-xs-12 col-lg-7" method="post" action="{{ url_for('add_node') }}">
     {{ form_addnode.csrf_token }}
   <div class="input-group">
-    <span class="input-group-addon">Add Node.....</span>
-    {{ form_addnode.nodeaddress(type="text", class_="form-control", placeholder="Enter Node IP, Include Port if not :3888")}}
+    <span class="input-group-addon">노드 추가하기...</span>
+    {{ form_addnode.nodeaddress(type="text", class_="form-control", placeholder="노트 IP를 입력해주세요. :3888이 아니면 포함해서 적어주세요.")}}
     <div class="input-group-btn">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">작성</button>
     </div>
   </div>
-  <small>NOTE: It can take a few minutes to update connected nodes</small>
+  <small>주의: 노드 연결시에 시간이 좀 걸립니다.</small>
   <br />
   {% if form_addnode.errors %}
     {% for field, errors in form_addnode.errors.items() %}
@@ -103,21 +103,21 @@
   {% endwith %}
   </form>
   <div class="disable-staking col-xs-12 col-lg-5">
-    <a href="/start_wallet" class="btn btn-primary">Restart Wallet</a>
-    <a href="/download" class="btn btn-primary">Download Backup</a>
+    <a href="/start_wallet" class="btn btn-primary">지갑 재시작</a>
+    <a href="/download" class="btn btn-primary">백업 다운로드</a>
   </div>
   </div>
   <div class="transactions-index col-xs-12">
-    <h3>Feedback</h3>
+    <h3>피드백</h3>
     <div class="support-us col-xs-12 col-md-6">
       <p>
-        The Qtum Pi UI is an ongoing project, and your feedback and support are appreciated.
-        You can get in contact below or make a donation using the QRCode or donation address. <br />
+        라즈베리파이 퀀텀 UI 는 현재 진행중인 프로젝트에 있습니다. 지원가 피드백은 저에게 큰 도움이 됩니다.
+        개발자가 열심히 진행 하고있습니다 QR코드나 밑에있는 지갑주소로 개발자를 위해 커피한잔 부탁드립니다 :D <br />
         <br />
-        Donations: <a href="/send/QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ">QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ</a> <br />
-        Contact: trevsadev@protonmail.com <br />
-        Join us on <a href="https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A">Telegram</a> <br />
-        View source code on <a href="https://github.com/rpiwalletui/qtum-ui">Github</a>
+        도네이션(기부): <a href="/send/QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ">QceE7a47byDhFs9wy2c2ZdXz4yfT4RZLJQ</a> <br />
+        연락처: trevsadev@protonmail.com <br />
+        텔레그램 참가하기 <a href="https://t.me/joinchat/FvYLc1FTsk6qg_wuN9WF8A">텔레그램</a> <br />
+        소스코드 확인 <a href="https://github.com/rpiwalletui/qtum-ui">깃허브</a>
       </p>
     </div>
     <div class="qrcode-donate-img col-xs-12 col-md-6">
